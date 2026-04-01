@@ -262,7 +262,7 @@
     <div class="grid-2">
         <div class="card">
             <div class="card-head">
-                <h3>🧠 Total Skills Completed by School</h3>
+                <h3>🧠 Total Skills Completed by Program</h3>
                 <span style="font-size:11px;color:var(--muted)">Placed students × avg skills</span>
             </div>
             <div class="card-body">
@@ -1458,7 +1458,7 @@ function buildSkillsChart() {
     charts.skills = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: data.map(s => s.school.replace(' Elementary School','').replace(' Elementary','')),
+            labels: data.map(s => s.product),
             datasets: [{
                 label: 'Total Skills Completed',
                 data: data.map(s => s.totalSkills),
