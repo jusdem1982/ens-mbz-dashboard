@@ -455,8 +455,8 @@
 
 const SCHOOLS = [
     // ── UAE - ENS - MBZ (Mohamed Bin Zayed Campus) ──────────
-    { org:"UAE - ENS", district:"UAE - ENS - MBZ",     school:"Emirates National Schools Mbz",      product:"My Math Academy",    active:1403, placed:1014, avgHours:1.3, avgSkills:19,  growth:8 },
-    { org:"UAE - ENS", district:"UAE - ENS - MBZ",     school:"Emirates National Schools Mbz",      product:"My Reading Academy", active:1370, placed:951,  avgHours:1.3, avgSkills:1,   growth:17 },
+    { org:"UAE - ENS", district:"UAE - ENS - MBZ",     school:"Emirates National Schools Mbz",      product:"My Math Academy",    active:1403, placed:1014, avgHours:1.3, avgSkills:24,  growth:6 },
+    { org:"UAE - ENS", district:"UAE - ENS - MBZ",     school:"Emirates National Schools Mbz",      product:"My Reading Academy", active:1370, placed:951,  avgHours:1.3, avgSkills:1,   growth:6 },
 ];
 
 // Derived: total skills = placed × avgSkills
@@ -542,18 +542,18 @@ const CLASSROOM_DATA = [
 //  UAE - ENS - MBZ · By product and grade
 // ════════════════════════════════════════════════════════════
 const GRADE_DATA = [
-    // My Math Academy
-    {product:'My Math Academy', grade:'Pre-K',        placed:102, avgHours:0.6, avgSkills:2,  priorKnow:75, growth:1},
-    {product:'My Math Academy', grade:'Kindergarten',  placed:182, avgHours:0.6, avgSkills:12, priorKnow:95, growth:5},
-    {product:'My Math Academy', grade:'1st Grade',     placed:284, avgHours:1.6, avgSkills:37, priorKnow:96, growth:9},
-    {product:'My Math Academy', grade:'2nd Grade',     placed:233, avgHours:1.3, avgSkills:22, priorKnow:95, growth:10},
-    {product:'My Math Academy', grade:'3rd Grade',     placed:213, avgHours:1.9, avgSkills:8,  priorKnow:87, growth:9},
-    // My Reading Academy
-    {product:'My Reading Academy', grade:'Pre-K',        placed:163, avgHours:0.7, avgSkills:1, priorKnow:0, growth:2},
-    {product:'My Reading Academy', grade:'Kindergarten',  placed:122, avgHours:0.6, avgSkills:0, priorKnow:0, growth:12},
-    {product:'My Reading Academy', grade:'1st Grade',     placed:275, avgHours:1.3, avgSkills:2, priorKnow:0, growth:19},
-    {product:'My Reading Academy', grade:'2nd Grade',     placed:176, avgHours:1.0, avgSkills:1, priorKnow:0, growth:34},
-    {product:'My Reading Academy', grade:'3rd Grade',     placed:215, avgHours:2.3, avgSkills:1, priorKnow:0, growth:23},
+    // My Math Academy — Avg Skills Completed Per Placed, Prior Knowledge %, Avg Growth %
+    {product:'My Math Academy', grade:'Pre-K',        placed:102, avgHours:0.6, avgSkills:6,  priorKnow:69, growth:3},
+    {product:'My Math Academy', grade:'Kindergarten',  placed:182, avgHours:0.6, avgSkills:14, priorKnow:56, growth:8},
+    {product:'My Math Academy', grade:'1st Grade',     placed:284, avgHours:1.6, avgSkills:43, priorKnow:95, growth:7},
+    {product:'My Math Academy', grade:'2nd Grade',     placed:233, avgHours:1.3, avgSkills:27, priorKnow:46, growth:6},
+    {product:'My Math Academy', grade:'3rd Grade',     placed:213, avgHours:1.9, avgSkills:11, priorKnow:24, growth:4},
+    // My Reading Academy — Prior Knowledge not applicable (0%)
+    {product:'My Reading Academy', grade:'Pre-K',        placed:163, avgHours:0.7, avgSkills:1, priorKnow:0, growth:1},
+    {product:'My Reading Academy', grade:'Kindergarten',  placed:122, avgHours:0.6, avgSkills:0, priorKnow:0, growth:7},
+    {product:'My Reading Academy', grade:'1st Grade',     placed:275, avgHours:1.3, avgSkills:2, priorKnow:0, growth:6},
+    {product:'My Reading Academy', grade:'2nd Grade',     placed:176, avgHours:1.0, avgSkills:1, priorKnow:0, growth:8},
+    {product:'My Reading Academy', grade:'3rd Grade',     placed:215, avgHours:2.3, avgSkills:2, priorKnow:0, growth:5},
 ];
 GRADE_DATA.forEach(g => { g.totalSkills = g.placed * g.avgSkills; });
 
