@@ -1607,23 +1607,27 @@ function renderGradeTable() {
             rows = GRADE_DATA.filter(g => g.product === prod);
         } else {
             // Aggregate from weekly grade data within the selected date range
+            // Use MAX for active/placed (unique students, not additive across weeks)
+            // Use weighted averages for skills/growth, sum for hours
             const filtered = WG.filter(r => r.p === pKey && r.w >= from && r.w <= to);
             const byGrade = {};
             filtered.forEach(r => {
-                if (!byGrade[r.g]) byGrade[r.g] = { grade: r.g, active: 0, placed: 0, totalHours: 0, skillsWtd: 0, growthWtd: 0, weeks: 0 };
+                if (!byGrade[r.g]) byGrade[r.g] = { grade: r.g, active: 0, placed: 0, totalHours: 0, skillsWtd: 0, growthWtd: 0, plWtdSum: 0, weeks: 0 };
                 const g = byGrade[r.g];
                 g.active  = Math.max(g.active, r.a);
-                g.placed  += r.pl;
+                g.placed  = Math.max(g.placed, r.pl);
                 g.totalHours += r.h;
+                // Weight skills and growth by weekly placed count for proper averaging
                 g.skillsWtd += r.sk * r.pl;
                 g.growthWtd += r.gr * r.pl;
+                g.plWtdSum  += r.pl; // sum of weekly placed for weighting denominator
                 g.weeks++;
             });
             const gradeOrder = ['Pre-K','Kindergarten','1st Grade','2nd Grade','3rd Grade'];
             rows = gradeOrder.map(gn => byGrade[gn]).filter(Boolean).map(g => {
                 const avgHrs = g.placed > 0 ? (g.totalHours / 60 / g.placed).toFixed(1) : '0.0';
-                const avgSk  = g.placed > 0 ? Math.round(g.skillsWtd / g.placed) : 0;
-                const avgGr  = g.placed > 0 ? +(g.growthWtd / g.placed).toFixed(1) : 0;
+                const avgSk  = g.plWtdSum > 0 ? Math.round(g.skillsWtd / g.plWtdSum) : 0;
+                const avgGr  = g.plWtdSum > 0 ? +(g.growthWtd / g.plWtdSum).toFixed(1) : 0;
                 // Find matching static row for priorKnow (doesn't change by date)
                 const staticRow = GRADE_DATA.find(s => s.product === prod && s.grade === g.grade);
                 return {
@@ -1667,14 +1671,15 @@ function renderClassroomTable(filter) {
         data = CLASSROOM_DATA;
     } else {
         // Aggregate weekly classroom data within date range
+        // Use MAX for active/placed (unique students, not additive across weeks)
         const filtered = WC.filter(r => r.w >= from && r.w <= to);
         const byCls = {};
         filtered.forEach(r => {
             if (!byCls[r.c]) byCls[r.c] = { cls: r.c, active: 0, placed: 0, totalHrs: 0 };
             const c = byCls[r.c];
             c.active = Math.max(c.active, r.a);
-            c.placed += r.pl;
-            c.totalHrs += r.h * r.pl; // h is avg per placed, so h*pl = total hours for that week
+            c.placed = Math.max(c.placed, r.pl);
+            c.totalHrs += r.h * r.pl; // h is avg per placed for that week, so h*pl = total hours
         });
         // Map to same shape as CLASSROOM_DATA, inferring grade/grp from static data
         data = Object.values(byCls).map(c => {
