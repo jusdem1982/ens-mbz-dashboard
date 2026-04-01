@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age of Learning — Learning Leaderboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --navy:       #003082;
+            --royal:      #0341EC;
+            --blue-light: #1EA6F9;
+            --cyan:       #00CFFF;
+            --gold:       #FFD000;
+            --red:        #FF2E48;
+            --green:      #1AA85C;
+            --bg:         #EEF3FC;
+            --card:       #FFFFFF;
+            --border:     #D8E3F5;
+            --text:       #0A0F2A;
+            --muted:      #5A6A8A;
+            --gap:        16px;
+            --radius:     10px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Calibri, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+
+        /* ─── HEADER ─── */
+        .header { background: linear-gradient(135deg, var(--navy) 0%, #0a2a74 55%, var(--royal) 100%); color: white; margin-bottom: var(--gap); box-shadow: 0 4px 20px rgba(3,65,236,0.22); }
+        .header-top { display: flex; align-items: center; justify-content: space-between; padding: 18px 28px 14px; gap: 16px; flex-wrap: wrap; }
+        .header-brand { display: flex; align-items: center; gap: 14px; }
+        .aol-badge { width: 50px; height: 50px; background: white; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .aol-badge .bt { font-size: 7.5px; font-weight: 900; color: var(--navy); line-height: 1; }
+        .aol-badge .bb { font-size: 13px; font-weight: 900; color: var(--royal); line-height: 1.1; letter-spacing: -0.5px; }
+        .header-title h1 { font-size: 20px; font-weight: 700; }
+        .header-title p { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 1px; }
+        .comp-badge { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 8px 16px; text-align: right; }
+        .comp-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.55); }
+        .comp-name { font-size: 14px; font-weight: 700; color: var(--gold); }
+
+        /* ─── FILTERS ─── */
+        .filters-bar { background: rgba(0,0,0,0.20); border-top: 1px solid rgba(255,255,255,0.1); padding: 10px 28px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+        .fg { display: flex; align-items: center; gap: 7px; }
+        .fg label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.7px; color: rgba(255,255,255,0.55); white-space: nowrap; }
+        .fg select { padding: 5px 9px; border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; background: rgba(255,255,255,0.1); color: white; font-size: 12px; min-width: 110px; cursor: pointer; font-family: inherit; }
+        .fg select option { background: var(--navy); color: white; }
+        .sep { width: 1px; height: 26px; background: rgba(255,255,255,0.15); }
+
+        /* ─── DATA SOURCE STRIP ─── */
+        .source-strip { background: var(--navy); padding: 7px 28px; font-size: 11px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; color: rgba(255,255,255,0.7); }
+        .source-tag { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 1px 8px; font-size: 10px; color: rgba(255,255,255,0.6); }
+        .source-live { color: var(--gold); font-weight: 700; display: flex; align-items: center; gap: 5px; }
+        .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+        /* ─── MAIN ─── */
+        .wrap { max-width: 1440px; margin: 0 auto; padding: 0 var(--gap) var(--gap); }
+
+        /* ─── KPI ROW ─── */
+        .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--gap); margin-bottom: var(--gap); }
+        .kpi-card { background: var(--card); border-radius: var(--radius); padding: 18px 20px 16px; box-shadow: 0 1px 4px rgba(3,65,236,0.07); border-top: 3px solid var(--royal); }
+        .kpi-card:nth-child(2) { border-top-color: var(--blue-light); }
+        .kpi-card:nth-child(3) { border-top-color: var(--cyan); }
+        .kpi-card:nth-child(4) { border-top-color: var(--gold); }
+        .kpi-card:nth-child(5) { border-top-color: var(--green); }
+        .kpi-emoji { font-size: 20px; margin-bottom: 6px; }
+        .kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 3px; }
+        .kpi-value { font-size: 30px; font-weight: 700; color: var(--navy); line-height: 1; }
+        .kpi-sub { font-size: 11px; color: var(--muted); margin-top: 5px; }
+
+        /* ─── GRID ─── */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); margin-bottom: var(--gap); }
+        @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+
+        /* ─── CARDS ─── */
+        .card { background: var(--card); border-radius: var(--radius); box-shadow: 0 1px 4px rgba(3,65,236,0.07); overflow: hidden; }
+        .card-full { grid-column: 1 / -1; }
+        .card-head { padding: 13px 20px 11px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .card-head h3 { font-size: 14px; font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 7px; }
+        .card-body { padding: 16px 20px; }
+        .chart-wrap { height: 270px; position: relative; }
+
+        /* ─── PRODUCT TAG ─── */
+        .prod-tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+        .prod-math    { background: #E8EFFF; color: var(--royal); }
+        .prod-reading { background: #E0F8FF; color: #0077AA; }
+
+        /* ─── TABS ─── */
+        .tab-bar { display: flex; border-bottom: 2px solid var(--border); }
+        .tab-btn { padding: 13px 22px; font-size: 13px; font-weight: 600; color: var(--muted); background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -2px; cursor: pointer; font-family: inherit; display: flex; align-items: center; gap: 6px; transition: all 0.15s; }
+        .tab-btn:hover { color: var(--royal); }
+        .tab-btn.active { color: var(--royal); border-bottom-color: var(--royal); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* ─── LEADERBOARD TABLE ─── */
+        .lb-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .lb-table thead th { padding: 9px 12px; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); border-bottom: 2px solid var(--border); white-space: nowrap; cursor: pointer; user-select: none; text-align: left; }
+        .lb-table thead th:hover { color: var(--royal); }
+        .lb-table thead th.sort-asc::after  { content: ' ▲'; font-size: 9px; color: var(--royal); }
+        .lb-table thead th.sort-desc::after { content: ' ▼'; font-size: 9px; color: var(--royal); }
+        .lb-table tbody tr { border-bottom: 1px solid #F0F5FE; transition: background 0.1s; }
+        .lb-table tbody tr:last-child { border-bottom: none; }
+        .lb-table tbody tr:hover { background: #F5F9FF; }
+        .lb-table tbody tr.rank-1 { background: #FFFBDD; }
+        .lb-table tbody tr.rank-2 { background: #F8F8F8; }
+        .lb-table tbody tr.rank-3 { background: #FFF4F0; }
+        .lb-table tbody tr.rank-1:hover { background: #FFF4AA; }
+        .lb-table tbody tr.rank-2:hover { background: #F0F0F0; }
+        .lb-table tbody tr.rank-3:hover { background: #FFE5DA; }
+        .lb-table tbody td { padding: 10px 12px; }
+
+        /* ─── RANK BADGE ─── */
+        .rank-badge { display: inline-flex; align-items: center; justify-content: center; width: 27px; height: 27px; border-radius: 50%; font-weight: 800; font-size: 12px; }
+        .rank-1 .rank-badge { background: #FFD000; color: #7A5500; }
+        .rank-2 .rank-badge { background: #C0C0C0; color: #444; }
+        .rank-3 .rank-badge { background: #CD7F32; color: white; }
+        .rank-other .rank-badge { background: #E8EFFF; color: var(--muted); }
+
+        /* ─── GROWTH BADGE ─── */
+        .growth-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; }
+        .growth-high   { background: #D6F5E5; color: #1AA85C; }
+        .growth-mid    { background: #E8EFFF; color: var(--royal); }
+        .growth-low    { background: #FFF3CC; color: #AA6600; }
+        .growth-min    { background: #FFE0E0; color: var(--red); }
+
+        /* ─── PROGRESS BAR ─── */
+        .prog-wrap { display: flex; align-items: center; gap: 8px; }
+        .prog-bar  { flex: 1; height: 6px; background: #E8EFFF; border-radius: 3px; overflow: hidden; min-width: 50px; }
+        .prog-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--royal), var(--blue-light)); }
+        .prog-fill-gold { background: linear-gradient(90deg, #C8A800, var(--gold)); }
+
+        /* ─── GRADE TABLE (2nd tab) ─── */
+        .grade-section { padding: 16px 20px; }
+        .grade-section h4 { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 12px; display: flex; align-items: center; gap: 7px; }
+
+        /* ─── CLASSROOM FILTER BUTTONS ─── */
+        .cls-btn { padding: 4px 12px; border: 1px solid var(--border); border-radius: 20px; background: white; color: var(--muted); font-size: 11px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+        .cls-btn:hover { border-color: var(--royal); color: var(--royal); }
+        .cls-btn.active { background: var(--royal); color: white; border-color: var(--royal); }
+
+        /* ─── UTIL BADGE ─── */
+        .util-badge { font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 10px; }
+        .util-high { background: #D6F5E5; color: #1AA85C; }
+        .util-mid  { background: #FFF3CC; color: #AA6600; }
+        .util-low  { background: #FFE0E0; color: var(--red); }
+
+        /* ─── FOOTER ─── */
+        .footer { text-align: center; padding: 14px; font-size: 11px; color: var(--muted); }
+
+        @media (max-width: 640px) { .kpi-row { grid-template-columns: 1fr 1fr; } .header-top { flex-direction: column; align-items: flex-start; } }
+    </style>
+</head>
+<body>
+
+<!-- ══════════ HEADER ══════════ -->
+<div class="header">
+    <div class="header-top">
+        <div class="header-brand">
+            <div class="aol-badge">
+                <div class="bt">AGE OF</div>
+                <div class="bb">LEARN</div>
+            </div>
+            <div class="header-title">
+                <h1>Learning Leaderboard</h1>
+                <p>School Competition Tracker · Age of Learning</p>
+            </div>
+        </div>
+        <div class="comp-badge">
+            <div class="comp-label">Competition</div>
+            <div class="comp-name">ENS – Mohamed Bin Zayed</div>
+        </div>
+    </div>
+
+    <div class="filters-bar">
+        <div class="fg">
+            <label>Organization</label>
+            <select id="fOrg" onchange="onOrgChange()">
+                <option value="all">All Organizations</option>
+            </select>
+        </div>
+        <div class="fg">
+            <label>District</label>
+            <select id="fDistrict" onchange="onDistrictChange()">
+                <option value="all">All Districts</option>
+            </select>
+        </div>
+        <div class="fg">
+            <label>School</label>
+            <select id="fSchool" onchange="applyFilters()">
+                <option value="all">All Schools</option>
+            </select>
+        </div>
+        <div class="sep"></div>
+        <div class="fg">
+            <label>Program</label>
+            <select id="fProduct" onchange="applyFilters()">
+                <option value="all">All Programs</option>
+                <option value="My Math Academy">My Math Academy</option>
+                <option value="My Reading Academy">My Reading Academy</option>
+            </select>
+        </div>
+        <div class="fg">
+            <label>Rank By</label>
+            <select id="fCriteria" onchange="applyFilters()">
+                <option value="totalSkills">Total Skills Completed</option>
+                <option value="avgSkills">Avg Skills / Student</option>
+                <option value="avgHours">Avg Usage Hours</option>
+                <option value="growth">Avg Growth %</option>
+            </select>
+        </div>
+        <button class="btn-reset" onclick="resetFilters()" style="padding:5px 14px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.22);border-radius:5px;color:white;font-size:12px;cursor:pointer;font-family:inherit">↺ Reset</button>
+    </div>
+
+    <div class="source-strip">
+        <span class="source-live"><span class="live-dot"></span>Live from Omni</span>
+        <span class="source-tag">Customer Success Coffee Report</span>
+        <span class="source-tag">Term: Aug 2025 – Present</span>
+        <span class="source-tag">ENS – Mohamed Bin Zayed</span>
+        <span style="margin-left:auto;color:rgba(255,255,255,0.35);font-size:10px" id="lastUpdated">PROPRIETARY &amp; CONFIDENTIAL</span>
+    </div>
+</div>
+
+<!-- ══════════ MAIN ══════════ -->
+<div class="wrap">
+
+    <!-- KPI ROW -->
+    <div class="kpi-row">
+        <div class="kpi-card">
+            <div class="kpi-emoji">🏫</div>
+            <div class="kpi-label">Active Programs</div>
+            <div class="kpi-value" id="kpiSchools">—</div>
+            <div class="kpi-sub" id="kpiSchoolsSub"></div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-emoji">🎓</div>
+            <div class="kpi-label">Active Students</div>
+            <div class="kpi-value" id="kpiActive">1,418</div>
+            <div class="kpi-sub" id="kpiActiveSub">of 1,446 licensed seats &nbsp;<span class="util-badge util-high">98% utilized</span></div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-emoji">📍</div>
+            <div class="kpi-label">Placed Students</div>
+            <div class="kpi-value" id="kpiPlaced">1,238</div>
+            <div class="kpi-sub" id="kpiPlacedSub">87% of active students placed</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-emoji">🧠</div>
+            <div class="kpi-label">Total Skills Completed</div>
+            <div class="kpi-value" id="kpiSkills">—</div>
+            <div class="kpi-sub" id="kpiSkillsSub"></div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-emoji">📈</div>
+            <div class="kpi-label">Avg Learning Growth</div>
+            <div class="kpi-value" id="kpiGrowth">—</div>
+            <div class="kpi-sub" id="kpiGrowthSub"></div>
+        </div>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-head">
+                <h3>🧠 Total Skills Completed by School</h3>
+                <span style="font-size:11px;color:var(--muted)">Placed students × avg skills</span>
+            </div>
+            <div class="card-body">
+                <div class="chart-wrap"><canvas id="skillsChart"></canvas></div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-head">
+                <h3>⏱️ Avg Usage Hours After Placement</h3>
+                <span style="font-size:11px;color:var(--muted)">Per student, per school</span>
+            </div>
+            <div class="card-body">
+                <div class="chart-wrap"><canvas id="hoursChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEADERBOARD TABS -->
+    <div class="card card-full">
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="switchTab('schoolLB', this)">🏫 School Leaderboard</button>
+            <button class="tab-btn" onclick="switchTab('gradeLB', this)">📊 Grade-Level Breakdown</button>
+            <button class="tab-btn" onclick="switchTab('classroomLB', this)">🏛️ Classroom Breakdown</button>
+            <button class="tab-btn" onclick="switchTab('trendsLB', this)">📈 Trends</button>
+        </div>
+
+        <!-- ── GLOBAL DATE RANGE FILTER ─────────────────────────── -->
+        <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:10px 20px;border-bottom:1px solid var(--border);background:var(--surface);">
+            <span style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.04em;margin-right:2px">DATE RANGE</span>
+            <button class="cls-btn active" id="presetAll" onclick="setTrendPreset('all',this)">All</button>
+            <button class="cls-btn" id="preset8w" onclick="setTrendPreset('8w',this)">Last 8 weeks</button>
+            <button class="cls-btn" id="preset4w" onclick="setTrendPreset('4w',this)">Last 4 weeks</button>
+            <span style="width:1px;height:18px;background:var(--border);margin:0 4px"></span>
+            <span style="font-size:11px;font-weight:600;color:var(--muted)">FROM</span>
+            <input type="date" id="trendFrom"
+                   style="font-size:12px;padding:3px 7px;border:1px solid var(--border);border-radius:6px;font-family:inherit;color:var(--text);background:white;"
+                   onchange="applyCustomRange()">
+            <span style="font-size:11px;font-weight:600;color:var(--muted)">TO</span>
+            <input type="date" id="trendTo"
+                   style="font-size:12px;padding:3px 7px;border:1px solid var(--border);border-radius:6px;font-family:inherit;color:var(--text);background:white;"
+                   onchange="applyCustomRange()">
+            <span style="font-size:11px;color:var(--muted);margin-left:6px">Showing: <strong id="drLabel">Nov 24, 2025 → Mar 23, 2026</strong></span>
+            <span id="rangeNote" style="display:none;font-size:11px;color:#7A5500;background:#FFF3CC;padding:2px 9px;border-radius:10px;font-weight:600;margin-left:6px">⚡ School Leaderboard &amp; KPIs reflect peak activity in this range</span>
+        </div>
+
+        <!-- SCHOOL LEADERBOARD -->
+        <div id="schoolLB" class="tab-content active">
+            <div class="card-body" style="padding-bottom:0">
+                <p style="font-size:12px;color:var(--muted);margin-bottom:10px">
+                    Programs ranked by the selected competition criteria. Data sourced from Omni's Growth by School report for UAE – ENS Mohamed Bin Zayed. Refreshes hourly.
+                </p>
+            </div>
+            <div style="overflow-x:auto;padding:0 20px 20px">
+                <table class="lb-table" id="schoolTable">
+                    <thead>
+                        <tr>
+                            <th onclick="sortTbl('schoolTable','rank',true)" class="sort-asc" data-field="rank" data-asc="true">Rank</th>
+                            <th onclick="sortTbl('schoolTable','school',false)" data-field="school">School</th>
+                            <th onclick="sortTbl('schoolTable','product',false)" data-field="product">Program</th>
+                            <th onclick="sortTbl('schoolTable','active',false)" data-field="active">Active Students</th>
+                            <th onclick="sortTbl('schoolTable','placed',false)" data-field="placed">Placed Students</th>
+                            <th onclick="sortTbl('schoolTable','avgHours',false)" data-field="avgHours">Avg Usage Hours</th>
+                            <th onclick="sortTbl('schoolTable','avgSkills',false)" data-field="avgSkills">Avg Skills Completed</th>
+                            <th onclick="sortTbl('schoolTable','growth',false)" data-field="growth">Avg Growth</th>
+                            <th onclick="sortTbl('schoolTable','score',false)" data-field="score">Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="schoolTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- GRADE BREAKDOWN -->
+        <div id="gradeLB" class="tab-content">
+            <div class="card-body" style="padding-bottom:0">
+                <p style="font-size:12px;color:var(--muted);margin-bottom:4px">
+                    Grade-level performance from Omni's Growth by App Hours report · UAE – ENS Mohamed Bin Zayed · Term Aug 2025 – Present · Updated Mar 26 2026.
+                </p>
+                <div id="gradeRangeNote" style="display:none;align-items:center;gap:7px;background:#FFF3CC;border:1px solid #FFD000;border-radius:7px;padding:7px 12px;margin-bottom:6px;font-size:12px;color:#7A5500;">
+                    <span>📅</span>
+                    <span>This tab shows the <strong>full-term snapshot</strong> (Aug 2025 – Mar 2026). Grade-level breakdowns are not available per week — use the <strong>Trends tab</strong> to see weekly patterns.</span>
+                </div>
+            </div>
+
+            <div class="grade-section">
+                <h4>📐 My Math Academy — Grade Performance</h4>
+                <div style="overflow-x:auto">
+                    <table class="lb-table">
+                        <thead>
+                            <tr>
+                                <th>Grade</th>
+                                <th>Placed Students</th>
+                                <th>Avg Usage Hours</th>
+                                <th>Avg Skills Completed</th>
+                                <th>% Prior Knowledge</th>
+                                <th>Avg Growth</th>
+                                <th>Est. Total Skills</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Pre-K</strong></td>
+                                <td>119</td>
+                                <td>0.6 hrs</td>
+                                <td><strong>3</strong></td>
+                                <td>13%</td>
+                                <td><span class="growth-badge growth-high">11% ↑</span></td>
+                                <td>
+                                    <div class="prog-wrap">
+                                        <div class="prog-bar"><div class="prog-fill" style="width:20%"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--navy)">357</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Kindergarten</strong></td>
+                                <td>200</td>
+                                <td>0.6 hrs</td>
+                                <td><strong>3</strong></td>
+                                <td>18%</td>
+                                <td><span class="growth-badge growth-mid">4% ↑</span></td>
+                                <td>
+                                    <div class="prog-wrap">
+                                        <div class="prog-bar"><div class="prog-fill" style="width:34%"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--navy)">600</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="rank-1">
+                                <td><strong>1st Grade</strong></td>
+                                <td>297</td>
+                                <td>1.5 hrs</td>
+                                <td><strong>6</strong></td>
+                                <td>29%</td>
+                                <td><span class="growth-badge growth-low">3% ↑</span></td>
+                                <td>
+                                    <div class="prog-wrap">
+                                        <div class="prog-bar"><div class="prog-fill" style="width:100%"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--navy)">1,782</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>2nd Grade</strong></td>
+                                <td>231</td>
+                                <td>1.2 hrs</td>
+                                <td><strong>3</strong></td>
+                                <td>26%</td>
+                                <td><span class="growth-badge growth-min">2% ↑</span></td>
+                                <td>
+                                    <div class="prog-wrap">
+                                        <div class="prog-bar"><div class="prog-fill" style="width:39%"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--navy)">693</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>3rd Grade</strong></td>
+                                <td>215</td>
+                                <td>1.9 hrs</td>
+                                <td><strong>5</strong></td>
+                                <td>31%</td>
+                                <td><span class="growth-badge growth-min">2% ↑</span></td>
+                                <td>
+                                    <div class="prog-wrap">
+                                        <div class="prog-bar"><div class="prog-fill" style="width:60%"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--navy)">1,075</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="grade-section" style="border-top: 1px solid var(--border); margin-top: 4px;">
+                <h4>📖 My Reading Academy — Grade Performance</h4>
+                <div style="overflow-x:auto">
+                    <table class="lb-table">
+                        <thead>
+                            <tr>
+                                <th>Grade</th>
+                                <th>Placed Students</th>
+                                <th>Avg Usage Hours</th>
+                                <th>Avg Skills Completed</th>
+                                <th>% Prior Knowledge</th>
+                                <th>Avg Growth</th>
+                                <th>Est. Total Skills</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Pre-K</strong></td>
+                                <td>160</td>
+                                <td>0.7 hrs</td>
+                                <td><strong>2</strong></td>
+                                <td>15%</td>
+                                <td><span class="growth-badge growth-low">3% ↑</span></td>
+                                <td>
+                                    <div class="prog-wrap">
+                                        <div class="prog-bar"><div class="prog-fill" style="width:30%"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--navy)">320</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Kindergarten</strong></td>
+                                <td>119</td>
+                                <td>0.6 hrs</td>
+                                <td><strong>2</strong></td>
+                                <td>13%</td>
+                                <td><span class="growth-badge growth-min">1% ↑</span></td>
+                                <td>
+                                    <div class="prog-wrap">
+                                        <div class="prog-bar"><div class="prog-fill" style="width:22%"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--navy)">238</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>1st Grade</strong></td>
+                                <td>291</td>
+                                <td>1.2 hrs</td>
+                                <td><strong>3</strong></td>
+                                <td>22%</td>
+                                <td><span class="growth-badge growth-min">1% ↑</span></td>
+                                <td>
+                                    <div class="prog-wrap">
+                                        <div class="prog-bar"><div class="prog-fill" style="width:81%"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--navy)">873</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>2nd Grade</strong></td>
+                                <td>216</td>
+                                <td>1.0 hrs</td>
+                                <td><strong>2</strong></td>
+                                <td>36%</td>
+                                <td><span class="growth-badge growth-min">1% ↑</span></td>
+                                <td>
+                                    <div class="prog-wrap">
+                                        <div class="prog-bar"><div class="prog-fill" style="width:40%"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--navy)">432</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="rank-1">
+                                <td><strong>3rd Grade</strong></td>
+                                <td>215</td>
+                                <td>2.3 hrs</td>
+                                <td><strong>5</strong></td>
+                                <td>51%</td>
+                                <td><span class="growth-badge growth-min">1% ↑</span></td>
+                                <td>
+                                    <div class="prog-wrap">
+                                        <div class="prog-bar"><div class="prog-fill" style="width:100%"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--navy)">1,075</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- CLASSROOM BREAKDOWN -->
+        <div id="classroomLB" class="tab-content">
+            <div class="card-body" style="padding-bottom:0">
+                <p style="font-size:12px;color:var(--muted);margin-bottom:8px">
+                    Classroom-level enrollment from Omni's Student Term Summary · All products combined · UAE – ENS Mohamed Bin Zayed · Updated Mar 26 2026.
+                </p>
+                <div id="clsRangeNote" style="display:none;align-items:center;gap:7px;background:#FFF3CC;border:1px solid #FFD000;border-radius:7px;padding:7px 12px;margin-bottom:8px;font-size:12px;color:#7A5500;">
+                    <span>📅</span>
+                    <span>This tab shows the <strong>full-term snapshot</strong> (Aug 2025 – Mar 2026). Per-classroom weekly data is not available — use the <strong>Trends tab</strong> to see weekly patterns.</span>
+                </div>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px">
+                    <button class="cls-btn active" onclick="filterCls('all',this)">All (58)</button>
+                    <button class="cls-btn" onclick="filterCls('KG1',this)">KG1 — Pre-K (12)</button>
+                    <button class="cls-btn" onclick="filterCls('KG2',this)">KG2 — Kinder (12)</button>
+                    <button class="cls-btn" onclick="filterCls('G1',this)">Grade 1 (13)</button>
+                    <button class="cls-btn" onclick="filterCls('G2',this)">Grade 2 (11)</button>
+                    <button class="cls-btn" onclick="filterCls('G3',this)">Grade 3 (10)</button>
+                </div>
+            </div>
+            <div style="overflow-x:auto;padding:0 20px 20px">
+                <table class="lb-table" id="classroomTable">
+                    <thead>
+                        <tr>
+                            <th>Grade Level</th>
+                            <th>Classroom</th>
+                            <th>Active Students</th>
+                            <th>Placed Students</th>
+                            <th>Avg Hours</th>
+                            <th>Total Hours</th>
+                            <th>Placement Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody id="classroomTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TRENDS TAB -->
+        <div id="trendsLB" class="tab-content">
+            <div class="card-body" style="padding-bottom:4px">
+                <p style="font-size:12px;color:var(--muted);margin-bottom:0">
+                    Weekly active &amp; placed students by program · UAE – ENS Mohamed Bin Zayed · Updated Mar 26 2026.
+                </p>
+            </div>
+            <div style="padding:0 20px 20px;position:relative;height:320px">
+                <canvas id="trendsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="footer">
+    Data sourced from <strong>Omni · Customer Success Coffee Report</strong> · UAE – ENS Mohamed Bin Zayed · Term starting Aug 2025 · Refreshes hourly
+    &nbsp;|&nbsp; Age of Learning · Customer Success &nbsp;|&nbsp; PROPRIETARY &amp; CONFIDENTIAL
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════
+//  REAL DATA — sourced from Omni, Mar 26 2026
+//  Growth by School · UAE – Emirates National Schools (ENS-MBZ)
+//  UAE - ENS - MBZ (Mohamed Bin Zayed Campus)
+// ════════════════════════════════════════════════════════════
+
+const SCHOOLS = [
+    // ── UAE - ENS - MBZ (Mohamed Bin Zayed Campus) ──────────
+    { org:"UAE - ENS", district:"UAE - ENS - MBZ",     school:"Emirates National Schools Mbz",      product:"My Math Academy",    active:1401, placed:1063, avgHours:1.3, avgSkills:4,  growth:4 },
+    { org:"UAE - ENS", district:"UAE - ENS - MBZ",     school:"Emirates National Schools Mbz",      product:"My Reading Academy", active:1366, placed:1002, avgHours:1.3, avgSkills:4,  growth:1 },
+];
+
+// Derived: total skills = placed × avgSkills
+SCHOOLS.forEach(s => { s.totalSkills = s.placed * s.avgSkills; });
+
+// ════════════════════════════════════════════════════════════
+//  CLASSROOM DATA — sourced from Omni Student Term Summary, Mar 26 2026
+//  UAE - ENS - MBZ · All products combined · 58 classrooms
+// ════════════════════════════════════════════════════════════
+const CLASSROOM_DATA = [
+    // ── KG1 (Pre-K) — 12 classrooms ─────────────────────────
+    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Blue',   active:23, placed:18, hours:1.16},
+    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Brown',  active:22, placed:14, hours:0.79},
+    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Gold',   active:25, placed:15, hours:0.35},
+    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Green',  active:23, placed:17, hours:0.43},
+    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Lilac',  active:23, placed:16, hours:0.51},
+    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Lime',   active:24, placed:10, hours:0.45},
+    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Orange', active:24, placed:18, hours:0.89},
+    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Purple', active:23, placed:16, hours:0.42},
+    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Red',    active:23, placed:10, hours:0.45},
+    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Silver', active:24, placed:23, hours:0.68},
+    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-White',  active:22, placed:19, hours:0.82},
+    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Yellow', active:24, placed:14, hours:0.34},
+    // ── KG2 (Kindergarten) — 12 classrooms ──────────────────
+    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Blue',   active:24, placed:23, hours:0.84},
+    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Brown',  active:22, placed:15, hours:0.29},
+    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Gold',   active:25, placed:19, hours:0.34},
+    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Green',  active:20, placed:15, hours:0.25},
+    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Lilac',  active:13, placed:6,  hours:0.27},
+    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Lime',   active:23, placed:20, hours:0.52},
+    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Orange', active:23, placed:19, hours:0.50},
+    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Purple', active:24, placed:20, hours:0.74},
+    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Red',    active:24, placed:24, hours:0.80},
+    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Silver', active:24, placed:24, hours:0.53},
+    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-White',  active:22, placed:22, hours:0.41},
+    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Yellow', active:24, placed:21, hours:0.52},
+    // ── Grade 1 — 13 classrooms ──────────────────────────────
+    {grade:'Grade 1', grp:'G1', cls:'1A', active:26, placed:25, hours:1.10},
+    {grade:'Grade 1', grp:'G1', cls:'1B', active:26, placed:26, hours:1.19},
+    {grade:'Grade 1', grp:'G1', cls:'1C', active:26, placed:26, hours:1.40},
+    {grade:'Grade 1', grp:'G1', cls:'1D', active:26, placed:24, hours:0.80},
+    {grade:'Grade 1', grp:'G1', cls:'1E', active:27, placed:27, hours:1.38},
+    {grade:'Grade 1', grp:'G1', cls:'1F', active:25, placed:23, hours:1.45},
+    {grade:'Grade 1', grp:'G1', cls:'1G', active:26, placed:24, hours:0.68},
+    {grade:'Grade 1', grp:'G1', cls:'1H', active:26, placed:26, hours:1.13},
+    {grade:'Grade 1', grp:'G1', cls:'1I', active:25, placed:12, hours:0.09},
+    {grade:'Grade 1', grp:'G1', cls:'1J', active:27, placed:26, hours:3.47},
+    {grade:'Grade 1', grp:'G1', cls:'1K', active:25, placed:24, hours:0.89},
+    {grade:'Grade 1', grp:'G1', cls:'1L', active:27, placed:25, hours:0.78},
+    {grade:'Grade 1', grp:'G1', cls:'1M', active:26, placed:26, hours:2.39},
+    // ── Grade 2 — 11 classrooms ──────────────────────────────
+    {grade:'Grade 2', grp:'G2', cls:'2A', active:27, placed:24, hours:0.76},
+    {grade:'Grade 2', grp:'G2', cls:'2B', active:26, placed:26, hours:1.60},
+    {grade:'Grade 2', grp:'G2', cls:'2C', active:26, placed:24, hours:0.78},
+    {grade:'Grade 2', grp:'G2', cls:'2D', active:26, placed:24, hours:1.98},
+    {grade:'Grade 2', grp:'G2', cls:'2E', active:26, placed:25, hours:0.54},
+    {grade:'Grade 2', grp:'G2', cls:'2F', active:27, placed:24, hours:0.67},
+    {grade:'Grade 2', grp:'G2', cls:'2G', active:27, placed:25, hours:1.74},
+    {grade:'Grade 2', grp:'G2', cls:'2H', active:25, placed:25, hours:1.50},
+    {grade:'Grade 2', grp:'G2', cls:'2I', active:26, placed:25, hours:1.06},
+    {grade:'Grade 2', grp:'G2', cls:'2J', active:27, placed:24, hours:1.34},
+    {grade:'Grade 2', grp:'G2', cls:'2K', active:27, placed:25, hours:1.01},
+    // ── Grade 3 — 10 classrooms ──────────────────────────────
+    {grade:'Grade 3', grp:'G3', cls:'3A', active:25, placed:24, hours:1.25},
+    {grade:'Grade 3', grp:'G3', cls:'3B', active:23, placed:22, hours:1.29},
+    {grade:'Grade 3', grp:'G3', cls:'3C', active:26, placed:25, hours:1.94},
+    {grade:'Grade 3', grp:'G3', cls:'3D', active:25, placed:24, hours:1.46},
+    {grade:'Grade 3', grp:'G3', cls:'3E', active:25, placed:25, hours:5.94},
+    {grade:'Grade 3', grp:'G3', cls:'3F', active:24, placed:21, hours:1.66},
+    {grade:'Grade 3', grp:'G3', cls:'3G', active:23, placed:23, hours:1.85},
+    {grade:'Grade 3', grp:'G3', cls:'3H', active:24, placed:24, hours:1.94},
+    {grade:'Grade 3', grp:'G3', cls:'3I', active:26, placed:26, hours:1.44},
+    {grade:'Grade 3', grp:'G3', cls:'3J', active:24, placed:23, hours:1.52},
+];
+
+// ════════════════════════════════════════════════════════════
+//  WEEKLY TREND DATA — sourced from Omni User Group Summary Daily, Mar 26 2026
+//  UAE - ENS - MBZ · My Math Academy & My Reading Academy
+// ════════════════════════════════════════════════════════════
+const WEEKLY_DATA = [
+    {week:'2025-11-24', label:'Nov 24', mmaActive:1,   mmaPlaced:0,   mraActive:1,   mraPlaced:0},
+    {week:'2026-01-05', label:'Jan 5',  mmaActive:37,  mmaPlaced:3,   mraActive:16,  mraPlaced:0},
+    {week:'2026-01-12', label:'Jan 12', mmaActive:747, mmaPlaced:195, mraActive:554, mraPlaced:120},
+    {week:'2026-01-19', label:'Jan 19', mmaActive:977, mmaPlaced:550, mraActive:924, mraPlaced:487},
+    {week:'2026-01-26', label:'Jan 26', mmaActive:760, mmaPlaced:556, mraActive:815, mraPlaced:507},
+    {week:'2026-02-02', label:'Feb 2',  mmaActive:547, mmaPlaced:434, mraActive:611, mraPlaced:417},
+    {week:'2026-02-09', label:'Feb 9',  mmaActive:441, mmaPlaced:370, mraActive:418, mraPlaced:306},
+    {week:'2026-02-16', label:'Feb 16', mmaActive:701, mmaPlaced:494, mraActive:632, mraPlaced:437},
+    {week:'2026-02-23', label:'Feb 23', mmaActive:622, mmaPlaced:477, mraActive:665, mraPlaced:502},
+    {week:'2026-03-02', label:'Mar 2',  mmaActive:67,  mmaPlaced:63,  mraActive:53,  mraPlaced:51},
+    {week:'2026-03-09', label:'Mar 9',  mmaActive:4,   mmaPlaced:4,   mraActive:4,   mraPlaced:4},
+    {week:'2026-03-16', label:'Mar 16', mmaActive:12,  mmaPlaced:10,  mraActive:15,  mraPlaced:13},
+    {week:'2026-03-23', label:'Mar 23', mmaActive:174, mmaPlaced:159, mraActive:169, mraPlaced:140},
+];
+
+function renderTrendsChart(from, to) {
+    const rows = WEEKLY_DATA.filter(r => r.week >= from && r.week <= to);
+    const ctx  = document.getElementById('trendsChart');
+    if (!ctx) return;
+    if (charts.trends) charts.trends.destroy();
+    charts.trends = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: rows.map(r => r.label),
+            datasets: [
+                { label:'MMA Active',  data: rows.map(r=>r.mmaActive),  borderColor:'#4F46E5', backgroundColor:'rgba(79,70,229,0.08)', tension:0.3, pointRadius:4, borderWidth:2 },
+                { label:'MMA Placed',  data: rows.map(r=>r.mmaPlaced),  borderColor:'#4F46E5', backgroundColor:'transparent',          tension:0.3, pointRadius:4, borderWidth:2, borderDash:[5,4] },
+                { label:'MRA Active',  data: rows.map(r=>r.mraActive),  borderColor:'#1EA6F9', backgroundColor:'rgba(30,166,249,0.08)',tension:0.3, pointRadius:4, borderWidth:2 },
+                { label:'MRA Placed',  data: rows.map(r=>r.mraPlaced),  borderColor:'#1EA6F9', backgroundColor:'transparent',          tension:0.3, pointRadius:4, borderWidth:2, borderDash:[5,4] },
+            ]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            interaction: { mode:'index', intersect:false },
+            plugins: {
+                legend: { position:'top', labels:{ font:{ size:11, family:'inherit' }, boxWidth:14 } },
+                tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString()}` } }
+            },
+            scales: {
+                x: { grid:{ color:'rgba(0,0,0,0.04)' }, ticks:{ font:{ size:11, family:'inherit' } } },
+                y: { grid:{ color:'rgba(0,0,0,0.04)' }, ticks:{ font:{ size:11, family:'inherit' }, callback: v => v.toLocaleString() }, beginAtZero:true }
+            }
+        }
+    });
+}
+
+function fmtDate(iso) {
+    if (!iso) return '—';
+    const [y,m,d] = iso.split('-');
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${months[+m-1]} ${+d}, ${y}`;
+}
+
+function updateDateRangeLabels(from, to) {
+    const label = `${fmtDate(from)} → ${fmtDate(to)}`;
+    const el = document.getElementById('drLabel');
+    if (el) el.textContent = label;
+}
+
+function setTrendPreset(preset, btn) {
+    document.querySelectorAll('#presetAll,#preset8w,#preset4w').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const allDates = WEEKLY_DATA.map(r => r.week);
+    const last = allDates[allDates.length - 1];
+    let from = allDates[0];
+    if (preset === '8w') { const d = new Date(last); d.setDate(d.getDate()-56); from = d.toISOString().slice(0,10); }
+    if (preset === '4w') { const d = new Date(last); d.setDate(d.getDate()-28); from = d.toISOString().slice(0,10); }
+    document.getElementById('trendFrom').value = from;
+    document.getElementById('trendTo').value   = last;
+    currentDateRange = { from, to: last };
+    updateDateRangeLabels(from, last);
+    renderTrendsChart(from, last);
+    applyFilters();
+    updateSnapshotNotices();
+}
+
+function applyCustomRange() {
+    document.querySelectorAll('#presetAll,#preset8w,#preset4w').forEach(b => b.classList.remove('active'));
+    const from = document.getElementById('trendFrom').value;
+    const to   = document.getElementById('trendTo').value;
+    if (from && to && from <= to) {
+        currentDateRange = { from, to };
+        updateDateRangeLabels(from, to);
+        renderTrendsChart(from, to);
+        applyFilters();
+        updateSnapshotNotices();
+    }
+}
+
+// ════════════════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════════════════
+const state = { sortStates: {} };
+let charts = {};
+let currentDateRange = { from: WEEKLY_DATA[0].week, to: WEEKLY_DATA[WEEKLY_DATA.length - 1].week };
+
+// ════════════════════════════════════════════════════════════
+//  DATE-RANGE HELPERS
+// ════════════════════════════════════════════════════════════
+function getDateRangeStats(from, to) {
+    const rows = WEEKLY_DATA.filter(r => r.week >= from && r.week <= to);
+    if (!rows.length) return null;
+    return {
+        mmaMaxActive:  Math.max(...rows.map(r => r.mmaActive)),
+        mmaPeakPlaced: Math.max(...rows.map(r => r.mmaPlaced)),
+        mraMaxActive:  Math.max(...rows.map(r => r.mraActive)),
+        mraPeakPlaced: Math.max(...rows.map(r => r.mraPlaced)),
+        weeks: rows.length
+    };
+}
+
+function getDateAdjustedSchools() {
+    const { from, to } = currentDateRange;
+    const isFullRange = from <= WEEKLY_DATA[0].week && to >= WEEKLY_DATA[WEEKLY_DATA.length - 1].week;
+    if (isFullRange) return SCHOOLS;
+    const stats = getDateRangeStats(from, to);
+    if (!stats) return SCHOOLS;
+    return SCHOOLS.map(s => ({
+        ...s,
+        active:      s.product === 'My Math Academy' ? stats.mmaMaxActive  : stats.mraMaxActive,
+        placed:      s.product === 'My Math Academy' ? stats.mmaPeakPlaced : stats.mraPeakPlaced,
+        totalSkills: s.product === 'My Math Academy' ? stats.mmaPeakPlaced * s.avgSkills : stats.mraPeakPlaced * s.avgSkills
+    }));
+}
+
+function updateSnapshotNotices() {
+    const { from, to } = currentDateRange;
+    const isFullRange = from <= WEEKLY_DATA[0].week && to >= WEEKLY_DATA[WEEKLY_DATA.length - 1].week;
+    const notice = document.getElementById('rangeNote');
+    if (notice) notice.style.display = isFullRange ? 'none' : 'inline';
+    const clsNote = document.getElementById('clsRangeNote');
+    if (clsNote) clsNote.style.display = isFullRange ? 'none' : 'flex';
+    const gradeNote = document.getElementById('gradeRangeNote');
+    if (gradeNote) gradeNote.style.display = isFullRange ? 'none' : 'flex';
+}
+
+// ════════════════════════════════════════════════════════════
+//  CASCADING FILTER POPULATION
+// ════════════════════════════════════════════════════════════
+
+function unique(arr) { return [...new Set(arr)].sort(); }
+
+function setOptions(selectId, values, allLabel) {
+    const sel = document.getElementById(selectId);
+    const prev = sel.value;
+    sel.innerHTML = `<option value="all">${allLabel}</option>`;
+    values.forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v; opt.textContent = v;
+        if (v === prev) opt.selected = true;
+        sel.appendChild(opt);
+    });
+    // If previous value no longer valid, reset to 'all'
+    if (!values.includes(sel.value) && sel.value !== 'all') sel.value = 'all';
+}
+
+function populateOrgFilter() {
+    setOptions('fOrg', unique(SCHOOLS.map(s => s.org)), 'All Organizations');
+}
+
+function populateDistrictFilter() {
+    const org = document.getElementById('fOrg').value;
+    const districts = unique(SCHOOLS.filter(s => org === 'all' || s.org === org).map(s => s.district));
+    setOptions('fDistrict', districts, 'All Districts');
+}
+
+function populateSchoolFilter() {
+    const org      = document.getElementById('fOrg').value;
+    const district = document.getElementById('fDistrict').value;
+    const schools  = unique(
+        SCHOOLS
+            .filter(s => (org === 'all' || s.org === org) && (district === 'all' || s.district === district))
+            .map(s => s.school)
+    );
+    setOptions('fSchool', schools, 'All Schools');
+}
+
+function onOrgChange() {
+    populateDistrictFilter();
+    populateSchoolFilter();
+    applyFilters();
+}
+
+function onDistrictChange() {
+    populateSchoolFilter();
+    applyFilters();
+}
+
+function resetFilters() {
+    document.getElementById('fOrg').value      = 'all';
+    populateDistrictFilter();
+    populateSchoolFilter();
+    document.getElementById('fProduct').value  = 'all';
+    document.getElementById('fCriteria').value = 'totalSkills';
+    applyFilters();
+}
+
+// ════════════════════════════════════════════════════════════
+//  HELPERS
+// ════════════════════════════════════════════════════════════
+function fmt(n) {
+    if (n >= 1000) return (n/1000).toFixed(1).replace(/\.0$/,'') + 'K';
+    return n.toLocaleString();
+}
+
+function productTag(p) {
+    if (p === 'My Math Academy')    return `<span class="prod-tag prod-math">📐 My Math Academy</span>`;
+    if (p === 'My Reading Academy') return `<span class="prod-tag prod-reading">📖 My Reading Academy</span>`;
+    return `<span class="prod-tag">${p}</span>`;
+}
+
+function growthBadge(g) {
+    const cls = g >= 8 ? 'growth-high' : g >= 5 ? 'growth-mid' : g >= 3 ? 'growth-low' : 'growth-min';
+    return `<span class="growth-badge ${cls}">${g}% ↑</span>`;
+}
+
+function utilBadge(active, placed) {
+    const pct = Math.round((placed / active) * 100);
+    const cls = pct >= 85 ? 'util-high' : pct >= 70 ? 'util-mid' : 'util-low';
+    return `<span class="util-badge ${cls}">${pct}% placed</span>`;
+}
+
+// ════════════════════════════════════════════════════════════
+//  FILTER + SCORE
+// ════════════════════════════════════════════════════════════
+function getFiltered() {
+    const org      = document.getElementById('fOrg').value;
+    const district = document.getElementById('fDistrict').value;
+    const school   = document.getElementById('fSchool').value;
+    const p        = document.getElementById('fProduct').value;
+    return getDateAdjustedSchools().filter(s =>
+        (org      === 'all' || s.org      === org)      &&
+        (district === 'all' || s.district === district) &&
+        (school   === 'all' || s.school   === school)   &&
+        (p        === 'all' || s.product  === p)
+    );
+}
+
+function getScore(s, criteria) {
+    switch (criteria) {
+        case 'avgSkills': return s.avgSkills;
+        case 'avgHours':  return s.avgHours;
+        case 'growth':    return s.growth;
+        default:          return s.totalSkills; // totalSkills
+    }
+}
+
+function applyFilters() {
+    updateKPIs();
+    updateCharts();
+    renderSchoolTable();
+}
+
+// ════════════════════════════════════════════════════════════
+//  KPIs
+// ════════════════════════════════════════════════════════════
+function updateKPIs() {
+    const data = getFiltered();
+    const totalSkills = data.reduce((s,r) => s + r.totalSkills, 0);
+    const programs = [...new Set(data.map(r => r.product))];
+    const wtdGrowth = data.length ? (data.reduce((s,r) => s + r.growth * r.placed, 0) / data.reduce((s,r) => s + r.placed, 0)) : 0;
+
+    document.getElementById('kpiSchools').textContent    = programs.length;
+    document.getElementById('kpiSchoolsSub').textContent = `My Math Academy + My Reading Academy · ENS-MBZ`;
+    document.getElementById('kpiSkills').textContent     = fmt(totalSkills);
+    document.getElementById('kpiSkillsSub').textContent  = 'placed students × avg skills completed';
+    document.getElementById('kpiGrowth').textContent     = wtdGrowth.toFixed(1) + '%';
+    document.getElementById('kpiGrowthSub').textContent  = 'Weighted avg growth, placed students';
+}
+
+// ════════════════════════════════════════════════════════════
+//  CHARTS
+// ════════════════════════════════════════════════════════════
+const CHART_COLORS_MATH    = '#0341EC';
+const CHART_COLORS_READING = '#1EA6F9';
+
+function initCharts() {
+    buildSkillsChart();
+    buildHoursChart();
+}
+
+function buildSkillsChart() {
+    const data = getFiltered().sort((a,b) => b.totalSkills - a.totalSkills).slice(0,12);
+    const ctx = document.getElementById('skillsChart').getContext('2d');
+    if (charts.skills) charts.skills.destroy();
+    charts.skills = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: data.map(s => s.school.replace(' Elementary School','').replace(' Elementary','')),
+            datasets: [{
+                label: 'Total Skills Completed',
+                data: data.map(s => s.totalSkills),
+                backgroundColor: data.map(s => s.product === 'My Math Academy' ? CHART_COLORS_MATH + 'BB' : CHART_COLORS_READING + 'BB'),
+                borderColor:     data.map(s => s.product === 'My Math Academy' ? CHART_COLORS_MATH : CHART_COLORS_READING),
+                borderWidth: 1,
+                borderRadius: 4,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: ctx => `${ctx.dataset.data[ctx.dataIndex].toLocaleString()} skills` } }
+            },
+            scales: {
+                x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+                y: { beginAtZero: true, ticks: { font: { size: 11 }, callback: v => fmt(v) } }
+            }
+        }
+    });
+}
+
+function buildHoursChart() {
+    const data = getFiltered().sort((a,b) => b.avgHours - a.avgHours).slice(0,12);
+    const ctx = document.getElementById('hoursChart').getContext('2d');
+    if (charts.hours) charts.hours.destroy();
+    charts.hours = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: data.map(s => s.school.replace(' Elementary School','').replace(' Elementary','')),
+            datasets: [{
+                label: 'Avg Usage Hours',
+                data: data.map(s => s.avgHours),
+                backgroundColor: '#FFD00088',
+                borderColor: '#C8A800',
+                borderWidth: 1,
+                borderRadius: 4,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+                y: { beginAtZero: true, ticks: { font: { size: 11 }, callback: v => v + ' hrs' } }
+            }
+        }
+    });
+}
+
+function updateCharts() { buildSkillsChart(); buildHoursChart(); }
+
+// ════════════════════════════════════════════════════════════
+//  SCHOOL TABLE
+// ════════════════════════════════════════════════════════════
+function renderSchoolTable() {
+    const criteria = document.getElementById('fCriteria').value;
+    const ranked = getFiltered()
+        .map(s => ({ ...s, score: getScore(s, criteria) }))
+        .sort((a,b) => b.score - a.score)
+        .map((s,i) => ({ ...s, rank: i+1 }));
+
+    const maxScore = Math.max(...ranked.map(s => s.score), 1);
+    const tbody = document.getElementById('schoolTableBody');
+
+    if (ranked.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:32px;color:var(--muted)">No schools match the current filters.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = ranked.map(s => {
+        const rankCls = s.rank <= 3 ? `rank-${s.rank}` : 'rank-other';
+        const pct = Math.round((s.score / maxScore) * 100);
+        const scoreLabel = criteria === 'totalSkills' ? s.totalSkills.toLocaleString()
+                         : criteria === 'avgSkills'   ? s.avgSkills + ' skills'
+                         : criteria === 'avgHours'    ? s.avgHours + ' hrs'
+                         : s.growth + '%';
+        return `<tr class="${rankCls}">
+            <td><span class="rank-badge">${s.rank}</span></td>
+            <td><strong>${s.school}</strong></td>
+            <td>${productTag(s.product)}</td>
+            <td>${s.active.toLocaleString()}</td>
+            <td>${s.placed.toLocaleString()} ${utilBadge(s.active, s.placed)}</td>
+            <td>${s.avgHours} hrs</td>
+            <td><strong>${s.avgSkills}</strong></td>
+            <td>${growthBadge(s.growth)}</td>
+            <td>
+                <div class="prog-wrap">
+                    <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+                    <span style="font-size:12px;font-weight:700;color:var(--navy);min-width:70px;text-align:right">${scoreLabel}</span>
+                </div>
+            </td>
+        </tr>`;
+    }).join('');
+}
+
+// ════════════════════════════════════════════════════════════
+//  TABLE SORT
+// ════════════════════════════════════════════════════════════
+function sortTbl(tableId, field, initAsc) {
+    const key = tableId+'_'+field;
+    state.sortStates[key] = (state.sortStates[key] === undefined) ? initAsc : !state.sortStates[key];
+    const asc = state.sortStates[key];
+
+    const table = document.getElementById(tableId);
+    table.querySelectorAll('thead th').forEach(th => {
+        th.classList.remove('sort-asc','sort-desc');
+        if (th.dataset.field === field) th.classList.add(asc ? 'sort-asc' : 'sort-desc');
+    });
+
+    const tbody = document.getElementById('schoolTableBody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const headers = Array.from(table.querySelectorAll('thead th'));
+    const colIdx = headers.findIndex(th => th.dataset.field === field);
+
+    rows.sort((a,b) => {
+        const av = a.cells[colIdx]?.textContent.trim() || '';
+        const bv = b.cells[colIdx]?.textContent.trim() || '';
+        const an = parseFloat(av.replace(/[^0-9.-]/g,''));
+        const bn = parseFloat(bv.replace(/[^0-9.-]/g,''));
+        const isNum = !isNaN(an) && !isNaN(bn);
+        const cmp = isNum ? an - bn : av.localeCompare(bv);
+        return asc ? cmp : -cmp;
+    });
+    rows.forEach(r => tbody.appendChild(r));
+}
+
+// ════════════════════════════════════════════════════════════
+//  CLASSROOM BREAKDOWN
+// ════════════════════════════════════════════════════════════
+function renderClassroomTable(filter) {
+    const rows = filter === 'all' ? CLASSROOM_DATA : CLASSROOM_DATA.filter(r => r.grp === filter);
+    const tbody = document.getElementById('classroomTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = rows.map(r => {
+        const rate = Math.round(r.placed / r.active * 100);
+        const badgeClass = rate >= 95 ? 'growth-high' : rate >= 85 ? 'growth-mid' : rate >= 70 ? 'growth-low' : 'growth-min';
+        const hrs = r.hours != null ? r.hours.toFixed(2) : '—';
+        const totalHrs = r.hours != null ? (r.hours * r.placed).toFixed(1) : '—';
+        return `<tr>
+            <td style="color:var(--muted);font-size:12px">${r.grade}</td>
+            <td><strong>${r.cls}</strong></td>
+            <td>${r.active}</td>
+            <td>${r.placed}</td>
+            <td style="font-variant-numeric:tabular-nums">${hrs}</td>
+            <td style="font-variant-numeric:tabular-nums;font-weight:600;color:var(--navy)">${totalHrs}</td>
+            <td>
+                <div class="prog-wrap">
+                    <div class="prog-bar"><div class="prog-fill" style="width:${rate}%"></div></div>
+                    <span class="growth-badge ${badgeClass}" style="margin-left:2px;font-size:11px">${rate}%</span>
+                </div>
+            </td>
+        </tr>`;
+    }).join('');
+}
+
+function filterCls(filter, btn) {
+    document.querySelectorAll('.cls-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderClassroomTable(filter);
+}
+
+// ════════════════════════════════════════════════════════════
+//  TABS
+// ════════════════════════════════════════════════════════════
+function switchTab(id, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+}
+
+// ════════════════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════════════════
+// Set date picker bounds dynamically from actual data — no hardcoded dates
+(function() {
+    const first = WEEKLY_DATA[0].week;
+    const last  = WEEKLY_DATA[WEEKLY_DATA.length - 1].week;
+    const fromEl = document.getElementById('trendFrom');
+    const toEl   = document.getElementById('trendTo');
+    if (fromEl) { fromEl.min = first; fromEl.value = first; }
+    if (toEl)   { toEl.min   = first; toEl.value   = last;  }
+    // Update the drLabel to match
+    updateDateRangeLabels(first, last);
+})();
+populateOrgFilter();
+populateDistrictFilter();
+populateSchoolFilter();
+updateKPIs();
+initCharts();
+renderSchoolTable();
+renderClassroomTable('all');
+renderTrendsChart(WEEKLY_DATA[0].week, WEEKLY_DATA[WEEKLY_DATA.length-1].week);
+updateSnapshotNotices();
+// Stamp last-updated time (written by the hourly refresh task)
+(function(){
+    const el = document.getElementById('lastUpdated');
+    if (el) {
+        const d = new Date();
+        const fmt = d.toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit',hour12:true});
+        el.textContent = 'Last updated: ' + fmt + ' · PROPRIETARY & CONFIDENTIAL';
+    }
+})();
+</script>
+</body>
+</html>
