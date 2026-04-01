@@ -271,8 +271,8 @@
         </div>
         <div class="card">
             <div class="card-head">
-                <h3>⏱️ Avg Usage Hours After Placement</h3>
-                <span style="font-size:11px;color:var(--muted)">Per student, per school</span>
+                <h3>⏱️ Avg Usage Hours After Placement by Program</h3>
+                <span style="font-size:11px;color:var(--muted)">Per placed student</span>
             </div>
             <div class="card-body">
                 <div class="chart-wrap"><canvas id="hoursChart"></canvas></div>
@@ -1489,12 +1489,12 @@ function buildHoursChart() {
     charts.hours = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: data.map(s => s.school.replace(' Elementary School','').replace(' Elementary','')),
+            labels: data.map(s => s.product),
             datasets: [{
                 label: 'Avg Usage Hours',
                 data: data.map(s => s.avgHours),
-                backgroundColor: '#FFD00088',
-                borderColor: '#C8A800',
+                backgroundColor: data.map(s => s.product === 'My Math Academy' ? CHART_COLORS_MATH + 'BB' : CHART_COLORS_READING + 'BB'),
+                borderColor:     data.map(s => s.product === 'My Math Academy' ? CHART_COLORS_MATH : CHART_COLORS_READING),
                 borderWidth: 1,
                 borderRadius: 4,
             }]
