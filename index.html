@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Age of Learning — Learning Leaderboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
+    <title>Age of Learning â Learning Leaderboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js" crossorigin="anonymous"></script>
     <style>
         :root {
             --navy:       #003082;
@@ -25,7 +25,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Calibri, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
 
-        /* ─── HEADER ─── */
+        /* âââ HEADER âââ */
         .header { background: linear-gradient(135deg, var(--navy) 0%, #0a2a74 55%, var(--royal) 100%); color: white; margin-bottom: var(--gap); box-shadow: 0 4px 20px rgba(3,65,236,0.22); }
         .header-top { display: flex; align-items: center; justify-content: space-between; padding: 18px 28px 14px; gap: 16px; flex-wrap: wrap; }
         .header-brand { display: flex; align-items: center; gap: 14px; }
@@ -38,7 +38,7 @@
         .comp-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.55); }
         .comp-name { font-size: 14px; font-weight: 700; color: var(--gold); }
 
-        /* ─── FILTERS ─── */
+        /* âââ FILTERS âââ */
         .filters-bar { background: rgba(0,0,0,0.20); border-top: 1px solid rgba(255,255,255,0.1); padding: 10px 28px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
         .fg { display: flex; align-items: center; gap: 7px; }
         .fg label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.7px; color: rgba(255,255,255,0.55); white-space: nowrap; }
@@ -46,17 +46,17 @@
         .fg select option { background: var(--navy); color: white; }
         .sep { width: 1px; height: 26px; background: rgba(255,255,255,0.15); }
 
-        /* ─── DATA SOURCE STRIP ─── */
+        /* âââ DATA SOURCE STRIP âââ */
         .source-strip { background: var(--navy); padding: 7px 28px; font-size: 11px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; color: rgba(255,255,255,0.7); }
         .source-tag { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 1px 8px; font-size: 10px; color: rgba(255,255,255,0.6); }
         .source-live { color: var(--gold); font-weight: 700; display: flex; align-items: center; gap: 5px; }
         .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: pulse 2s infinite; }
         @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
-        /* ─── MAIN ─── */
+        /* âââ MAIN âââ */
         .wrap { max-width: 1440px; margin: 0 auto; padding: 0 var(--gap) var(--gap); }
 
-        /* ─── KPI ROW ─── */
+        /* âââ KPI ROW âââ */
         .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--gap); margin-bottom: var(--gap); }
         .kpi-card { background: var(--card); border-radius: var(--radius); padding: 18px 20px 16px; box-shadow: 0 1px 4px rgba(3,65,236,0.07); border-top: 3px solid var(--royal); }
         .kpi-card:nth-child(2) { border-top-color: var(--blue-light); }
@@ -68,11 +68,11 @@
         .kpi-value { font-size: 30px; font-weight: 700; color: var(--navy); line-height: 1; }
         .kpi-sub { font-size: 11px; color: var(--muted); margin-top: 5px; }
 
-        /* ─── GRID ─── */
+        /* âââ GRID âââ */
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); margin-bottom: var(--gap); }
         @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
 
-        /* ─── CARDS ─── */
+        /* âââ CARDS âââ */
         .card { background: var(--card); border-radius: var(--radius); box-shadow: 0 1px 4px rgba(3,65,236,0.07); overflow: hidden; }
         .card-full { grid-column: 1 / -1; }
         .card-head { padding: 13px 20px 11px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
@@ -80,12 +80,12 @@
         .card-body { padding: 16px 20px; }
         .chart-wrap { height: 270px; position: relative; }
 
-        /* ─── PRODUCT TAG ─── */
+        /* âââ PRODUCT TAG âââ */
         .prod-tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; white-space: nowrap; }
         .prod-math    { background: #E8EFFF; color: var(--royal); }
         .prod-reading { background: #E0F8FF; color: #0077AA; }
 
-        /* ─── TABS ─── */
+        /* âââ TABS âââ */
         .tab-bar { display: flex; border-bottom: 2px solid var(--border); }
         .tab-btn { padding: 13px 22px; font-size: 13px; font-weight: 600; color: var(--muted); background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -2px; cursor: pointer; font-family: inherit; display: flex; align-items: center; gap: 6px; transition: all 0.15s; }
         .tab-btn:hover { color: var(--royal); }
@@ -93,12 +93,12 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* ─── LEADERBOARD TABLE ─── */
+        /* âââ LEADERBOARD TABLE âââ */
         .lb-table { width: 100%; border-collapse: collapse; font-size: 13px; }
         .lb-table thead th { padding: 9px 12px; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); border-bottom: 2px solid var(--border); white-space: nowrap; cursor: pointer; user-select: none; text-align: left; }
         .lb-table thead th:hover { color: var(--royal); }
-        .lb-table thead th.sort-asc::after  { content: ' ▲'; font-size: 9px; color: var(--royal); }
-        .lb-table thead th.sort-desc::after { content: ' ▼'; font-size: 9px; color: var(--royal); }
+        .lb-table thead th.sort-asc::after  { content: ' â²'; font-size: 9px; color: var(--royal); }
+        .lb-table thead th.sort-desc::after { content: ' â¼'; font-size: 9px; color: var(--royal); }
         .lb-table tbody tr { border-bottom: 1px solid #F0F5FE; transition: background 0.1s; }
         .lb-table tbody tr:last-child { border-bottom: none; }
         .lb-table tbody tr:hover { background: #F5F9FF; }
@@ -107,45 +107,44 @@
         .lb-table tbody tr.rank-3 { background: #FFF4F0; }
         .lb-table tbody tr.rank-1:hover { background: #FFF4AA; }
         .lb-table tbody tr.rank-2:hover { background: #F0F0F0; }
-        .lb-table tbody tr.rank-3:hover { background: #FFE5DA; }
+        .lb-table tbody tr.rank-3:hover { background: #FFE5DA0}
         .lb-table tbody td { padding: 10px 12px; }
 
-        /* ─── RANK BADGE ─── */
-        .rank-badge { display: inline-flex; align-items: center; justify-content: center; width: 27px; height: 27px; border-radius: 50%; font-weight: 800; font-size: 12px; }
+        /* âââ RANK ABADGE { display: inline-flex; align-items: center; justify-content: center; width: 27px; height: 27px; border-radius: 50%; font-weight: 800; font-size: 12px; }
         .rank-1 .rank-badge { background: #FFD000; color: #7A5500; }
         .rank-2 .rank-badge { background: #C0C0C0; color: #444; }
         .rank-3 .rank-badge { background: #CD7F32; color: white; }
         .rank-other .rank-badge { background: #E8EFFF; color: var(--muted); }
 
-        /* ─── GROWTH BADGE ─── */
+        /* âââ GROWTH BADGE âââ */
         .growth-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; }
         .growth-high   { background: #D6F5E5; color: #1AA85C; }
         .growth-mid    { background: #E8EFFF; color: var(--royal); }
         .growth-low    { background: #FFF3CC; color: #AA6600; }
         .growth-min    { background: #FFE0E0; color: var(--red); }
 
-        /* ─── PROGRESS BAR ─── */
+        /* âââ PROGRESS BAR âââ */
         .prog-wrap { display: flex; align-items: center; gap: 8px; }
         .prog-bar  { flex: 1; height: 6px; background: #E8EFFF; border-radius: 3px; overflow: hidden; min-width: 50px; }
         .prog-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--royal), var(--blue-light)); }
         .prog-fill-gold { background: linear-gradient(90deg, #C8A800, var(--gold)); }
 
-        /* ─── GRADE TABLE (2nd tab) ─── */
+        /* âââ GRADE TABLE (2nd tab) âââ */
         .grade-section { padding: 16px 20px; }
         .grade-section h4 { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 12px; display: flex; align-items: center; gap: 7px; }
 
-        /* ─── CLASSROOM FILTER BUTTONS ─── */
+        /* âââ CLASSROOM FILTER BUTTONS âââ */
         .cls-btn { padding: 4px 12px; border: 1px solid var(--border); border-radius: 20px; background: white; color: var(--muted); font-size: 11px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
         .cls-btn:hover { border-color: var(--royal); color: var(--royal); }
         .cls-btn.active { background: var(--royal); color: white; border-color: var(--royal); }
 
-        /* ─── UTIL BADGE ─── */
+        /* âââ UTIL BADGE âââ */
         .util-badge { font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 10px; }
         .util-high { background: #D6F5E5; color: #1AA85C; }
         .util-mid  { background: #FFF3CC; color: #AA6600; }
         .util-low  { background: #FFE0E0; color: var(--red); }
 
-        /* ─── FOOTER ─── */
+        /* âââ FOOTER âââ */
         .footer { text-align: center; padding: 14px; font-size: 11px; color: var(--muted); }
 
         @media (max-width: 640px) { .kpi-row { grid-template-columns: 1fr 1fr; } .header-top { flex-direction: column; align-items: flex-start; } }
@@ -153,7 +152,7 @@
 </head>
 <body>
 
-<!-- ══════════ HEADER ══════════ -->
+<!-- ââââââââââ HEADER ââââââââââ -->
 <div class="header">
     <div class="header-top">
         <div class="header-brand">
@@ -163,12 +162,12 @@
             </div>
             <div class="header-title">
                 <h1>Learning Leaderboard</h1>
-                <p>School Competition Tracker · Age of Learning</p>
+                <p>School Competition Tracker Â· Age of Learning</p>
             </div>
         </div>
         <div class="comp-badge">
             <div class="comp-label">Competition</div>
-            <div class="comp-name">ENS – Mohamed Bin Zayed</div>
+            <div class="comp-name">ENS â Mohamed Bin Zayed</div>
         </div>
     </div>
 
@@ -209,51 +208,51 @@
                 <option value="growth">Avg Growth %</option>
             </select>
         </div>
-        <button class="btn-reset" onclick="resetFilters()" style="padding:5px 14px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.22);border-radius:5px;color:white;font-size:12px;cursor:pointer;font-family:inherit">↺ Reset</button>
+        <button class="btn-reset" onclick="resetFilters()" style="padding:5px 14px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.22);border-radius:5px;color:white;font-size:12px;cursor:pointer;font-family:inherit">âº Reset</button>
     </div>
 
     <div class="source-strip">
         <span class="source-live"><span class="live-dot"></span>Live from Omni</span>
         <span class="source-tag">Customer Success Coffee Report</span>
-        <span class="source-tag">Term: Aug 2025 – Present</span>
-        <span class="source-tag">ENS – Mohamed Bin Zayed</span>
+        <span class="source-tag">Term: Aug 2025 â Present</span>
+        <span class="source-tag">ENS â Mohamed Bin Zayed</span>
         <span style="margin-left:auto;color:rgba(255,255,255,0.35);font-size:10px" id="lastUpdated">PROPRIETARY &amp; CONFIDENTIAL</span>
     </div>
 </div>
 
-<!-- ══════════ MAIN ══════════ -->
+<!-- ââââââââââ MAIN ââââââââââ -->
 <div class="wrap">
 
     <!-- KPI ROW -->
     <div class="kpi-row">
         <div class="kpi-card">
-            <div class="kpi-emoji">🏫</div>
+            <div class="kpi-emoji">ð«</div>
             <div class="kpi-label">Active Programs</div>
-            <div class="kpi-value" id="kpiSchools">—</div>
+            <div class="kpi-value" id="kpiSchools">â</div>
             <div class="kpi-sub" id="kpiSchoolsSub"></div>
         </div>
         <div class="kpi-card">
-            <div class="kpi-emoji">🎓</div>
+            <div class="kpi-emoji">ð</div>
             <div class="kpi-label">Active Students</div>
             <div class="kpi-value" id="kpiActive">1,418</div>
             <div class="kpi-sub" id="kpiActiveSub">of 1,446 licensed seats &nbsp;<span class="util-badge util-high">98% utilized</span></div>
         </div>
         <div class="kpi-card">
-            <div class="kpi-emoji">📍</div>
+            <div class="kpi-emoji">ð</div>
             <div class="kpi-label">Placed Students</div>
             <div class="kpi-value" id="kpiPlaced">1,238</div>
             <div class="kpi-sub" id="kpiPlacedSub">87% of active students placed</div>
         </div>
         <div class="kpi-card">
-            <div class="kpi-emoji">🧠</div>
+            <div class="kpi-emoji">ð§ </div>
             <div class="kpi-label">Total Skills Completed</div>
-            <div class="kpi-value" id="kpiSkills">—</div>
+            <div class="kpi-value" id="kpiSkills">â</div>
             <div class="kpi-sub" id="kpiSkillsSub"></div>
         </div>
         <div class="kpi-card">
-            <div class="kpi-emoji">📈</div>
+            <div class="kpi-emoji">ð</div>
             <div class="kpi-label">Avg Learning Growth</div>
-            <div class="kpi-value" id="kpiGrowth">—</div>
+            <div class="kpi-value" id="kpiGrowth">â</div>
             <div class="kpi-sub" id="kpiGrowthSub"></div>
         </div>
     </div>
@@ -262,8 +261,8 @@
     <div class="grid-2">
         <div class="card">
             <div class="card-head">
-                <h3>🧠 Total Skills Completed by Program</h3>
-                <span style="font-size:11px;color:var(--muted)">Placed students × avg skills</span>
+                <h3>ð§  Total Skills Completed by School</h3>
+                <span style="font-size:11px;color:var(--muted)">Placed students Ã avg skills</span>
             </div>
             <div class="card-body">
                 <div class="chart-wrap"><canvas id="skillsChart"></canvas></div>
@@ -271,8 +270,8 @@
         </div>
         <div class="card">
             <div class="card-head">
-                <h3>⏱️ Avg Usage Hours After Placement by Program</h3>
-                <span style="font-size:11px;color:var(--muted)">Per placed student</span>
+                <h3>â±ï¸ Avg Usage Hours After Placement</h3>
+                <span style="font-size:11px;color:var(--muted)">Per student, per school</span>
             </div>
             <div class="card-body">
                 <div class="chart-wrap"><canvas id="hoursChart"></canvas></div>
@@ -283,13 +282,13 @@
     <!-- LEADERBOARD TABS -->
     <div class="card card-full">
         <div class="tab-bar">
-            <button class="tab-btn active" onclick="switchTab('schoolLB', this)">🏫 School Leaderboard</button>
-            <button class="tab-btn" onclick="switchTab('gradeLB', this)">📊 Grade-Level Breakdown</button>
-            <button class="tab-btn" onclick="switchTab('classroomLB', this)">🏛️ Classroom Breakdown</button>
-            <button class="tab-btn" onclick="switchTab('trendsLB', this)">📈 Trends</button>
+            <button class="tab-btn active" onclick="switchTab('schoolLB', this)">ð« School Leaderboard</button>
+            <button class="tab-btn" onclick="switchTab('gradeLB', this)">ð Grade-Level Breakdown</button>
+            <button class="tab-btn" onclick="switchTab('classroomLB', this)">ðï¸ Classroom Breakdown</button>
+            <button class="tab-btn" onclick="switchTab('trendsLB', this)">ð Trends</button>
         </div>
 
-        <!-- ── GLOBAL DATE RANGE FILTER ─────────────────────────── -->
+        <!-- ââ GLOBAL DATE RANGE FILTER âââââââââââââââââââââââââââ -->
         <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:10px 20px;border-bottom:1px solid var(--border);background:var(--surface);">
             <span style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.04em;margin-right:2px">DATE RANGE</span>
             <button class="cls-btn active" id="presetAll" onclick="setTrendPreset('all',this)">All</button>
@@ -304,15 +303,15 @@
             <input type="date" id="trendTo"
                    style="font-size:12px;padding:3px 7px;border:1px solid var(--border);border-radius:6px;font-family:inherit;color:var(--text);background:white;"
                    onchange="applyCustomRange()">
-            <span style="font-size:11px;color:var(--muted);margin-left:6px">Showing: <strong id="drLabel">Nov 24, 2025 → Mar 23, 2026</strong></span>
-            <span id="rangeNote" style="display:none;font-size:11px;color:#7A5500;background:#FFF3CC;padding:2px 9px;border-radius:10px;font-weight:600;margin-left:6px">⚡ School Leaderboard &amp; KPIs reflect peak activity in this range</span>
+            <span style="font-size:11px;color:var(--muted);margin-left:6px">Showing: <strong id="drLabel">Nov 24, 2025 â Mar 23, 2026</strong></span>
+            <span id="rangeNote" style="display:none;font-size:11px;color:#7A5500;background:#FFF3CC;padding:2px 9px;border-radius:10px;font-weight:600;margin-left:6px">â¡ School Leaderboard &amp; KPIs reflect peak activity in this range</span>
         </div>
 
         <!-- SCHOOL LEADERBOARD -->
         <div id="schoolLB" class="tab-content active">
             <div class="card-body" style="padding-bottom:0">
                 <p style="font-size:12px;color:var(--muted);margin-bottom:10px">
-                    Programs ranked by the selected competition criteria. Data sourced from Omni's Growth by School report for UAE – ENS Mohamed Bin Zayed. Refreshes hourly.
+                    Programs ranked by the selected competition criteria. Data sourced from Omni's Growth by School report for UAE â ENS Mohamed Bin Zayed. Refreshes hourly.
                 </p>
             </div>
             <div style="overflow-x:auto;padding:0 20px 20px">
@@ -339,16 +338,16 @@
         <div id="gradeLB" class="tab-content">
             <div class="card-body" style="padding-bottom:0">
                 <p style="font-size:12px;color:var(--muted);margin-bottom:4px">
-                    Grade-level performance from Omni's Growth by App Hours report · UAE – ENS Mohamed Bin Zayed · Term Aug 2025 – Present · Updated Apr 1 2026.
+                    Grade-level performance from Omni's Growth by App Hours report Â· UAE â ENS Mohamed Bin Zayed Â· Term Aug 2025 â Present Â· Updated Mar 26 2026.
                 </p>
-                <div id="gradeRangeNote" style="display:none;align-items:center;gap:7px;background:#E8F4FD;border:1px solid #4DA3E8;border-radius:7px;padding:7px 12px;margin-bottom:6px;font-size:12px;color:#1A5276;">
-                    <span>📅</span>
-                    <span>Showing grade data <strong>filtered by selected date range</strong>. Placed counts and averages are aggregated from weekly data within the range.</span>
+                <div id="gradeRangeNote" style="display:none;align-items:center;gap:7px;background:#FFF3CC;border:1px solid #FFD000;border-radius:7px;padding:7px 12px;margin-bottom:6px;font-size:12px;color:#7A5500;">
+                    <span>ð</span>
+                    <span>This tab shows the <strong>full-term snapshot</strong> (Aug 2025 â Mar 2026). Grade-level breakdowns are not available per week â use the <strong>Trends tab</strong> to see weekly patterns.</span>
                 </div>
             </div>
 
             <div class="grade-section">
-                <h4>📐 My Math Academy — Grade Performance</h4>
+                <h4>ð My Math Academy â Grade Performance</h4>
                 <div style="overflow-x:auto">
                     <table class="lb-table">
                         <thead>
@@ -362,13 +361,84 @@
                                 <th>Est. Total Skills</th>
                             </tr>
                         </thead>
-                        <tbody id="gradeMmaBody"></tbody>
+                        <tbody>
+                            <tr>
+                                <td><strong>Pre-K</strong></td>
+                                <td>119</td>
+                                <td>0.6 hrs</td>
+                                <td><strong>3</strong></td>
+                                <td>13%</td>
+                                <td><span class="growth-badge growth-high">11% â</span></td>
+                                <td>
+                                    <div class="prog-wrap">
+                                        <div class="prog-bar"><div class="prog-fill" style="width:20%"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--navy)">357</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Kindergarten</strong></td>
+                                <td>200</td>
+                                <td>0.6 hrs</td>
+                                <td><strong>3</strong></td>
+                                <td>18%</td>
+                                <td><span class="growth-badge growth-mid">4% â</span></td>
+                                <td>
+                                    <div class="prog-wrap">
+                                        <div class="prog-bar"><div class="prog-fill" style="width:34%"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--navy)">600</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="rank-1">
+                                <td><strong>1st Grade</strong></td>
+                                <td>297</td>
+                                <td>1.5 hrs</td>
+                                <td><strong>6</strong></td>
+                                <td>29%</td>
+                                <td><span class="growth-badge growth-low">3% â</span></td>
+                                <td>
+                                    <div class="prog-wrap">
+                                        <div class="prog-bar"><div class="prog-fill" style="width:100%"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--navy)">1,782</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>2nd Grade</strong></td>
+                                <td>231</td>
+                                <td>1.2 hrs</td>
+                                <td><strong>3</strong></td>
+                                <td>26%</td>
+                                <td><span class="growth-badge growth-min">2% â</span></td>
+                                <td>
+                                    <div class="prog-wrap">
+                                        <div class="prog-bar"><div class="prog-fill" style="width:39%"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--navy)">693</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>3rd Grade</strong></td>
+                                <td>215</td>
+                                <td>1.9 hrs</td>
+                                <td><strong>5</strong></td>
+                                <td>31%</td>
+                                <td><span class="growth-badge growth-min">2% â</span></td>
+                                <td>
+                                    <div class="prog-wrap">
+                                        <div class="prog-bar"><div class="prog-fill" style="width:60%"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--navy)">1,075</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
 
             <div class="grade-section" style="border-top: 1px solid var(--border); margin-top: 4px;">
-                <h4>📖 My Reading Academy — Grade Performance</h4>
+                <h4>ð My Reading Academy â Grade Performance</h4>
                 <div style="overflow-x:auto">
                     <table class="lb-table">
                         <thead>
@@ -382,27 +452,97 @@
                                 <th>Est. Total Skills</th>
                             </tr>
                         </thead>
-                        <tbody id="gradeMraBody"></tbody>
+                        <tbody>
+                            <tr>
+                                <td><strong>Pre-K</strong></td>
+                                <td>160</td>
+                                <td>0.7 hrs</td>
+                                <td><strong>2</strong></td>
+                                <td>15%</td>
+                                <td><span class="growth-badge growth-low">3% â</span></td>
+                                <td>
+                                    <div class="prog-wrap">
+                                        <div class="prog-bar"><div class="prog-fill" style="width:30%"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--navy)">320</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Kindergarten</strong></td>
+                                <td>119</td>
+                                <td>0.6 hrs</td>
+                                <td><strong>2</strong></td>
+                                <td>13%</td>
+                                <td><span class="growth-badge growth-min">1% â</span></td>
+                                <td>
+                                    <div class="prog-wrap">
+                                        <div class="prog-bar"><div class="prog-fill" style="width:22%"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--navy)">238</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>1st Grade</strong></td>
+                                <td>291</td>
+                                <td>1.2 hrs</td>
+                                <td><strong>3</strong></td>
+                                <td>22%</td>
+                                <td><span class="growth-badge growth-min">1% â</span></td>
+                                <td>
+                                    <div class="prog-wrap">
+                                        <div class="prog-bar"><div class="prog-fill" style="width:81%"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--navy)">873</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>2nd Grade</strong></td>
+                                <td>216</td>
+                                <td>1.0 hrs</td>
+                                <td><strong>2</strong></td>
+                                <td>36%</td>
+                                <td><span class="growth-badge growth-min">1% â</span></td>
+                                <td>
+                                    <div class="prog-wrap">
+                                        <div class="prog-bar"><div class="prog-fill" style="width:40%"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--navy)">432</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="rank-1">
+                                <td><strong>3rd Grade</strong></td>
+                                <td>215</td>
+                                <td>2.3 hrs</td>
+                                <td><strong>5</strong></td>
+                                <td>51%</td>
+                                <td><span class="growth-badge growth-min">1% â</span></td>
+                                <td>
+                                    <div class="prog-wrap">
+                                        <div class="prog-bar"><div class="prog-fill" style="width:100%"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--navy)">1,075</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
-
         </div>
 
         <!-- CLASSROOM BREAKDOWN -->
         <div id="classroomLB" class="tab-content">
             <div class="card-body" style="padding-bottom:0">
                 <p style="font-size:12px;color:var(--muted);margin-bottom:8px">
-                    Classroom-level enrollment from Omni's Student Term Summary · All products combined · UAE – ENS Mohamed Bin Zayed · Updated Apr 1 2026.
+                    Classroom-level enrollment from Omni's Student Term Summary Â· All products combined Â· UAE â ENS Mohamed Bin Zayed Â· Updated Mar 26 2026.
                 </p>
-                <div id="clsRangeNote" style="display:none;align-items:center;gap:7px;background:#E8F4FD;border:1px solid #4DA3E8;border-radius:7px;padding:7px 12px;margin-bottom:8px;font-size:12px;color:#1A5276;">
-                    <span>📅</span>
-                    <span>Showing classroom data <strong>filtered by selected date range</strong>. Placed counts and hours are aggregated from weekly data within the range.</span>
+                <div id="clsRangeNote" style="display:none;align-items:center;gap:7px;background:#FFF3CC;border:1px solid #FFD000;border-radius:7px;padding:7px 12px;margin-bottom:8px;font-size:12px;color:#7A5500;">
+                    <span>ð</span>
+                    <span>This tab shows the <strong>full-term snapshot</strong> (Aug 2025 â Mar 2026). Per-classroom weekly data is not available â use the <strong>Trends tab</strong> to see weekly patterns.</span>
                 </div>
                 <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px">
                     <button class="cls-btn active" onclick="filterCls('all',this)">All (58)</button>
-                    <button class="cls-btn" onclick="filterCls('KG1',this)">KG1 — Pre-K (12)</button>
-                    <button class="cls-btn" onclick="filterCls('KG2',this)">KG2 — Kinder (12)</button>
+                    <button class="cls-btn" onclick="filterCls('KG1',this)">KG1 â Pre-K (12)</button>
+                    <button class="cls-btn" onclick="filterCls('KG2',this)">KG2 â Kinder (12)</button>
                     <button class="cls-btn" onclick="filterCls('G1',this)">Grade 1 (13)</button>
                     <button class="cls-btn" onclick="filterCls('G2',this)">Grade 2 (11)</button>
                     <button class="cls-btn" onclick="filterCls('G3',this)">Grade 3 (10)</button>
@@ -430,7 +570,7 @@
         <div id="trendsLB" class="tab-content">
             <div class="card-body" style="padding-bottom:4px">
                 <p style="font-size:12px;color:var(--muted);margin-bottom:0">
-                    Weekly active &amp; placed students by program · UAE – ENS Mohamed Bin Zayed · Updated Apr 1 2026.
+                    Weekly active &amp; placed students by program Â· UAE â ENS Mohamed Bin Zayed Â· Updated Mar 26 2026.
                 </p>
             </div>
             <div style="padding:0 20px 20px;position:relative;height:320px">
@@ -442,742 +582,114 @@
 </div>
 
 <div class="footer">
-    Data sourced from <strong>Omni · Customer Success Coffee Report</strong> · UAE – ENS Mohamed Bin Zayed · Term starting Aug 2025 · Refreshes hourly
-    &nbsp;|&nbsp; Age of Learning · Customer Success &nbsp;|&nbsp; PROPRIETARY &amp; CONFIDENTIAL
+    Data sourced from <strong>Omni Â· Customer Success Coffee Report</strong> Â· UAE â ENS Mohamed Bin Zayed Â· Term starting Aug 2025 Â· Refreshes hourly
+    &nbsp;|&nbsp; Age of Learning Â· Customer Success &nbsp;|&nbsp; PROPRIETARY &amp; CONFIDENTIAL
 </div>
 
 <script>
-// ════════════════════════════════════════════════════════════
-//  REAL DATA — sourced from Omni, Apr 3, 2026
-//  Growth by School · UAE – Emirates National Schools (ENS-MBZ)
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+//  REAL DATA â sourced from Omni, Mar 26 2026
+//  Growth by School Â· UAE â Emirates National Schools (ENS-MBZ)
 //  UAE - ENS - MBZ (Mohamed Bin Zayed Campus)
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 
 const SCHOOLS = [
-    // ── UAE - ENS - MBZ (Mohamed Bin Zayed Campus) ──────────,
-    { org:"UAE - ENS", district:"UAE - ENS - MBZ", school:"Emirates National Schools Mbz", product:"My Math Academy", active:1404, placed:1020, avgHours:1.3, avgSkills:3, growth:6 },
-    { org:"UAE - ENS", district:"UAE - ENS - MBZ", school:"Emirates National Schools Mbz", product:"My Reading Academy", active:1372, placed:964, avgHours:1.3, avgSkills:0, growth:6 },
+    // ââ UAE - ENS - MBZ (Mohamed Bin Zayed Campus) ââââââââââ
+    { org:"UAE - ENS", district:"UAE - ENS - MBZ",     school:"Emirates National Schools Mbz",      product:"My Math Academy",    active:1401, placed:1063, avgHours:1.3, avgSkills:4,  growth:4 },
+    { org:"UAE - ENS", district:"UAE - ENS - MBZ",     school:"Emirates National Schools Mbz",      product:"My Reading Academy", active:1366, placed:1002, avgHours:1.3, avgSkills:4,  growth:1 },
 ];
 
-// Derived: total skills = placed × avgSkills
+// Derived: total skills = placed Ã avgSkills
 SCHOOLS.forEach(s => { s.totalSkills = s.placed * s.avgSkills; });
 
-// ════════════════════════════════════════════════════════════
-//  CLASSROOM DATA — sourced from Omni User Group Summary Daily, Apr 3, 2026
-//  UAE - ENS - MBZ · All products combined · 58 classrooms
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+//  CLASSROOM DATA â sourced from Omni Student Term Summary, Mar 26 2026
+//  UAE - ENS - MBZ Â· All products combined Â· 58 classrooms
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const CLASSROOM_DATA = [
-    {grade:'Grade 1', grp:'G1', cls:'1A', active:26, placed:24, hours:2.59},
-    {grade:'Grade 1', grp:'G1', cls:'1B', active:26, placed:26, hours:2.65},
-    {grade:'Grade 1', grp:'G1', cls:'1C', active:26, placed:26, hours:2.86},
-    {grade:'Grade 1', grp:'G1', cls:'1D', active:26, placed:24, hours:1.82},
-    {grade:'Grade 1', grp:'G1', cls:'1E', active:27, placed:27, hours:2.82},
-    {grade:'Grade 1', grp:'G1', cls:'1F', active:25, placed:22, hours:2.74},
-    {grade:'Grade 1', grp:'G1', cls:'1G', active:26, placed:20, hours:1.13},
-    {grade:'Grade 1', grp:'G1', cls:'1H', active:26, placed:26, hours:2.34},
-    {grade:'Grade 1', grp:'G1', cls:'1I', active:25, placed:5, hours:0.09},
-    {grade:'Grade 1', grp:'G1', cls:'1J', active:27, placed:27, hours:6.63},
-    {grade:'Grade 1', grp:'G1', cls:'1K', active:25, placed:24, hours:1.66},
-    {grade:'Grade 1', grp:'G1', cls:'1L', active:27, placed:25, hours:1.31},
-    {grade:'Grade 1', grp:'G1', cls:'1M', active:26, placed:26, hours:4.64},
-    {grade:'Grade 2', grp:'G2', cls:'2A', active:27, placed:23, hours:1.02},
-    {grade:'Grade 2', grp:'G2', cls:'2B', active:26, placed:26, hours:2.27},
-    {grade:'Grade 2', grp:'G2', cls:'2C', active:26, placed:23, hours:1.39},
-    {grade:'Grade 2', grp:'G2', cls:'2D', active:25, placed:24, hours:2.23},
-    {grade:'Grade 2', grp:'G2', cls:'2E', active:26, placed:25, hours:0.89},
-    {grade:'Grade 2', grp:'G2', cls:'2F', active:27, placed:24, hours:1.12},
-    {grade:'Grade 2', grp:'G2', cls:'2G', active:27, placed:24, hours:2.14},
-    {grade:'Grade 2', grp:'G2', cls:'2H', active:25, placed:25, hours:3.05},
-    {grade:'Grade 2', grp:'G2', cls:'2I', active:26, placed:25, hours:1.66},
-    {grade:'Grade 2', grp:'G2', cls:'2J', active:27, placed:25, hours:2.46},
-    {grade:'Grade 2', grp:'G2', cls:'2K', active:27, placed:25, hours:1.63},
-    {grade:'Grade 3', grp:'G3', cls:'3A', active:25, placed:24, hours:2.52},
-    {grade:'Grade 3', grp:'G3', cls:'3B', active:23, placed:22, hours:2.44},
-    {grade:'Grade 3', grp:'G3', cls:'3C', active:26, placed:25, hours:3.94},
-    {grade:'Grade 3', grp:'G3', cls:'3D', active:25, placed:24, hours:2.64},
-    {grade:'Grade 3', grp:'G3', cls:'3E', active:25, placed:25, hours:11.87},
-    {grade:'Grade 3', grp:'G3', cls:'3F', active:24, placed:21, hours:2.92},
-    {grade:'Grade 3', grp:'G3', cls:'3G', active:23, placed:23, hours:3.46},
-    {grade:'Grade 3', grp:'G3', cls:'3H', active:24, placed:24, hours:4.12},
-    {grade:'Grade 3', grp:'G3', cls:'3I', active:26, placed:26, hours:2.44},
-    {grade:'Grade 3', grp:'G3', cls:'3J', active:24, placed:23, hours:2.23},
-    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Blue', active:23, placed:18, hours:1.81},
-    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Brown', active:22, placed:14, hours:1.4},
-    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Gold', active:25, placed:14, hours:0.6},
-    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Green', active:23, placed:18, hours:0.55},
-    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Lilac', active:23, placed:16, hours:0.62},
-    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Lime', active:24, placed:10, hours:0.47},
-    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Purple', active:23, placed:15, hours:0.61},
-    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Red', active:23, placed:7, hours:0.54},
-    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Silver', active:24, placed:23, hours:1.14},
-    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-White', active:21, placed:18, hours:1.55},
-    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Yellow', active:24, placed:14, hours:0.67},
-    {grade:'KG1 — Pre-K', grp:'KG1', cls:'Kg1-Orange', active:24, placed:18, hours:1.36},
-    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2- Blue', active:24, placed:23, hours:1.61},
-    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Brown', active:22, placed:15, hours:0.54},
-    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Gold', active:25, placed:18, hours:0.6},
-    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Green', active:20, placed:9, hours:0.5},
-    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Lilac', active:14, placed:4, hours:0.36},
-    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Lime', active:23, placed:20, hours:0.82},
-    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Orange', active:23, placed:18, hours:0.67},
-    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Purple', active:24, placed:20, hours:0.92},
-    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Red', active:24, placed:24, hours:1.7},
-    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Silver', active:24, placed:24, hours:0.81},
-    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-White', active:22, placed:22, hours:0.79},
-    {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Yellow', active:24, placed:20, hours:0.62},
+    // ââ KG1 (Pre-K) â 12 classrooms âââââââââââââââââââââââââ
+    {grade:'KG1 â Pre-K', grp:'KG1', cls:'KG1-Blue',   active:23, placed:18, hours:1.16},
+    {grade:'KG1 â Pre-K', grp:'KG1', cls:'KG1-Brown',  active:22, placed:14, hours:0.79},
+    {grade:'KG1 â Pre-K', grp:'KG1', cls:'KG1-Gold',   active:25, placed:15, hours:0.35},
+    {grade:'KG1 â Pre-K', grp:'KG1', cls:'KG1-Green',  active:23, placed:17, hours:0.43},
+    {grade:'KG1 â Pre-K', grp:'KG1', cls:'KG1-Lilac',  active:23, placed:16, hours:0.51},
+    {grade:'KG1 â Pre-K', grp:'KG1', cls:'KG1-Lime',   active:24, placed:10, hours:0.45},
+    {grade:'KG1 â Pre-K', grp:'KG1', cls:'KG1-Orange', active:24, placed:18, hours:0.89},
+    {grade:'KG1 â Pre-K', grp:'KG1', cls:'KG1-Purple', active:23, placed:16, hours:0.42},
+    {grade:'KG1 â Pre-K', grp:'KG1', cls:'KG1-Red',    active:23, placed:10, hours:0.45},
+    {grade:'KG1 â Pre-K', grp:'KG1', cls:'KG1-Silver', active:24, placed:23, hours:0.68},
+    {grade:'KG1 â Pre-K', grp:'KG1', cls:'KG1-White',  active:22, placed:19, hours:0.82},
+    {grade:'KG1 â Pre-K', grp:'KG1', cls:'KG1-Yellow', active:24, placed:14, hours:0.34},
+    // ââ KG2 (Kindergarten) â 12 classrooms ââââââââââââââââââ
+    {grade:'KG2 â Kinder', grp:'KG2', cls:'KG2-Blue',   active:24, placed:23, hours:0.84},
+    {grade:'KG2 â Kinder', grp:'KG2', cls:'KG2-Brown',  active:22, placed:15, hours:0.29},
+    {grade:'KG2 â Kinder', grp:'KG2', cls:'KG2-Gold',   active:25, placed:19, hours:0.34},
+    {grade:'KG2 â Kinder', grp:'KG2', cls:'KG2-Green',  active:20, placed:15, hours:0.25},
+    {grade:'KG2 â Kinder', grp:'KG2', cls:'KG2-Lilac',  active:13, placed:6,  hours:0.27},
+    {grade:'KG2 â Kinder', grp:'KG2', cls:'KG2-Lime',   active:23, placed:20, hours:0.52},
+    {grade:'KG2 â Kinder', grp:'KG2', cls:'KG2-Orange', active:23, placed:19, hours:0.50},
+    {grade:'KG2 â Kinder', grp:'KG2', cls:'KG2-Purple', active:24, placed:20, hours:0.74},
+    {grade:'KG2 â Kinder', grp:'KG2', cls:'KG2-Red',    active:24, placed:24, hours:0.80},
+    {grade:'KG2 â Kinder', grp:'KG2', cls:'KG2-Silver', active:24, placed:24, hours:0.53},
+    {grade:'KG2 â Kinder', grp:'KG2', cls:'KG2-White',  active:22, placed:22, hours:0.41},
+    {grade:'KG2 â Kinder', grp:'KG2', cls:'KG2-Yellow', active:24, placed:21, hours:0.52},
+    // ââ Grade 1 â 13 classrooms ââââââââââââââââââââââââââââââ
+    {grade:'Grade 1', grp:'G1', cls:'1A', active:26, placed:25, hours:1.10},
+    {grade:'Grade 1', grp:'G1', cls:'1B', active:26, placed:26, hours:1.19},
+    {grade:'Grade 1', grp:'G1', cls:'1C', active:26, placed:26, hours:1.40},
+    {grade:'Grade 1', grp:'G1', cls:'1D', active:26, placed:24, hours:0.80},
+    {grade:'Grade 1', grp:'G1', cls:'1E', active:27, placed:27, hours:1.38},
+    {grade:'Grade 1', grp:'G1', cls:'1F', active:25, placed:23, hours:1.45},
+    {grade:'Grade 1', grp:'G1', cls:'1G', active:26, placed:24, hours:0.68},
+    {grade:'Grade 1', grp:'G1', cls:'1H', active:26, placed:26, hours:1.13},
+    {grade:'Grade 1', grp:'G1', cls:'1I', active:25, placed:12, hours:0.09},
+    {grade:'Grade 1', grp:'G1', cls:'1J', active:27, placed:26, hours:3.47},
+    {grade:'Grade 1', grp:'G1', cls:'1K', active:25, placed:24, hours:0.89},
+    {grade:'Grade 1', grp:'G1', cls:'1L', active:27, placed:25, hours:0.78},
+    {grade:'Grade 1', grp:'G1', cls:'1M', active:26, placed:26, hours:2.39},
+    // ââ Grade 2 â 11 classrooms ââââââââââââââââââââââââââââââ
+    {grade:'Grade 2', grp:'G2', cls:'2A', active:27, placed:24, hours:0.76},
+    {grade:'Grade 2', grp:'G2', cls:'2B', active:26, placed:26, hours:1.60},
+    {grade:'Grade 2', grp:'G2', cls:'2C', active:26, placed:24, hours:0.78},
+    {grade:'Grade 2', grp:'G2', cls:'2D', active:26, placed:24, hours:1.98},
+    {grade:'Grade 2', grp:'G2', cls:'2E', active:26, placed:25, hours:0.54},
+    {grade:'Grade 2', grp:'G2', cls:'2F', active:27, placed:24, hours:0.67},
+    {grade:'Grade 2', grp:'G2', cls:'2G', active:27, placed:25, hours:1.74},
+    {grade:'Grade 2', grp:'G2', cls:'2H', active:25, placed:25, hours:1.50},
+    {grade:'Grade 2', grp:'G2', cls:'2I', active:26, placed:25, hours:1.06},
+    {grade:'Grade 2', grp:'G2', cls:'2J', active:27, placed:24, hours:1.34},
+    {grade:'Grade 2', grp:'G2', cls:'2K', active:27, placed:25, hours:1.01},
+    // ââ Grade 3 â 10 classrooms ââââââââââââââââââââââââââââââ
+    {grade:'Grade 3', grp:'G3', cls:'3A', active:25, placed:24, hours:1.25},
+    {grade:'Grade 3', grp:'G3', cls:'3B', active:23, placed:22, hours:1.29},
+    {grade:'Grade 3', grp:'G3', cls:'3C', active:26, placed:25, hours:1.94},
+    {grade:'Grade 3', grp:'G3', cls:'3D', active:25, placed:24, hours:1.46},
+    {grade:'Grade 3', grp:'G3', cls:'3E', active:25, placed:25, hours:5.94},
+    {grade:'Grade 3', grp:'G3', cls:'3F', active:24, placed:21, hours:1.66},
+    {grade:'Grade 3', grp:'G3', cls:'3G', active:23, placed:23, hours:1.85},
+    {grade:'Grade 3', grp:'G3', cls:'3H', active:24, placed:24, hours:1.94},
+    {grade:'Grade 3', grp:'G3', cls:'3I', active:26, placed:26, hours:1.44},
+    {grade:'Grade 3', grp:'G3', cls:'3J', active:24, placed:23, hours:1.52},
 ];
 
-
-// ════════════════════════════════════════════════════════════
-//  GRADE-LEVEL DATA — sourced from Omni User Group Summary Daily, Apr 3, 2026
-//  UAE - ENS - MBZ · By product and grade
-// ════════════════════════════════════════════════════════════
-const GRADE_DATA = [
-    {product:'My Math Academy', grade:'Pre-K', placed:105, avgHours:0.6, avgSkills:3, priorKnow:72, growth:42},
-    {product:'My Math Academy', grade:'Kindergarten', placed:184, avgHours:0.6, avgSkills:4, priorKnow:94, growth:29},
-    {product:'My Math Academy', grade:'1st Grade', placed:284, avgHours:1.6, avgSkills:23, priorKnow:96, growth:13},
-    {product:'My Math Academy', grade:'2nd Grade', placed:234, avgHours:1.3, avgSkills:20, priorKnow:95, growth:11},
-    {product:'My Math Academy', grade:'3rd Grade', placed:213, avgHours:2.0, avgSkills:11, priorKnow:87, growth:7},
-    {product:'My Reading Academy', grade:'Pre-K', placed:165, avgHours:0.7, avgSkills:1, priorKnow:0, growth:15},
-    {product:'My Reading Academy', grade:'Kindergarten', placed:127, avgHours:0.6, avgSkills:0, priorKnow:0, growth:2},
-    {product:'My Reading Academy', grade:'1st Grade', placed:276, avgHours:1.4, avgSkills:1, priorKnow:0, growth:3},
-    {product:'My Reading Academy', grade:'2nd Grade', placed:181, avgHours:1.0, avgSkills:1, priorKnow:0, growth:1},
-    {product:'My Reading Academy', grade:'3rd Grade', placed:215, avgHours:2.3, avgSkills:2, priorKnow:0, growth:3},
-];
-GRADE_DATA.forEach(g => { g.totalSkills = g.placed * g.avgSkills; });
-
-// ════════════════════════════════════════════════════════════
-//  WEEKLY GRADE DATA — for date-range filtering on Grade tab
-//  Fields: w=week, g=grade, p=product(mma/mra), a=active, pl=placed, h=totalHours(min), sk=avgSkills, gr=avgGrowth
-// ════════════════════════════════════════════════════════════
-const WG = [
-  {w:'2025-11-24',g:'Kindergarten',p:'mma',a:1,pl:0,h:0.0,sk:0,gr:0.0},
-  {w:'2025-11-24',g:'Kindergarten',p:'mra',a:1,pl:0,h:0.0,sk:0,gr:0.0},
-  {w:'2026-01-05',g:'1st Grade',p:'mma',a:1,pl:0,h:0.0,sk:0,gr:0.0},
-  {w:'2026-01-05',g:'1st Grade',p:'mra',a:1,pl:0,h:0.0,sk:0,gr:0.0},
-  {w:'2026-01-05',g:'2nd Grade',p:'mma',a:7,pl:1,h:4.73,sk:0.0,gr:1.7},
-  {w:'2026-01-05',g:'2nd Grade',p:'mra',a:10,pl:0,h:0.0,sk:0,gr:13.6},
-  {w:'2026-01-05',g:'3rd Grade',p:'mma',a:21,pl:1,h:1.62,sk:0.0,gr:2.8},
-  {w:'2026-01-05',g:'3rd Grade',p:'mra',a:1,pl:0,h:0.0,sk:0,gr:0.0},
-  {w:'2026-01-05',g:'Kindergarten',p:'mma',a:6,pl:1,h:20.37,sk:0.0,gr:4.4},
-  {w:'2026-01-05',g:'Kindergarten',p:'mra',a:3,pl:0,h:0.0,sk:0,gr:0.0},
-  {w:'2026-01-05',g:'Pre-K',p:'mma',a:2,pl:0,h:0.0,sk:0,gr:0.0},
-  {w:'2026-01-05',g:'Pre-K',p:'mra',a:1,pl:0,h:0.0,sk:0,gr:0.0},
-  {w:'2026-01-12',g:'1st Grade',p:'mma',a:146,pl:27,h:441.12,sk:0.63,gr:25.4},
-  {w:'2026-01-12',g:'1st Grade',p:'mra',a:173,pl:42,h:665.25,sk:2.26,gr:30.6},
-  {w:'2026-01-12',g:'2nd Grade',p:'mma',a:174,pl:55,h:581.22,sk:0.47,gr:13.6},
-  {w:'2026-01-12',g:'2nd Grade',p:'mra',a:129,pl:16,h:264.37,sk:0.19,gr:26.6},
-  {w:'2026-01-12',g:'3rd Grade',p:'mma',a:146,pl:61,h:2024.03,sk:0.69,gr:7.3},
-  {w:'2026-01-12',g:'3rd Grade',p:'mra',a:193,pl:52,h:1554.93,sk:0.92,gr:17.5},
-  {w:'2026-01-12',g:'Kindergarten',p:'mma',a:109,pl:23,h:183.8,sk:0.91,gr:15.0},
-  {w:'2026-01-12',g:'Kindergarten',p:'mra',a:26,pl:0,h:0.0,sk:0,gr:9.9},
-  {w:'2026-01-12',g:'Pre-K',p:'mma',a:172,pl:29,h:152.25,sk:1.07,gr:3.9},
-  {w:'2026-01-12',g:'Pre-K',p:'mra',a:33,pl:10,h:154.9,sk:0.7,gr:2.0},
-  {w:'2026-01-19',g:'1st Grade',p:'mma',a:298,pl:188,h:6390.68,sk:0.74,gr:15.2},
-  {w:'2026-01-19',g:'1st Grade',p:'mra',a:286,pl:196,h:6785.5,sk:1.08,gr:11.7},
-  {w:'2026-01-19',g:'2nd Grade',p:'mma',a:223,pl:139,h:4435.17,sk:0.6,gr:8.6},
-  {w:'2026-01-19',g:'2nd Grade',p:'mra',a:248,pl:91,h:2332.08,sk:0.4,gr:13.7},
-  {w:'2026-01-19',g:'3rd Grade',p:'mma',a:224,pl:155,h:5625.32,sk:0.63,gr:7.3},
-  {w:'2026-01-19',g:'3rd Grade',p:'mra',a:220,pl:173,h:7227.0,sk:0.86,gr:6.1},
-  {w:'2026-01-19',g:'Kindergarten',p:'mma',a:87,pl:24,h:242.07,sk:0.62,gr:11.0},
-  {w:'2026-01-19',g:'Kindergarten',p:'mra',a:116,pl:12,h:116.08,sk:0.25,gr:10.5},
-  {w:'2026-01-19',g:'Pre-K',p:'mma',a:145,pl:44,h:609.43,sk:0.95,gr:3.8},
-  {w:'2026-01-19',g:'Pre-K',p:'mra',a:54,pl:15,h:201.0,sk:0.53,gr:1.9},
-  {w:'2026-01-26',g:'1st Grade',p:'mma',a:224,pl:169,h:4997.4,sk:0.41,gr:5.0},
-  {w:'2026-01-26',g:'1st Grade',p:'mra',a:199,pl:138,h:3388.07,sk:0.24,gr:1.6},
-  {w:'2026-01-26',g:'2nd Grade',p:'mma',a:221,pl:167,h:4462.45,sk:0.69,gr:7.5},
-  {w:'2026-01-26',g:'2nd Grade',p:'mra',a:206,pl:114,h:2319.42,sk:0.18,gr:4.6},
-  {w:'2026-01-26',g:'3rd Grade',p:'mma',a:213,pl:183,h:7042.25,sk:0.45,gr:5.0},
-  {w:'2026-01-26',g:'3rd Grade',p:'mra',a:206,pl:182,h:8105.22,sk:0.53,gr:1.1},
-  {w:'2026-01-26',g:'Kindergarten',p:'mma',a:48,pl:25,h:326.1,sk:0.4,gr:8.4},
-  {w:'2026-01-26',g:'Kindergarten',p:'mra',a:55,pl:18,h:282.42,sk:0.39,gr:6.3},
-  {w:'2026-01-26',g:'Pre-K',p:'mma',a:54,pl:12,h:73.05,sk:0.25,gr:1.4},
-  {w:'2026-01-26',g:'Pre-K',p:'mra',a:149,pl:55,h:753.28,sk:0.64,gr:1.5},
-  {w:'2026-02-02',g:'1st Grade',p:'mma',a:168,pl:144,h:4175.18,sk:0.32,gr:2.0},
-  {w:'2026-02-02',g:'1st Grade',p:'mra',a:166,pl:133,h:2914.4,sk:0.15,gr:0.7},
-  {w:'2026-02-02',g:'2nd Grade',p:'mma',a:141,pl:118,h:2662.77,sk:0.46,gr:4.8},
-  {w:'2026-02-02',g:'2nd Grade',p:'mra',a:144,pl:93,h:2133.3,sk:0.28,gr:1.4},
-  {w:'2026-02-02',g:'3rd Grade',p:'mma',a:139,pl:127,h:2955.67,sk:0.31,gr:1.4},
-  {w:'2026-02-02',g:'3rd Grade',p:'mra',a:156,pl:141,h:4460.37,sk:0.27,gr:0.3},
-  {w:'2026-02-02',g:'Kindergarten',p:'mma',a:70,pl:38,h:650.0,sk:0.26,gr:5.1},
-  {w:'2026-02-02',g:'Kindergarten',p:'mra',a:69,pl:19,h:227.93,sk:0.16,gr:12.2},
-  {w:'2026-02-02',g:'Pre-K',p:'mma',a:29,pl:7,h:153.93,sk:0.29,gr:1.8},
-  {w:'2026-02-02',g:'Pre-K',p:'mra',a:76,pl:31,h:488.68,sk:0.84,gr:2.2},
-  {w:'2026-02-09',g:'1st Grade',p:'mma',a:174,pl:158,h:3137.45,sk:0.3,gr:2.4},
-  {w:'2026-02-09',g:'1st Grade',p:'mra',a:122,pl:106,h:1607.88,sk:0.12,gr:0.7},
-  {w:'2026-02-09',g:'2nd Grade',p:'mma',a:105,pl:89,h:1374.98,sk:0.2,gr:1.4},
-  {w:'2026-02-09',g:'2nd Grade',p:'mra',a:93,pl:61,h:1111.63,sk:0.05,gr:0.5},
-  {w:'2026-02-09',g:'3rd Grade',p:'mma',a:86,pl:82,h:1486.62,sk:0.32,gr:1.7},
-  {w:'2026-02-09',g:'3rd Grade',p:'mra',a:120,pl:110,h:2266.35,sk:0.06,gr:0.2},
-  {w:'2026-02-09',g:'Kindergarten',p:'mma',a:60,pl:32,h:424.32,sk:0.53,gr:11.9},
-  {w:'2026-02-09',g:'Kindergarten',p:'mra',a:56,pl:18,h:238.73,sk:0.06,gr:7.5},
-  {w:'2026-02-09',g:'Pre-K',p:'mma',a:16,pl:9,h:92.88,sk:0.11,gr:1.4},
-  {w:'2026-02-09',g:'Pre-K',p:'mra',a:27,pl:11,h:135.68,sk:0.27,gr:1.4},
-  {w:'2026-02-16',g:'1st Grade',p:'mma',a:181,pl:166,h:3444.28,sk:0.36,gr:2.2},
-  {w:'2026-02-16',g:'1st Grade',p:'mra',a:155,pl:145,h:2675.07,sk:0.08,gr:0.5},
-  {w:'2026-02-16',g:'2nd Grade',p:'mma',a:84,pl:77,h:1594.18,sk:0.4,gr:2.2},
-  {w:'2026-02-16',g:'2nd Grade',p:'mra',a:59,pl:32,h:498.7,sk:0.03,gr:0.8},
-  {w:'2026-02-16',g:'3rd Grade',p:'mma',a:102,pl:93,h:2518.2,sk:0.26,gr:0.9},
-  {w:'2026-02-16',g:'3rd Grade',p:'mra',a:103,pl:91,h:2749.18,sk:0.09,gr:1.1},
-  {w:'2026-02-16',g:'Kindergarten',p:'mma',a:170,pl:107,h:1927.43,sk:0.44,gr:8.5},
-  {w:'2026-02-16',g:'Kindergarten',p:'mra',a:151,pl:73,h:1368.93,sk:0.15,gr:5.9},
-  {w:'2026-02-16',g:'Pre-K',p:'mma',a:164,pl:51,h:872.3,sk:0.43,gr:1.9},
-  {w:'2026-02-16',g:'Pre-K',p:'mra',a:164,pl:96,h:2368.68,sk:0.73,gr:1.4},
-  {w:'2026-02-23',g:'1st Grade',p:'mma',a:140,pl:129,h:2356.95,sk:0.31,gr:1.7},
-  {w:'2026-02-23',g:'1st Grade',p:'mra',a:118,pl:106,h:1610.2,sk:0.06,gr:0.2},
-  {w:'2026-02-23',g:'2nd Grade',p:'mma',a:71,pl:65,h:996.28,sk:0.28,gr:2.3},
-  {w:'2026-02-23',g:'2nd Grade',p:'mra',a:79,pl:59,h:1001.73,sk:0.24,gr:0.4},
-  {w:'2026-02-23',g:'3rd Grade',p:'mma',a:119,pl:109,h:2228.08,sk:0.28,gr:1.0},
-  {w:'2026-02-23',g:'3rd Grade',p:'mra',a:128,pl:121,h:2474.25,sk:0.08,gr:0.3},
-  {w:'2026-02-23',g:'Kindergarten',p:'mma',a:142,pl:108,h:1881.05,sk:0.23,gr:4.2},
-  {w:'2026-02-23',g:'Kindergarten',p:'mra',a:155,pl:101,h:2043.25,sk:0.2,gr:4.0},
-  {w:'2026-02-23',g:'Pre-K',p:'mma',a:150,pl:66,h:1401.37,sk:0.41,gr:1.9},
-  {w:'2026-02-23',g:'Pre-K',p:'mra',a:185,pl:115,h:2676.42,sk:0.56,gr:1.3},
-  {w:'2026-03-02',g:'1st Grade',p:'mma',a:23,pl:22,h:367.98,sk:0.36,gr:1.1},
-  {w:'2026-03-02',g:'1st Grade',p:'mra',a:20,pl:20,h:380.93,sk:0.3,gr:0.8},
-  {w:'2026-03-02',g:'2nd Grade',p:'mma',a:26,pl:23,h:337.88,sk:0.48,gr:2.4},
-  {w:'2026-03-02',g:'2nd Grade',p:'mra',a:16,pl:15,h:226.2,sk:0.07,gr:0.1},
-  {w:'2026-03-02',g:'3rd Grade',p:'mma',a:18,pl:18,h:207.3,sk:0.22,gr:0.4},
-  {w:'2026-03-02',g:'3rd Grade',p:'mra',a:17,pl:16,h:189.68,sk:0.0,gr:1.6},
-  {w:'2026-03-09',g:'1st Grade',p:'mma',a:2,pl:2,h:18.13,sk:0.0,gr:0.0},
-  {w:'2026-03-09',g:'1st Grade',p:'mra',a:2,pl:2,h:24.6,sk:0.0,gr:0.0},
-  {w:'2026-03-09',g:'2nd Grade',p:'mma',a:1,pl:1,h:0.48,sk:0.0,gr:0.0},
-  {w:'2026-03-09',g:'2nd Grade',p:'mra',a:1,pl:1,h:7.58,sk:0.0,gr:0.0},
-  {w:'2026-03-09',g:'3rd Grade',p:'mma',a:1,pl:1,h:13.38,sk:0.0,gr:0.0},
-  {w:'2026-03-09',g:'3rd Grade',p:'mra',a:1,pl:1,h:2.63,sk:0.0,gr:0.0},
-  {w:'2026-03-16',g:'1st Grade',p:'mma',a:6,pl:4,h:42.8,sk:0.0,gr:0.0},
-  {w:'2026-03-16',g:'1st Grade',p:'mra',a:4,pl:4,h:70.5,sk:0.0,gr:0.0},
-  {w:'2026-03-16',g:'2nd Grade',p:'mma',a:5,pl:5,h:14.97,sk:0.0,gr:0.0},
-  {w:'2026-03-16',g:'2nd Grade',p:'mra',a:7,pl:5,h:71.68,sk:0.0,gr:0.0},
-  {w:'2026-03-16',g:'3rd Grade',p:'mma',a:1,pl:1,h:29.4,sk:0.0,gr:0.0},
-  {w:'2026-03-16',g:'3rd Grade',p:'mra',a:4,pl:4,h:20.18,sk:0.0,gr:0.0},
-  {w:'2026-03-23',g:'1st Grade',p:'mma',a:61,pl:58,h:1084.42,sk:0.0,gr:0.0},
-  {w:'2026-03-23',g:'1st Grade',p:'mra',a:62,pl:61,h:1366.8,sk:0.0,gr:0.0},
-  {w:'2026-03-23',g:'2nd Grade',p:'mma',a:80,pl:69,h:1095.22,sk:0.0,gr:0.2},
-  {w:'2026-03-23',g:'2nd Grade',p:'mra',a:70,pl:44,h:636.0,sk:0.0,gr:0.0},
-  {w:'2026-03-23',g:'3rd Grade',p:'mma',a:43,pl:42,h:585.03,sk:0.0,gr:0.0},
-  {w:'2026-03-23',g:'3rd Grade',p:'mra',a:41,pl:39,h:688.6,sk:0.0,gr:0.0},
-  {w:'2026-03-30',g:'1st Grade',p:'mma',a:70,pl:67,h:1510.03,sk:0.0,gr:0.1},
-  {w:'2026-03-30',g:'1st Grade',p:'mra',a:52,pl:51,h:1058.22,sk:0.0,gr:0.0},
-  {w:'2026-03-30',g:'2nd Grade',p:'mma',a:54,pl:48,h:590.15,sk:0.0,gr:0.0},
-  {w:'2026-03-30',g:'2nd Grade',p:'mra',a:46,pl:37,h:532.13,sk:0.0,gr:0.0},
-  {w:'2026-03-30',g:'3rd Grade',p:'mma',a:58,pl:50,h:680.3,sk:0.0,gr:0.0},
-  {w:'2026-03-30',g:'3rd Grade',p:'mra',a:41,pl:39,h:520.78,sk:0.0,gr:0.0},
-  {w:'2026-03-30',g:'Kindergarten',p:'mma',a:66,pl:57,h:1363.53,sk:0.0,gr:0.0},
-  {w:'2026-03-30',g:'Kindergarten',p:'mra',a:46,pl:35,h:621.33,sk:0.0,gr:0.0},
-  {w:'2026-03-30',g:'Pre-K',p:'mma',a:46,pl:24,h:451.92,sk:0.0,gr:0.0},
-  {w:'2026-03-30',g:'Pre-K',p:'mra',a:40,pl:33,h:586.62,sk:0.0,gr:0.0},
-];
-
-// ════════════════════════════════════════════════════════════
-//  WEEKLY CLASSROOM DATA — for date-range filtering on Classroom tab
-//  Fields: w=week, c=classroom, a=active, pl=placed, h=avgHoursPerPlaced
-// ════════════════════════════════════════════════════════════
-const WC = [
-  {w:'2025-11-24',cls:'KG2-Red',a:1,pl:0,h:0.0},
-  {w:'2026-01-05',cls:'KG1-Silver',a:1,pl:0,h:0.0},
-  {w:'2026-01-05',cls:'1F',a:1,pl:0,h:0.0},
-  {w:'2026-01-05',cls:'KG2-Red',a:6,pl:1,h:0.34},
-  {w:'2026-01-05',cls:'KG1-Green',a:1,pl:0,h:0.0},
-  {w:'2026-01-05',cls:'2F',a:14,pl:1,h:0.08},
-  {w:'2026-01-05',cls:'1B',a:1,pl:0,h:0.0},
-  {w:'2026-01-05',cls:'3G',a:21,pl:1,h:0.03},
-  {w:'2026-01-12',cls:'2F',a:21,pl:6,h:0.68},
-  {w:'2026-01-12',cls:'KG1-Lilac',a:5,pl:1,h:0.28},
-  {w:'2026-01-12',cls:'1G',a:25,pl:1,h:0.12},
-  {w:'2026-01-12',cls:'KG2- Blue',a:20,pl:4,h:0.74},
-  {w:'2026-01-12',cls:'3A',a:23,pl:10,h:1.66},
-  {w:'2026-01-12',cls:'2G',a:8,pl:0,h:0.0},
-  {w:'2026-01-12',cls:'KG1-Green',a:22,pl:0,h:0.0},
-  {w:'2026-01-12',cls:'KG2-Purple',a:22,pl:7,h:1.02},
-  {w:'2026-01-12',cls:'2K',a:26,pl:9,h:0.97},
-  {w:'2026-01-12',cls:'KG1-Purple',a:12,pl:4,h:0.37},
-  {w:'2026-01-12',cls:'KG1-Yellow',a:23,pl:8,h:2.49},
-  {w:'2026-01-12',cls:'2H',a:24,pl:21,h:7.41},
-  {w:'2026-01-12',cls:'3I',a:26,pl:18,h:12.59},
-  {w:'2026-01-12',cls:'1A',a:25,pl:0,h:0.0},
-  {w:'2026-01-12',cls:'1J',a:24,pl:9,h:3.49},
-  {w:'2026-01-12',cls:'KG2-Red',a:24,pl:5,h:1.0},
-  {w:'2026-01-12',cls:'3J',a:22,pl:7,h:1.31},
-  {w:'2026-01-12',cls:'KG1-Red',a:13,pl:0,h:0.0},
-  {w:'2026-01-12',cls:'3F',a:22,pl:13,h:3.25},
-  {w:'2026-01-12',cls:'2D',a:21,pl:11,h:1.96},
-  {w:'2026-01-12',cls:'3C',a:26,pl:0,h:0.0},
-  {w:'2026-01-12',cls:'KG2-Orange',a:20,pl:1,h:0.01},
-  {w:'2026-01-12',cls:'Kg1-Orange',a:1,pl:1,h:0.12},
-  {w:'2026-01-12',cls:'KG2-Silver',a:19,pl:6,h:0.29},
-  {w:'2026-01-12',cls:'2B',a:25,pl:0,h:0.0},
-  {w:'2026-01-12',cls:'KG1-Blue',a:7,pl:4,h:0.19},
-  {w:'2026-01-12',cls:'2C',a:24,pl:2,h:0.1},
-  {w:'2026-01-12',cls:'3H',a:24,pl:18,h:14.58},
-  {w:'2026-01-12',cls:'1E',a:18,pl:8,h:1.85},
-  {w:'2026-01-12',cls:'KG1-White',a:17,pl:4,h:0.18},
-  {w:'2026-01-12',cls:'2J',a:27,pl:3,h:0.22},
-  {w:'2026-01-12',cls:'1K',a:23,pl:0,h:0.0},
-  {w:'2026-01-12',cls:'3G',a:23,pl:20,h:23.14},
-  {w:'2026-01-12',cls:'1D',a:24,pl:11,h:1.89},
-  {w:'2026-01-12',cls:'3E',a:25,pl:5,h:3.12},
-  {w:'2026-01-12',cls:'KG1-Silver',a:23,pl:9,h:0.94},
-  {w:'2026-01-12',cls:'KG1-Gold',a:24,pl:1,h:0.12},
-  {w:'2026-01-12',cls:'2I',a:22,pl:10,h:2.75},
-  {w:'2026-01-12',cls:'KG1-Brown',a:18,pl:5,h:0.43},
-  {w:'2026-01-12',cls:'KG2-Yellow',a:5,pl:0,h:0.0},
-  {w:'2026-01-12',cls:'2A',a:0,pl:0,h:0.0},
-  {w:'2026-01-12',cls:'1C',a:26,pl:21,h:5.97},
-  {w:'2026-01-12',cls:'3B',a:20,pl:0,h:0.0},
-  {w:'2026-01-12',cls:'KG1-Lime',a:8,pl:0,h:0.0},
-  {w:'2026-01-12',cls:'KG2-White',a:1,pl:0,h:0.0},
-  {w:'2026-01-12',cls:'1F',a:15,pl:0,h:0.0},
-  {w:'2026-01-12',cls:'1H',a:26,pl:12,h:5.13},
-  {w:'2026-01-12',cls:'1I',a:22,pl:0,h:0.0},
-  {w:'2026-01-19',cls:'1L',a:27,pl:22,h:6.79},
-  {w:'2026-01-19',cls:'KG1-Yellow',a:16,pl:6,h:1.5},
-  {w:'2026-01-19',cls:'2K',a:26,pl:23,h:19.72},
-  {w:'2026-01-19',cls:'KG1-Red',a:8,pl:0,h:0.0},
-  {w:'2026-01-19',cls:'1G',a:26,pl:4,h:1.3},
-  {w:'2026-01-19',cls:'3G',a:23,pl:23,h:20.73},
-  {w:'2026-01-19',cls:'KG1-Green',a:13,pl:4,h:0.49},
-  {w:'2026-01-19',cls:'KG2-Gold',a:18,pl:2,h:0.25},
-  {w:'2026-01-19',cls:'1B',a:25,pl:23,h:10.39},
-  {w:'2026-01-19',cls:'Kg1-Orange',a:18,pl:12,h:3.41},
-  {w:'2026-01-19',cls:'1C',a:24,pl:24,h:16.13},
-  {w:'2026-01-19',cls:'KG2-Lime',a:23,pl:5,h:0.37},
-  {w:'2026-01-19',cls:'3I',a:25,pl:24,h:15.58},
-  {w:'2026-01-19',cls:'2F',a:26,pl:21,h:12.01},
-  {w:'2026-01-19',cls:'2H',a:25,pl:23,h:15.94},
-  {w:'2026-01-19',cls:'KG1-Lilac',a:9,pl:2,h:0.07},
-  {w:'2026-01-19',cls:'3J',a:23,pl:13,h:4.05},
-  {w:'2026-01-19',cls:'2I',a:25,pl:14,h:4.53},
-  {w:'2026-01-19',cls:'1M',a:25,pl:25,h:39.49},
-  {w:'2026-01-19',cls:'1E',a:27,pl:25,h:30.88},
-  {w:'2026-01-19',cls:'2C',a:25,pl:3,h:0.42},
-  {w:'2026-01-19',cls:'3D',a:25,pl:22,h:23.85},
-  {w:'2026-01-19',cls:'1D',a:21,pl:20,h:8.53},
-  {w:'2026-01-19',cls:'3H',a:24,pl:23,h:21.97},
-  {w:'2026-01-19',cls:'2B',a:26,pl:21,h:13.16},
-  {w:'2026-01-19',cls:'KG2-Red',a:17,pl:1,h:0.08},
-  {w:'2026-01-19',cls:'KG2-White',a:20,pl:6,h:0.32},
-  {w:'2026-01-19',cls:'1I',a:25,pl:4,h:0.39},
-  {w:'2026-01-19',cls:'KG1-White',a:9,pl:6,h:1.08},
-  {w:'2026-01-19',cls:'3B',a:22,pl:21,h:8.99},
-  {w:'2026-01-19',cls:'KG1-Purple',a:16,pl:5,h:1.28},
-  {w:'2026-01-19',cls:'1K',a:24,pl:23,h:8.07},
-  {w:'2026-01-19',cls:'KG1-Blue',a:19,pl:7,h:3.6},
-  {w:'2026-01-19',cls:'3F',a:24,pl:20,h:24.23},
-  {w:'2026-01-19',cls:'KG2-Brown',a:19,pl:2,h:0.08},
-  {w:'2026-01-19',cls:'KG2-Orange',a:4,pl:0,h:0.0},
-  {w:'2026-01-19',cls:'KG1-Lime',a:12,pl:2,h:0.3},
-  {w:'2026-01-19',cls:'KG1-Brown',a:6,pl:1,h:0.0},
-  {w:'2026-01-19',cls:'1F',a:20,pl:5,h:1.57},
-  {w:'2026-01-19',cls:'1A',a:25,pl:23,h:12.71},
-  {w:'2026-01-19',cls:'KG2- Blue',a:13,pl:6,h:1.53},
-  {w:'2026-01-19',cls:'KG2-Silver',a:19,pl:12,h:3.32},
-  {w:'2026-01-19',cls:'2E',a:26,pl:19,h:6.21},
-  {w:'2026-01-19',cls:'KG2-Yellow',a:17,pl:1,h:0.0},
-  {w:'2026-01-19',cls:'1J',a:27,pl:25,h:60.4},
-  {w:'2026-01-19',cls:'3E',a:25,pl:24,h:63.28},
-  {w:'2026-01-19',cls:'2D',a:24,pl:19,h:16.52},
-  {w:'2026-01-19',cls:'KG1-Silver',a:19,pl:7,h:1.59},
-  {w:'2026-01-19',cls:'3C',a:26,pl:23,h:17.83},
-  {w:'2026-01-19',cls:'2A',a:27,pl:15,h:9.03},
-  {w:'2026-01-19',cls:'2G',a:26,pl:19,h:15.25},
-  {w:'2026-01-19',cls:'3A',a:24,pl:21,h:13.71},
-  {w:'2026-01-19',cls:'1H',a:25,pl:23,h:22.95},
-  {w:'2026-01-19',cls:'KG1-Gold',a:6,pl:1,h:0.18},
-  {w:'2026-01-26',cls:'2E',a:23,pl:23,h:15.91},
-  {w:'2026-01-26',cls:'1I',a:19,pl:1,h:0.05},
-  {w:'2026-01-26',cls:'3G',a:21,pl:21,h:10.35},
-  {w:'2026-01-26',cls:'1K',a:25,pl:22,h:21.04},
-  {w:'2026-01-26',cls:'1C',a:26,pl:26,h:16.69},
-  {w:'2026-01-26',cls:'2A',a:26,pl:22,h:9.34},
-  {w:'2026-01-26',cls:'1A',a:25,pl:22,h:5.8},
-  {w:'2026-01-26',cls:'2C',a:24,pl:13,h:5.48},
-  {w:'2026-01-26',cls:'KG2-White',a:5,pl:0,h:0.0},
-  {w:'2026-01-26',cls:'3B',a:22,pl:20,h:14.0},
-  {w:'2026-01-26',cls:'3F',a:22,pl:18,h:13.89},
-  {w:'2026-01-26',cls:'1L',a:26,pl:20,h:4.23},
-  {w:'2026-01-26',cls:'KG1-Green',a:18,pl:7,h:1.38},
-  {w:'2026-01-26',cls:'2J',a:26,pl:23,h:15.61},
-  {w:'2026-01-26',cls:'KG1-Brown',a:18,pl:9,h:1.81},
-  {w:'2026-01-26',cls:'1B',a:8,pl:8,h:0.73},
-  {w:'2026-01-26',cls:'KG2-Silver',a:8,pl:5,h:1.61},
-  {w:'2026-01-26',cls:'2I',a:25,pl:22,h:8.77},
-  {w:'2026-01-26',cls:'KG1-Red',a:9,pl:0,h:0.0},
-  {w:'2026-01-26',cls:'1E',a:12,pl:12,h:9.01},
-  {w:'2026-01-26',cls:'KG2-Gold',a:7,pl:0,h:0.0},
-  {w:'2026-01-26',cls:'3E',a:25,pl:25,h:81.44},
-  {w:'2026-01-26',cls:'2G',a:24,pl:20,h:6.68},
-  {w:'2026-01-26',cls:'KG1-Blue',a:9,pl:2,h:0.61},
-  {w:'2026-01-26',cls:'KG1-White',a:16,pl:7,h:0.71},
-  {w:'2026-01-26',cls:'3D',a:25,pl:24,h:30.76},
-  {w:'2026-01-26',cls:'KG1-Silver',a:24,pl:19,h:6.15},
-  {w:'2026-01-26',cls:'1G',a:26,pl:13,h:5.05},
-  {w:'2026-01-26',cls:'2F',a:16,pl:10,h:1.38},
-  {w:'2026-01-26',cls:'KG1-Purple',a:1,pl:1,h:0.0},
-  {w:'2026-01-26',cls:'1F',a:23,pl:14,h:9.56},
-  {w:'2026-01-26',cls:'2K',a:23,pl:20,h:10.62},
-  {w:'2026-01-26',cls:'Kg1-Orange',a:11,pl:5,h:1.81},
-  {w:'2026-01-26',cls:'KG2-Purple',a:2,pl:0,h:0.0},
-  {w:'2026-01-26',cls:'3A',a:25,pl:24,h:20.96},
-  {w:'2026-01-26',cls:'KG1-Gold',a:21,pl:3,h:0.17},
-  {w:'2026-01-26',cls:'2H',a:24,pl:24,h:17.72},
-  {w:'2026-01-26',cls:'KG2-Orange',a:15,pl:9,h:1.54},
-  {w:'2026-01-26',cls:'2D',a:23,pl:20,h:7.78},
-  {w:'2026-01-26',cls:'2B',a:25,pl:23,h:13.73},
-  {w:'2026-01-26',cls:'KG2-Lime',a:13,pl:2,h:0.15},
-  {w:'2026-01-26',cls:'1D',a:26,pl:24,h:15.88},
-  {w:'2026-01-26',cls:'3C',a:25,pl:24,h:33.26},
-  {w:'2026-01-26',cls:'KG1-Lime',a:22,pl:1,h:0.01},
-  {w:'2026-01-26',cls:'1H',a:17,pl:17,h:12.27},
-  {w:'2026-01-26',cls:'KG2-Red',a:23,pl:22,h:6.83},
-  {w:'2026-01-26',cls:'3J',a:24,pl:21,h:10.83},
-  {w:'2026-01-26',cls:'KG1-Lilac',a:20,pl:8,h:1.12},
-  {w:'2026-01-26',cls:'1J',a:14,pl:13,h:19.24},
-  {w:'2026-01-26',cls:'3I',a:24,pl:22,h:19.69},
-  {w:'2026-01-26',cls:'3H',a:24,pl:23,h:17.27},
-  {w:'2026-01-26',cls:'1M',a:20,pl:20,h:20.22},
-  {w:'2026-02-02',cls:'3A',a:23,pl:22,h:7.9},
-  {w:'2026-02-02',cls:'3B',a:18,pl:18,h:14.47},
-  {w:'2026-02-02',cls:'KG2-Lime',a:20,pl:5,h:1.1},
-  {w:'2026-02-02',cls:'3F',a:15,pl:15,h:6.2},
-  {w:'2026-02-02',cls:'1D',a:4,pl:3,h:0.09},
-  {w:'2026-02-02',cls:'2B',a:24,pl:24,h:10.46},
-  {w:'2026-02-02',cls:'1K',a:7,pl:7,h:2.44},
-  {w:'2026-02-02',cls:'1G',a:26,pl:14,h:3.47},
-  {w:'2026-02-02',cls:'2J',a:26,pl:21,h:16.45},
-  {w:'2026-02-02',cls:'KG2-Gold',a:15,pl:2,h:0.26},
-  {w:'2026-02-02',cls:'KG2-Orange',a:18,pl:14,h:4.21},
-  {w:'2026-02-02',cls:'2K',a:19,pl:13,h:3.95},
-  {w:'2026-02-02',cls:'KG1-Yellow',a:10,pl:5,h:0.87},
-  {w:'2026-02-02',cls:'1L',a:4,pl:3,h:0.22},
-  {w:'2026-02-02',cls:'2H',a:23,pl:23,h:12.42},
-  {w:'2026-02-02',cls:'2A',a:1,pl:0,h:0.0},
-  {w:'2026-02-02',cls:'1F',a:24,pl:20,h:17.36},
-  {w:'2026-02-02',cls:'KG1-Brown',a:15,pl:5,h:1.26},
-  {w:'2026-02-02',cls:'1E',a:21,pl:21,h:13.43},
-  {w:'2026-02-02',cls:'KG2-White',a:20,pl:7,h:1.94},
-  {w:'2026-02-02',cls:'1B',a:26,pl:26,h:13.54},
-  {w:'2026-02-02',cls:'KG1-White',a:7,pl:4,h:0.91},
-  {w:'2026-02-02',cls:'2D',a:19,pl:18,h:6.52},
-  {w:'2026-02-02',cls:'3E',a:25,pl:25,h:46.75},
-  {w:'2026-02-02',cls:'1A',a:21,pl:19,h:5.51},
-  {w:'2026-02-02',cls:'1H',a:2,pl:2,h:0.78},
-  {w:'2026-02-02',cls:'KG2-Purple',a:13,pl:8,h:3.45},
-  {w:'2026-02-02',cls:'KG1-Red',a:9,pl:0,h:0.0},
-  {w:'2026-02-02',cls:'2C',a:25,pl:22,h:12.4},
-  {w:'2026-02-02',cls:'KG2-Red',a:17,pl:14,h:3.67},
-  {w:'2026-02-02',cls:'3I',a:20,pl:19,h:9.82},
-  {w:'2026-02-02',cls:'1C',a:25,pl:25,h:14.21},
-  {w:'2026-02-02',cls:'KG1-Lime',a:7,pl:0,h:0.0},
-  {w:'2026-02-02',cls:'2I',a:25,pl:23,h:13.08},
-  {w:'2026-02-02',cls:'KG1-Lilac',a:3,pl:1,h:0.08},
-  {w:'2026-02-02',cls:'3G',a:17,pl:16,h:6.1},
-  {w:'2026-02-02',cls:'3H',a:22,pl:22,h:13.5},
-  {w:'2026-02-02',cls:'3C',a:16,pl:15,h:7.39},
-  {w:'2026-02-02',cls:'1J',a:22,pl:18,h:37.47},
-  {w:'2026-02-02',cls:'1M',a:25,pl:24,h:9.63},
-  {w:'2026-02-02',cls:'3D',a:20,pl:18,h:4.55},
-  {w:'2026-02-02',cls:'2F',a:8,pl:8,h:3.14},
-  {w:'2026-02-02',cls:'KG1-Gold',a:11,pl:4,h:0.64},
-  {w:'2026-02-02',cls:'3J',a:20,pl:17,h:6.91},
-  {w:'2026-02-02',cls:'KG1-Silver',a:11,pl:10,h:3.4},
-  {w:'2026-02-02',cls:'2G',a:11,pl:9,h:1.51},
-  {w:'2026-02-02',cls:'KG1-Purple',a:6,pl:4,h:1.8},
-  {w:'2026-02-02',cls:'KG1-Blue',a:12,pl:5,h:1.76},
-  {w:'2026-02-09',cls:'3A',a:11,pl:11,h:2.88},
-  {w:'2026-02-09',cls:'KG2-Brown',a:12,pl:1,h:0.2},
-  {w:'2026-02-09',cls:'2C',a:14,pl:10,h:3.03},
-  {w:'2026-02-09',cls:'1G',a:21,pl:13,h:3.94},
-  {w:'2026-02-09',cls:'KG2-Green',a:1,pl:0,h:0.0},
-  {w:'2026-02-09',cls:'2G',a:14,pl:14,h:8.08},
-  {w:'2026-02-09',cls:'3B',a:7,pl:7,h:1.76},
-  {w:'2026-02-09',cls:'KG2-Yellow',a:17,pl:8,h:1.96},
-  {w:'2026-02-09',cls:'1J',a:23,pl:22,h:20.18},
-  {w:'2026-02-09',cls:'1B',a:25,pl:25,h:8.92},
-  {w:'2026-02-09',cls:'KG2- Blue',a:4,pl:4,h:0.6},
-  {w:'2026-02-09',cls:'2B',a:24,pl:23,h:9.55},
-  {w:'2026-02-09',cls:'1H',a:6,pl:6,h:2.73},
-  {w:'2026-02-09',cls:'KG2-Red',a:18,pl:16,h:4.33},
-  {w:'2026-02-09',cls:'3G',a:23,pl:22,h:9.24},
-  {w:'2026-02-09',cls:'2D',a:19,pl:16,h:2.81},
-  {w:'2026-02-09',cls:'3E',a:20,pl:20,h:20.36},
-  {w:'2026-02-09',cls:'1D',a:15,pl:14,h:2.7},
-  {w:'2026-02-09',cls:'3I',a:13,pl:13,h:3.89},
-  {w:'2026-02-09',cls:'KG2-Gold',a:13,pl:4,h:0.7},
-  {w:'2026-02-09',cls:'KG1-White',a:7,pl:4,h:0.53},
-  {w:'2026-02-09',cls:'KG1-Purple',a:6,pl:4,h:1.17},
-  {w:'2026-02-09',cls:'3F',a:3,pl:3,h:0.81},
-  {w:'2026-02-09',cls:'KG1-Silver',a:14,pl:9,h:2.01},
-  {w:'2026-02-09',cls:'1E',a:12,pl:12,h:5.94},
-  {w:'2026-02-09',cls:'2H',a:13,pl:13,h:2.89},
-  {w:'2026-02-09',cls:'1K',a:8,pl:7,h:1.72},
-  {w:'2026-02-09',cls:'KG1-Yellow',a:4,pl:0,h:0.0},
-  {w:'2026-02-09',cls:'3J',a:17,pl:12,h:2.37},
-  {w:'2026-02-09',cls:'KG2-White',a:8,pl:6,h:1.71},
-  {w:'2026-02-09',cls:'KG2-Silver',a:7,pl:5,h:1.06},
-  {w:'2026-02-09',cls:'2F',a:19,pl:16,h:8.26},
-  {w:'2026-02-09',cls:'2K',a:13,pl:12,h:2.42},
-  {w:'2026-02-09',cls:'KG2-Purple',a:2,pl:0,h:0.0},
-  {w:'2026-02-09',cls:'1L',a:9,pl:6,h:1.1},
-  {w:'2026-02-09',cls:'1A',a:15,pl:14,h:1.38},
-  {w:'2026-02-09',cls:'2I',a:7,pl:6,h:3.71},
-  {w:'2026-02-09',cls:'3C',a:23,pl:22,h:11.64},
-  {w:'2026-02-09',cls:'1C',a:15,pl:15,h:6.12},
-  {w:'2026-02-09',cls:'1M',a:23,pl:23,h:11.25},
-  {w:'2026-02-09',cls:'1F',a:22,pl:21,h:13.1},
-  {w:'2026-02-09',cls:'3H',a:17,pl:17,h:9.23},
-  {w:'2026-02-09',cls:'KG1-Blue',a:6,pl:1,h:0.09},
-  {w:'2026-02-09',cls:'3D',a:4,pl:4,h:0.35},
-  {w:'2026-02-09',cls:'KG2-Lilac',a:5,pl:0,h:0.0},
-  {w:'2026-02-09',cls:'2J',a:5,pl:5,h:0.7},
-  {w:'2026-02-09',cls:'KG2-Lime',a:6,pl:5,h:0.49},
-  {w:'2026-02-16',cls:'3J',a:24,pl:22,h:16.06},
-  {w:'2026-02-16',cls:'KG2-White',a:17,pl:13,h:2.16},
-  {w:'2026-02-16',cls:'KG2-Purple',a:14,pl:12,h:5.55},
-  {w:'2026-02-16',cls:'1C',a:23,pl:24,h:8.63},
-  {w:'2026-02-16',cls:'KG2-Lilac',a:6,pl:1,h:0.27},
-  {w:'2026-02-16',cls:'KG1-Blue',a:23,pl:17,h:8.58},
-  {w:'2026-02-16',cls:'KG1-Red',a:17,pl:6,h:1.98},
-  {w:'2026-02-16',cls:'1D',a:14,pl:14,h:7.01},
-  {w:'2026-02-16',cls:'KG2-Red',a:24,pl:24,h:11.96},
-  {w:'2026-02-16',cls:'2C',a:8,pl:7,h:2.22},
-  {w:'2026-02-16',cls:'KG1-White',a:21,pl:15,h:10.19},
-  {w:'2026-02-16',cls:'KG2-Lime',a:22,pl:16,h:6.57},
-  {w:'2026-02-16',cls:'1H',a:15,pl:15,h:6.65},
-  {w:'2026-02-16',cls:'KG2-Gold',a:21,pl:12,h:3.48},
-  {w:'2026-02-16',cls:'3F',a:21,pl:19,h:5.42},
-  {w:'2026-02-16',cls:'KG1-Silver',a:23,pl:17,h:5.17},
-  {w:'2026-02-16',cls:'2I',a:5,pl:5,h:3.07},
-  {w:'2026-02-16',cls:'1F',a:18,pl:18,h:9.94},
-  {w:'2026-02-16',cls:'1B',a:26,pl:26,h:15.11},
-  {w:'2026-02-16',cls:'KG2-Orange',a:14,pl:7,h:0.85},
-  {w:'2026-02-16',cls:'3H',a:19,pl:19,h:5.23},
-  {w:'2026-02-16',cls:'2K',a:10,pl:10,h:1.47},
-  {w:'2026-02-16',cls:'2J',a:3,pl:3,h:0.72},
-  {w:'2026-02-16',cls:'2D',a:24,pl:24,h:10.27},
-  {w:'2026-02-16',cls:'KG2-Silver',a:21,pl:15,h:4.22},
-  {w:'2026-02-16',cls:'KG1-Lilac',a:18,pl:5,h:1.19},
-  {w:'2026-02-16',cls:'1L',a:24,pl:21,h:7.06},
-  {w:'2026-02-16',cls:'KG1-Green',a:22,pl:12,h:3.92},
-  {w:'2026-02-16',cls:'KG1-Purple',a:9,pl:9,h:2.11},
-  {w:'2026-02-16',cls:'1M',a:24,pl:24,h:20.29},
-  {w:'2026-02-16',cls:'KG1-Yellow',a:6,pl:1,h:0.15},
-  {w:'2026-02-16',cls:'1A',a:22,pl:21,h:6.5},
-  {w:'2026-02-16',cls:'3D',a:2,pl:2,h:1.2},
-  {w:'2026-02-16',cls:'1E',a:2,pl:2,h:1.09},
-  {w:'2026-02-16',cls:'3A',a:11,pl:11,h:3.39},
-  {w:'2026-02-16',cls:'1G',a:23,pl:15,h:4.36},
-  {w:'2026-02-16',cls:'KG2-Yellow',a:16,pl:12,h:4.7},
-  {w:'2026-02-16',cls:'KG1-Lime',a:17,pl:3,h:0.44},
-  {w:'2026-02-16',cls:'1K',a:14,pl:13,h:2.96},
-  {w:'2026-02-16',cls:'2H',a:15,pl:15,h:4.24},
-  {w:'2026-02-16',cls:'2F',a:1,pl:1,h:0.0},
-  {w:'2026-02-16',cls:'1J',a:14,pl:14,h:12.38},
-  {w:'2026-02-16',cls:'2G',a:24,pl:22,h:12.9},
-  {w:'2026-02-16',cls:'Kg1-Orange',a:17,pl:15,h:11.29},
-  {w:'2026-02-16',cls:'KG2- Blue',a:22,pl:19,h:12.46},
-  {w:'2026-02-16',cls:'KG1-Brown',a:20,pl:13,h:7.36},
-  {w:'2026-02-16',cls:'2B',a:2,pl:2,h:0.0},
-  {w:'2026-02-16',cls:'3E',a:25,pl:25,h:52.19},
-  {w:'2026-02-16',cls:'3I',a:7,pl:6,h:0.78},
-  {w:'2026-02-16',cls:'KG1-Gold',a:20,pl:6,h:1.64},
-  {w:'2026-02-16',cls:'KG2-Brown',a:16,pl:6,h:1.67},
-  {w:'2026-02-16',cls:'KG2-Green',a:15,pl:5,h:1.04},
-  {w:'2026-02-16',cls:'3G',a:21,pl:21,h:3.51},
-  {w:'2026-02-23',cls:'KG2-Orange',a:11,pl:10,h:4.44},
-  {w:'2026-02-23',cls:'KG1-Blue',a:23,pl:18,h:16.74},
-  {w:'2026-02-23',cls:'KG1-Lilac',a:21,pl:15,h:6.53},
-  {w:'2026-02-23',cls:'KG2-Silver',a:18,pl:17,h:6.89},
-  {w:'2026-02-23',cls:'3E',a:25,pl:25,h:24.95},
-  {w:'2026-02-23',cls:'2D',a:2,pl:1,h:0.0},
-  {w:'2026-02-23',cls:'1L',a:22,pl:18,h:8.0},
-  {w:'2026-02-23',cls:'3C',a:26,pl:24,h:19.82},
-  {w:'2026-02-23',cls:'3F',a:18,pl:16,h:7.22},
-  {w:'2026-02-23',cls:'1B',a:19,pl:20,h:9.5},
-  {w:'2026-02-23',cls:'2G',a:20,pl:18,h:2.22},
-  {w:'2026-02-23',cls:'3I',a:6,pl:6,h:0.92},
-  {w:'2026-02-23',cls:'3H',a:20,pl:20,h:7.29},
-  {w:'2026-02-23',cls:'1A',a:20,pl:20,h:10.6},
-  {w:'2026-02-23',cls:'Kg1-Orange',a:16,pl:10,h:5.61},
-  {w:'2026-02-23',cls:'KG2- Blue',a:23,pl:21,h:17.62},
-  {w:'2026-02-23',cls:'KG2-White',a:22,pl:20,h:6.43},
-  {w:'2026-02-23',cls:'3J',a:18,pl:15,h:4.39},
-  {w:'2026-02-23',cls:'KG2-Green',a:9,pl:3,h:0.46},
-  {w:'2026-02-23',cls:'KG2-Gold',a:21,pl:15,h:4.08},
-  {w:'2026-02-23',cls:'KG2-Brown',a:20,pl:12,h:2.63},
-  {w:'2026-02-23',cls:'KG1-Lime',a:21,pl:9,h:3.77},
-  {w:'2026-02-23',cls:'KG1-Yellow',a:15,pl:8,h:2.41},
-  {w:'2026-02-23',cls:'KG1-White',a:21,pl:18,h:10.77},
-  {w:'2026-02-23',cls:'KG2-Lime',a:15,pl:11,h:3.33},
-  {w:'2026-02-23',cls:'1H',a:7,pl:7,h:1.45},
-  {w:'2026-02-23',cls:'1G',a:20,pl:14,h:2.16},
-  {w:'2026-02-23',cls:'1D',a:12,pl:12,h:2.38},
-  {w:'2026-02-23',cls:'2B',a:24,pl:23,h:9.32},
-  {w:'2026-02-23',cls:'KG1-Brown',a:14,pl:13,h:8.03},
-  {w:'2026-02-23',cls:'3B',a:9,pl:9,h:5.06},
-  {w:'2026-02-23',cls:'KG1-Green',a:18,pl:10,h:3.3},
-  {w:'2026-02-23',cls:'2I',a:12,pl:12,h:3.72},
-  {w:'2026-02-23',cls:'3G',a:20,pl:20,h:6.47},
-  {w:'2026-02-23',cls:'2A',a:3,pl:3,h:0.26},
-  {w:'2026-02-23',cls:'1K',a:7,pl:7,h:1.84},
-  {w:'2026-02-23',cls:'3A',a:13,pl:12,h:1.56},
-  {w:'2026-02-23',cls:'2J',a:3,pl:3,h:0.17},
-  {w:'2026-02-23',cls:'1E',a:2,pl:2,h:0.35},
-  {w:'2026-02-23',cls:'1M',a:25,pl:25,h:14.69},
-  {w:'2026-02-23',cls:'KG2-Purple',a:15,pl:13,h:6.91},
-  {w:'2026-02-23',cls:'2H',a:21,pl:21,h:13.92},
-  {w:'2026-02-23',cls:'KG2-Yellow',a:10,pl:10,h:3.3},
-  {w:'2026-02-23',cls:'1C',a:12,pl:12,h:2.27},
-  {w:'2026-02-23',cls:'2C',a:24,pl:18,h:3.69},
-  {w:'2026-02-23',cls:'KG1-Gold',a:18,pl:10,h:2.55},
-  {w:'2026-02-23',cls:'KG2-Lilac',a:7,pl:1,h:0.0},
-  {w:'2026-02-23',cls:'1F',a:14,pl:12,h:4.07},
-  {w:'2026-02-23',cls:'KG1-Silver',a:15,pl:13,h:4.65},
-  {w:'2026-02-23',cls:'KG1-Purple',a:18,pl:9,h:2.44},
-  {w:'2026-02-23',cls:'3D',a:2,pl:2,h:0.72},
-  {w:'2026-02-23',cls:'KG1-Red',a:21,pl:6,h:1.16},
-  {w:'2026-02-23',cls:'KG2-Red',a:21,pl:21,h:9.3},
-  {w:'2026-02-23',cls:'1J',a:15,pl:14,h:8.82},
-  {w:'2026-03-02',cls:'3H',a:6,pl:6,h:1.6},
-  {w:'2026-03-02',cls:'2J',a:15,pl:13,h:7.06},
-  {w:'2026-03-02',cls:'3F',a:1,pl:1,h:0.26},
-  {w:'2026-03-02',cls:'3C',a:5,pl:5,h:1.4},
-  {w:'2026-03-02',cls:'1E',a:6,pl:6,h:4.79},
-  {w:'2026-03-02',cls:'2F',a:1,pl:1,h:0.06},
-  {w:'2026-03-02',cls:'2G',a:2,pl:2,h:0.25},
-  {w:'2026-03-02',cls:'1L',a:3,pl:3,h:2.51},
-  {w:'2026-03-02',cls:'1D',a:1,pl:1,h:0.1},
-  {w:'2026-03-02',cls:'3E',a:4,pl:4,h:0.29},
-  {w:'2026-03-02',cls:'2A',a:1,pl:1,h:0.51},
-  {w:'2026-03-02',cls:'1B',a:7,pl:7,h:1.16},
-  {w:'2026-03-02',cls:'1F',a:4,pl:4,h:1.4},
-  {w:'2026-03-02',cls:'3J',a:6,pl:5,h:1.37},
-  {w:'2026-03-02',cls:'1J',a:1,pl:1,h:0.33},
-  {w:'2026-03-02',cls:'2H',a:2,pl:2,h:0.24},
-  {w:'2026-03-02',cls:'2K',a:3,pl:3,h:0.86},
-  {w:'2026-03-02',cls:'3A',a:1,pl:1,h:0.0},
-  {w:'2026-03-02',cls:'1A',a:4,pl:4,h:1.75},
-  {w:'2026-03-02',cls:'2I',a:5,pl:5,h:0.43},
-  {w:'2026-03-02',cls:'3B',a:6,pl:6,h:1.69},
-  {w:'2026-03-02',cls:'1C',a:2,pl:2,h:0.44},
-  {w:'2026-03-09',cls:'2H',a:1,pl:1,h:0.13},
-  {w:'2026-03-09',cls:'3H',a:1,pl:1,h:0.27},
-  {w:'2026-03-09',cls:'1A',a:1,pl:1,h:0.16},
-  {w:'2026-03-09',cls:'1C',a:1,pl:1,h:0.53},
-  {w:'2026-03-09',cls:'1D',a:1,pl:1,h:0.02},
-  {w:'2026-03-16',cls:'1K',a:3,pl:2,h:0.58},
-  {w:'2026-03-16',cls:'1F',a:1,pl:1,h:0.26},
-  {w:'2026-03-16',cls:'3A',a:3,pl:3,h:0.15},
-  {w:'2026-03-16',cls:'2J',a:7,pl:7,h:1.44},
-  {w:'2026-03-16',cls:'2B',a:3,pl:3,h:0.01},
-  {w:'2026-03-16',cls:'3J',a:1,pl:1,h:0.19},
-  {w:'2026-03-16',cls:'1J',a:1,pl:1,h:0.01},
-  {w:'2026-03-16',cls:'1H',a:2,pl:2,h:0.46},
-  {w:'2026-03-16',cls:'1C',a:1,pl:1,h:0.58},
-  {w:'2026-03-16',cls:'3E',a:1,pl:1,h:0.49},
-  {w:'2026-03-23',cls:'3E',a:15,pl:15,h:3.98},
-  {w:'2026-03-23',cls:'3B',a:7,pl:7,h:4.42},
-  {w:'2026-03-23',cls:'2F',a:4,pl:4,h:1.24},
-  {w:'2026-03-23',cls:'1H',a:8,pl:8,h:5.55},
-  {w:'2026-03-23',cls:'3A',a:14,pl:14,h:5.28},
-  {w:'2026-03-23',cls:'3H',a:11,pl:11,h:2.92},
-  {w:'2026-03-23',cls:'2H',a:3,pl:3,h:0.15},
-  {w:'2026-03-23',cls:'1M',a:6,pl:6,h:3.7},
-  {w:'2026-03-23',cls:'1C',a:4,pl:4,h:1.59},
-  {w:'2026-03-23',cls:'1L',a:3,pl:3,h:0.72},
-  {w:'2026-03-23',cls:'1B',a:12,pl:12,h:5.38},
-  {w:'2026-03-23',cls:'1J',a:11,pl:11,h:4.25},
-  {w:'2026-03-23',cls:'1A',a:8,pl:8,h:6.03},
-  {w:'2026-03-23',cls:'2J',a:18,pl:18,h:9.48},
-  {w:'2026-03-23',cls:'1E',a:18,pl:18,h:7.96},
-  {w:'2026-03-23',cls:'2A',a:22,pl:15,h:4.26},
-  {w:'2026-03-23',cls:'1F',a:5,pl:5,h:1.07},
-  {w:'2026-03-23',cls:'2B',a:12,pl:11,h:2.89},
-  {w:'2026-03-23',cls:'2K',a:3,pl:2,h:0.28},
-  {w:'2026-03-23',cls:'3C',a:5,pl:5,h:1.87},
-  {w:'2026-03-23',cls:'1G',a:3,pl:1,h:0.36},
-  {w:'2026-03-23',cls:'2D',a:12,pl:11,h:5.88},
-  {w:'2026-03-23',cls:'3J',a:12,pl:12,h:2.76},
-  {w:'2026-03-23',cls:'2I',a:6,pl:6,h:1.33},
-  {w:'2026-03-23',cls:'2C',a:3,pl:3,h:0.7},
-  {w:'2026-03-23',cls:'2G',a:14,pl:12,h:2.66},
-  {w:'2026-03-23',cls:'1D',a:7,pl:7,h:3.91},
-  {w:'2026-03-23',cls:'1K',a:2,pl:1,h:0.33},
-  {w:'2026-03-30',cls:'KG1-Lilac',a:3,pl:2,h:0.73},
-  {w:'2026-03-30',cls:'KG2-Yellow',a:5,pl:5,h:2.46},
-  {w:'2026-03-30',cls:'2E',a:0,pl:0,h:0.0},
-  {w:'2026-03-30',cls:'1A',a:16,pl:16,h:11.72},
-  {w:'2026-03-30',cls:'KG1-Green',a:4,pl:3,h:0.73},
-  {w:'2026-03-30',cls:'2J',a:21,pl:19,h:9.58},
-  {w:'2026-03-30',cls:'3F',a:1,pl:1,h:0.08},
-  {w:'2026-03-30',cls:'3B',a:10,pl:7,h:3.36},
-  {w:'2026-03-30',cls:'1B',a:8,pl:8,h:4.3},
-  {w:'2026-03-30',cls:'2G',a:9,pl:8,h:1.82},
-  {w:'2026-03-30',cls:'1M',a:2,pl:2,h:1.31},
-  {w:'2026-03-30',cls:'1I',a:0,pl:0,h:0.0},
-  {w:'2026-03-30',cls:'3J',a:8,pl:7,h:1.12},
-  {w:'2026-03-30',cls:'1F',a:7,pl:7,h:1.9},
-  {w:'2026-03-30',cls:'KG1-Red',a:5,pl:2,h:0.66},
-  {w:'2026-03-30',cls:'2D',a:6,pl:6,h:1.68},
-  {w:'2026-03-30',cls:'1C',a:3,pl:3,h:1.14},
-  {w:'2026-03-30',cls:'KG1-Purple',a:2,pl:2,h:0.0},
-  {w:'2026-03-30',cls:'1L',a:3,pl:3,h:2.21},
-  {w:'2026-03-30',cls:'KG1-Lime',a:1,pl:1,h:0.2},
-  {w:'2026-03-30',cls:'KG1-White',a:9,pl:9,h:3.58},
-  {w:'2026-03-30',cls:'3D',a:12,pl:10,h:1.96},
-  {w:'2026-03-30',cls:'2C',a:18,pl:15,h:3.91},
-  {w:'2026-03-30',cls:'KG2-Silver',a:3,pl:3,h:2.02},
-  {w:'2026-03-30',cls:'KG2-Green',a:5,pl:4,h:2.95},
-  {w:'2026-03-30',cls:'KG1-Gold',a:10,pl:6,h:3.12},
-  {w:'2026-03-30',cls:'KG1-Silver',a:7,pl:5,h:2.29},
-  {w:'2026-03-30',cls:'KG1-Yellow',a:5,pl:2,h:2.01},
-  {w:'2026-03-30',cls:'KG2-White',a:3,pl:3,h:4.86},
-  {w:'2026-03-30',cls:'Kg1-Orange',a:4,pl:4,h:2.3},
-  {w:'2026-03-30',cls:'3A',a:11,pl:9,h:2.91},
-  {w:'2026-03-30',cls:'3C',a:10,pl:10,h:5.38},
-  {w:'2026-03-30',cls:'3I',a:2,pl:2,h:0.16},
-  {w:'2026-03-30',cls:'1E',a:3,pl:3,h:0.88},
-  {w:'2026-03-30',cls:'KG2-Red',a:12,pl:12,h:3.25},
-  {w:'2026-03-30',cls:'KG2-Gold',a:6,pl:4,h:2.0},
-  {w:'2026-03-30',cls:'3G',a:0,pl:0,h:0.0},
-  {w:'2026-03-30',cls:'1J',a:20,pl:19,h:12.52},
-  {w:'2026-03-30',cls:'KG2-Brown',a:11,pl:7,h:3.47},
-  {w:'2026-03-30',cls:'2H',a:6,pl:6,h:1.25},
-  {w:'2026-03-30',cls:'KG1-Brown',a:3,pl:2,h:0.66},
-  {w:'2026-03-30',cls:'3H',a:15,pl:15,h:5.05},
-  {w:'2026-03-30',cls:'KG2-Lilac',a:3,pl:2,h:1.18},
-  {w:'2026-03-30',cls:'1K',a:7,pl:5,h:0.89},
-  {w:'2026-03-30',cls:'KG2- Blue',a:5,pl:5,h:4.04},
-  {w:'2026-03-30',cls:'KG2-Purple',a:5,pl:4,h:1.38},
-  {w:'2026-03-30',cls:'1H',a:7,pl:7,h:2.98},
-  {w:'2026-03-30',cls:'1G',a:1,pl:1,h:1.8},
-  {w:'2026-03-30',cls:'KG2-Lime',a:14,pl:13,h:4.4},
-  {w:'2026-03-30',cls:'1D',a:3,pl:3,h:1.15},
-  {w:'2026-03-30',cls:'KG2-Orange',a:4,pl:4,h:1.07},
-  {w:'2026-03-30',cls:'KG1-Blue',a:3,pl:2,h:1.03},
-  {w:'2026-03-30',cls:'2A',a:0,pl:0,h:0.0},
-  {w:'2026-03-30',cls:'2K',a:4,pl:4,h:0.47},
-];
-
-// ════════════════════════════════════════════════════════════
-//  WEEKLY TREND DATA — sourced from Omni User Group Summary Daily, Apr 3, 2026
-//  UAE - ENS - MBZ · My Math Academy & My Reading Academy
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+//  WEEKLY TREND DATA â sourced from Omni User Group Summary Daily, Mar 26 2026
+//  UAE - ENS - MBZ Â· My Math Academy & My Reading Academy
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const WEEKLY_DATA = [
-  {week:'2025-11-24', label:'Nov 24', mmaActive:1, mmaPlaced:0, mraActive:1, mraPlaced:0},
-  {week:'2026-01-05', label:'Jan 5', mmaActive:37, mmaPlaced:3, mraActive:16, mraPlaced:0},
-  {week:'2026-01-12', label:'Jan 12', mmaActive:747, mmaPlaced:195, mraActive:554, mraPlaced:120},
-  {week:'2026-01-19', label:'Jan 19', mmaActive:977, mmaPlaced:550, mraActive:924, mraPlaced:487},
-  {week:'2026-01-26', label:'Jan 26', mmaActive:760, mmaPlaced:556, mraActive:815, mraPlaced:507},
-  {week:'2026-02-02', label:'Feb 2', mmaActive:547, mmaPlaced:434, mraActive:611, mraPlaced:417},
-  {week:'2026-02-09', label:'Feb 9', mmaActive:441, mmaPlaced:370, mraActive:418, mraPlaced:306},
-  {week:'2026-02-16', label:'Feb 16', mmaActive:701, mmaPlaced:494, mraActive:632, mraPlaced:437},
-  {week:'2026-02-23', label:'Feb 23', mmaActive:622, mmaPlaced:477, mraActive:665, mraPlaced:502},
-  {week:'2026-03-02', label:'Mar 2', mmaActive:67, mmaPlaced:63, mraActive:53, mraPlaced:51},
-  {week:'2026-03-09', label:'Mar 9', mmaActive:4, mmaPlaced:4, mraActive:4, mraPlaced:4},
-  {week:'2026-03-16', label:'Mar 16', mmaActive:12, mmaPlaced:10, mraActive:15, mraPlaced:13},
-  {week:'2026-03-23', label:'Mar 23', mmaActive:184, mmaPlaced:169, mraActive:173, mraPlaced:144},
-  {week:'2026-03-30', label:'Mar 30', mmaActive:294, mmaPlaced:246, mraActive:225, mraPlaced:195},
+    {week:'2025-11-24', label:'Nov 24', mmaActive:1,   mmaPlaced:0,   mraActive:1,   mraPlaced:0},
+    {week:'2026-01-05', label:'Jan 5',  mmaActive:37,  mmaPlaced:3,   mraActive:16,  mraPlaced:0},
+    {week:'2026-01-12', label:'Jan 12', mmaActive:747, mmaPlaced:195, mraActive:554, mraPlaced:120},
+    {week:'2026-01-19', label:'Jan 19', mmaActive:977, mmaPlaced:550, mraActive:924, mraPlaced:487},
+    {week:'2026-01-26', label:'Jan 26', mmaActive:760, mmaPlaced:556, mraActive:815, mraPlaced:507},
+    {week:'2026-02-02', label:'Feb 2',  mmaActive:547, mmaPlaced:434, mraActive:611, mraPlaced:417},
+    {week:'2026-02-09', label:'Feb 9',  mmaActive:441, mmaPlaced:370, mraActive:418, mraPlaced:306},
+    {week:'2026-02-16', label:'Feb 16', mmaActive:701, mmaPlaced:494, mraActive:632, mraPlaced:437},
+    {week:'2026-02-23', label:'Feb 23', mmaActive:622, mmaPlaced:477, mraActive:665, mraPlaced:502},
+    {week:'2026-03-02', label:'Mar 2',  mmaActive:67,  mmaPlaced:63,  mraActive:53,  mraPlaced:51},
+    {week:'2026-03-09', label:'Mar 9',  mmaActive:4,   mmaPlaced:4,   mraActive:4,   mraPlaced:4},
+    {week:'2026-03-16', label:'Mar 16', mmaActive:12,  mmaPlaced:10,  mraActive:15,  mraPlaced:13},
+    {week:'2026-03-23', label:'Mar 23', mmaActive:174, mmaPlaced:159, mraActive:169, mraPlaced:140},
 ];
 
 function renderTrendsChart(from, to) {
@@ -1212,14 +724,14 @@ function renderTrendsChart(from, to) {
 }
 
 function fmtDate(iso) {
-    if (!iso) return '—';
+    if (!iso) return 'â';
     const [y,m,d] = iso.split('-');
     const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     return `${months[+m-1]} ${+d}, ${y}`;
 }
 
 function updateDateRangeLabels(from, to) {
-    const label = `${fmtDate(from)} → ${fmtDate(to)}`;
+    const label = `${fmtDate(from)} â ${fmtDate(to)}`;
     const el = document.getElementById('drLabel');
     if (el) el.textContent = label;
 }
@@ -1254,16 +766,16 @@ function applyCustomRange() {
     }
 }
 
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 //  STATE
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const state = { sortStates: {} };
 let charts = {};
 let currentDateRange = { from: WEEKLY_DATA[0].week, to: WEEKLY_DATA[WEEKLY_DATA.length - 1].week };
 
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 //  DATE-RANGE HELPERS
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function getDateRangeStats(from, to) {
     const rows = WEEKLY_DATA.filter(r => r.week >= from && r.week <= to);
     if (!rows.length) return null;
@@ -1301,9 +813,9 @@ function updateSnapshotNotices() {
     if (gradeNote) gradeNote.style.display = isFullRange ? 'none' : 'flex';
 }
 
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 //  CASCADING FILTER POPULATION
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 
 function unique(arr) { return [...new Set(arr)].sort(); }
 
@@ -1362,23 +874,23 @@ function resetFilters() {
     applyFilters();
 }
 
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 //  HELPERS
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function fmt(n) {
     if (n >= 1000) return (n/1000).toFixed(1).replace(/\.0$/,'') + 'K';
     return n.toLocaleString();
 }
 
 function productTag(p) {
-    if (p === 'My Math Academy')    return `<span class="prod-tag prod-math">📐 My Math Academy</span>`;
-    if (p === 'My Reading Academy') return `<span class="prod-tag prod-reading">📖 My Reading Academy</span>`;
+    if (p === 'My Math Academy')    return `<span class="prod-tag prod-math">ð My Math Academy</span>`;
+    if (p === 'My Reading Academy') return `<span class="prod-tag prod-reading">ð My Reading Academy</span>`;
     return `<span class="prod-tag">${p}</span>`;
 }
 
 function growthBadge(g) {
     const cls = g >= 8 ? 'growth-high' : g >= 5 ? 'growth-mid' : g >= 3 ? 'growth-low' : 'growth-min';
-    return `<span class="growth-badge ${cls}">${g}% ↑</span>`;
+    return `<span class="growth-badge ${cls}">${g}% â</span>`;
 }
 
 function utilBadge(active, placed) {
@@ -1387,9 +899,9 @@ function utilBadge(active, placed) {
     return `<span class="util-badge ${cls}">${pct}% placed</span>`;
 }
 
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 //  FILTER + SCORE
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function getFiltered() {
     const org      = document.getElementById('fOrg').value;
     const district = document.getElementById('fDistrict').value;
@@ -1414,16 +926,13 @@ function getScore(s, criteria) {
 
 function applyFilters() {
     updateKPIs();
-    updateCharts();
+    try { updateCharts(); } catch(e) { console.warn('Chart update skipped:', e); }
     renderSchoolTable();
-    renderGradeTable();
-    renderClassroomTable(currentClsFilter);
-    updateSnapshotNotices();
 }
 
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 //  KPIs
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function updateKPIs() {
     const data = getFiltered();
     const totalSkills = data.reduce((s,r) => s + r.totalSkills, 0);
@@ -1431,16 +940,16 @@ function updateKPIs() {
     const wtdGrowth = data.length ? (data.reduce((s,r) => s + r.growth * r.placed, 0) / data.reduce((s,r) => s + r.placed, 0)) : 0;
 
     document.getElementById('kpiSchools').textContent    = programs.length;
-    document.getElementById('kpiSchoolsSub').textContent = `My Math Academy + My Reading Academy · ENS-MBZ`;
+    document.getElementById('kpiSchoolsSub').textContent = `My Math Academy + My Reading Academy Â· ENS-MBZ`;
     document.getElementById('kpiSkills').textContent     = fmt(totalSkills);
-    document.getElementById('kpiSkillsSub').textContent  = 'placed students × avg skills completed';
+    document.getElementById('kpiSkillsSub').textContent  = 'placed students Ã avg skills completed';
     document.getElementById('kpiGrowth').textContent     = wtdGrowth.toFixed(1) + '%';
     document.getElementById('kpiGrowthSub').textContent  = 'Weighted avg growth, placed students';
 }
 
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 //  CHARTS
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const CHART_COLORS_MATH    = '#0341EC';
 const CHART_COLORS_READING = '#1EA6F9';
 
@@ -1456,7 +965,7 @@ function buildSkillsChart() {
     charts.skills = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: data.map(s => s.product),
+            labels: data.map(s => s.school.replace(' Elementary School','').replace(' Elementary','')),
             datasets: [{
                 label: 'Total Skills Completed',
                 data: data.map(s => s.totalSkills),
@@ -1487,20 +996,20 @@ function buildHoursChart() {
     charts.hours = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: data.map(s => s.product),
+            labels: data.map(s => s.school.replace(' Elementary School','').replace(' Elementary','')),
             datasets: [{
                 label: 'Avg Usage Hours',
                 data: data.map(s => s.avgHours),
-                backgroundColor: data.map(s => s.product === 'My Math Academy' ? CHART_COLORS_MATH + 'BB' : CHART_COLORS_READING + 'BB'),
-                borderColor:     data.map(s => s.product === 'My Math Academy' ? CHART_COLORS_MATH : CHART_COLORS_READING),
+                backgroundColor: '#FFD00088',
+                borderColor: '#C8A800',
                 borderWidth: 1,
                 borderRadius: 4,
             }]
         },
-        options: {
+        options:{
             responsive: true, maintainAspectRatio: false,
             plugins: { legend: { display: false } },
-            scales: {
+            scales: { 
                 x: { grid: { display: false }, ticks: { font: { size: 10 } } },
                 y: { beginAtZero: true, ticks: { font: { size: 11 }, callback: v => v + ' hrs' } }
             }
@@ -1510,9 +1019,9 @@ function buildHoursChart() {
 
 function updateCharts() { buildSkillsChart(); buildHoursChart(); }
 
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 //  SCHOOL TABLE
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function renderSchoolTable() {
     const criteria = document.getElementById('fCriteria').value;
     const ranked = getFiltered()
@@ -1554,9 +1063,9 @@ function renderSchoolTable() {
     }).join('');
 }
 
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 //  TABLE SORT
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function sortTbl(tableId, field, initAsc) {
     const key = tableId+'_'+field;
     state.sortStates[key] = (state.sortStates[key] === undefined) ? initAsc : !state.sortStates[key];
@@ -1585,130 +1094,25 @@ function sortTbl(tableId, field, initAsc) {
     rows.forEach(r => tbody.appendChild(r));
 }
 
-
-// ════════════════════════════════════════════════════════════
-//  GRADE-LEVEL BREAKDOWN
-// ════════════════════════════════════════════════════════════
-function renderGradeTable() {
-    const { from, to } = currentDateRange;
-    const isFullRange = from <= WEEKLY_DATA[0].week && to >= WEEKLY_DATA[WEEKLY_DATA.length - 1].week;
-
-    ['My Math Academy', 'My Reading Academy'].forEach(prod => {
-        const bodyId = prod === 'My Math Academy' ? 'gradeMmaBody' : 'gradeMraBody';
-        const pKey   = prod === 'My Math Academy' ? 'mma' : 'mra';
-        const tbody = document.getElementById(bodyId);
-        if (!tbody) return;
-
-        let rows;
-        if (isFullRange) {
-            // Use the static GRADE_DATA for full range (most accurate cumulative numbers)
-            rows = GRADE_DATA.filter(g => g.product === prod);
-        } else {
-            // Aggregate from weekly grade data within the selected date range
-            // Use MAX for active/placed (unique students, not additive across weeks)
-            // Use weighted averages for skills/growth, sum for hours
-            const filtered = WG.filter(r => r.p === pKey && r.w >= from && r.w <= to);
-            const byGrade = {};
-            filtered.forEach(r => {
-                if (!byGrade[r.g]) byGrade[r.g] = { grade: r.g, active: 0, placed: 0, totalHours: 0, skillsWtd: 0, growthWtd: 0, plWtdSum: 0, weeks: 0 };
-                const g = byGrade[r.g];
-                g.active  = Math.max(g.active, r.a);
-                g.placed  = Math.max(g.placed, r.pl);
-                g.totalHours += r.h;
-                // Weight skills and growth by weekly placed count for proper averaging
-                g.skillsWtd += r.sk * r.pl;
-                g.growthWtd += r.gr * r.pl;
-                g.plWtdSum  += r.pl; // sum of weekly placed for weighting denominator
-                g.weeks++;
-            });
-            const gradeOrder = ['Pre-K','Kindergarten','1st Grade','2nd Grade','3rd Grade'];
-            rows = gradeOrder.map(gn => byGrade[gn]).filter(Boolean).map(g => {
-                const avgHrs = g.placed > 0 ? (g.totalHours / 60 / g.placed).toFixed(1) : '0.0';
-                const avgSk  = g.plWtdSum > 0 ? Math.round(g.skillsWtd / g.plWtdSum) : 0;
-                const avgGr  = g.plWtdSum > 0 ? +(g.growthWtd / g.plWtdSum).toFixed(1) : 0;
-                // Find matching static row for priorKnow (doesn't change by date)
-                const staticRow = GRADE_DATA.find(s => s.product === prod && s.grade === g.grade);
-                return {
-                    grade: g.grade, placed: g.placed, avgHours: +avgHrs, avgSkills: avgSk,
-                    priorKnow: staticRow ? staticRow.priorKnow : 0, growth: avgGr,
-                    totalSkills: g.placed * avgSk
-                };
-            });
-        }
-
-        const maxSkills = Math.max(...rows.map(g => g.totalSkills || 0), 1);
-        tbody.innerHTML = rows.map(g => {
-            const pct = Math.round(((g.totalSkills || 0) / maxSkills) * 100);
-            const isTop = (g.totalSkills || 0) === maxSkills;
-            return `<tr${isTop ? ' class="rank-1"' : ''}>
-                <td><strong>${g.grade}</strong></td>
-                <td>${g.placed.toLocaleString()}</td>
-                <td>${g.avgHours} hrs</td>
-                <td><strong>${g.avgSkills}</strong></td>
-                <td>${g.priorKnow}%</td>
-                <td>${growthBadge(g.growth)}</td>
-                <td>
-                    <div class="prog-wrap">
-                        <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
-                        <span style="font-size:12px;font-weight:700;color:var(--navy)">${(g.totalSkills || 0).toLocaleString()}</span>
-                    </div>
-                </td>
-            </tr>`;
-        }).join('');
-    });
-}
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 //  CLASSROOM BREAKDOWN
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function renderClassroomTable(filter) {
-    const { from, to } = currentDateRange;
-    const isFullRange = from <= WEEKLY_DATA[0].week && to >= WEEKLY_DATA[WEEKLY_DATA.length - 1].week;
-
-    let data;
-    if (isFullRange) {
-        data = CLASSROOM_DATA;
-    } else {
-        // Aggregate weekly classroom data within date range
-        // Use MAX for active/placed (unique students, not additive across weeks)
-        const filtered = WC.filter(r => r.w >= from && r.w <= to);
-        const byCls = {};
-        filtered.forEach(r => {
-            if (!byCls[r.c]) byCls[r.c] = { cls: r.c, active: 0, placed: 0, totalHrs: 0 };
-            const c = byCls[r.c];
-            c.active = Math.max(c.active, r.a);
-            c.placed = Math.max(c.placed, r.pl);
-            c.totalHrs += r.h * r.pl; // h is avg per placed for that week, so h*pl = total hours
-        });
-        // Map to same shape as CLASSROOM_DATA, inferring grade/grp from static data
-        data = Object.values(byCls).map(c => {
-            const ref = CLASSROOM_DATA.find(s => s.cls === c.cls);
-            const avgH = c.placed > 0 ? +(c.totalHrs / c.placed).toFixed(2) : 0;
-            return {
-                grade: ref ? ref.grade : '',
-                grp: ref ? ref.grp : '',
-                cls: c.cls,
-                active: c.active,
-                placed: c.placed,
-                hours: avgH
-            };
-        });
-    }
-
-    const rows = filter === 'all' ? data : data.filter(r => r.grp === filter);
+    const rows = filter === 'all' ? CLASSROOM_DATA : CLASSROOM_DATA.filter(r => r.grp === filter);
     const tbody = document.getElementById('classroomTableBody');
     if (!tbody) return;
     tbody.innerHTML = rows.map(r => {
-        const rate = r.active > 0 ? Math.round(r.placed / r.active * 100) : 0;
+        const rate = Math.round(r.placed / r.active * 100);
         const badgeClass = rate >= 95 ? 'growth-high' : rate >= 85 ? 'growth-mid' : rate >= 70 ? 'growth-low' : 'growth-min';
-        const hrs = r.hours != null ? r.hours.toFixed(2) : '—';
-        const totalHrs = r.hours != null ? (r.hours * r.placed).toFixed(1) : '—';
+        const hrs = r.hours != null ? r.hours.toFixed(2) : 'â';
+        const totalHrs = r.hours != null ? (r.hours * r.placed).toFixed(1) : 'â';
         return `<tr>
             <td style="color:var(--muted);font-size:12px">${r.grade}</td>
             <td><strong>${r.cls}</strong></td>
             <td>${r.active}</td>
             <td>${r.placed}</td>
             <td style="font-variant-numeric:tabular-nums">${hrs}</td>
-            <td style="font-variant-numeric:tabular-nums;font-weight:600;color:var(--navy)">${totalHrs}</td>
+            <td style="font-variant-numeric:tabular-nums;&ont-weight:600;color:var(--navy)">${totalHrs}</td>
             <td>
                 <div class="prog-wrap">
                     <div class="prog-bar"><div class="prog-fill" style="width:${rate}%"></div></div>
@@ -1719,17 +1123,15 @@ function renderClassroomTable(filter) {
     }).join('');
 }
 
-let currentClsFilter = 'all';
 function filterCls(filter, btn) {
-    document.querySelectorAll('.cls-btn').forEach(b => b.classList.remove('active'));
+    btn.closest('div').querySelectorAll('.cls-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    currentClsFilter = filter;
     renderClassroomTable(filter);
 }
 
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 //  TABS
-// ════════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function switchTab(id, btn) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -1737,10 +1139,10 @@ function switchTab(id, btn) {
     btn.classList.add('active');
 }
 
-// ════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 //  INIT
-// ════════════════════════════════════════════════════════════
-// Set date picker bounds dynamically from actual data — no hardcoded dates
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Set date picker bounds dynamically from actual data â no hardcoded dates
 (function() {
     const first = WEEKLY_DATA[0].week;
     const last  = WEEKLY_DATA[WEEKLY_DATA.length - 1].week;
@@ -1755,11 +1157,10 @@ populateOrgFilter();
 populateDistrictFilter();
 populateSchoolFilter();
 updateKPIs();
-initCharts();
 renderSchoolTable();
-renderGradeTable();
 renderClassroomTable('all');
-renderTrendsChart(WEEKLY_DATA[0].week, WEEKLY_DATA[WEEKLY_DATA.length-1].week);
+try { initCharts(); } catch(e) { console.warn('Chart init skipped:', e); }
+try { renderTrendsChart(WEEKLY_DATA[0].week, WEEKLY_DATA[WEEKLY_DATA.length-1].week); } catch(e) { console.warn('Trends chart skipped:', e); }
 updateSnapshotNotices();
 // Stamp last-updated time (written by the hourly refresh task)
 (function(){
@@ -1767,7 +1168,7 @@ updateSnapshotNotices();
     if (el) {
         const d = new Date();
         const fmt = d.toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit',hour12:true});
-        el.textContent = 'Last updated: ' + fmt + ' · PROPRIETARY & CONFIDENTIAL';
+        el.textContent = 'Last updated: ' + fmt + ' Â· PROPRIETARY & CONFIDENTIAL';
     }
 })();
 </script>
