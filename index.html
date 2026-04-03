@@ -594,9 +594,9 @@
 // ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 
 const SCHOOLS = [
-    // ââ UAE - ENS - MBZ (Mohamed Bin Zayed Campus) ââââââââââ
-    { org:"UAE - ENS", district:"UAE - ENS - MBZ",     school:"Emirates National Schools Mbz",      product:"My Math Academy",    active:1404, placed:1020, avgHours:1.3, avgSkills:2,  growth:6 },
-    { org:"UAE - ENS", district:"UAE - ENS - MBZ",     school:"Emirates National Schools Mbz",      product:"My Reading Academy", active:1372, placed:964, avgHours:1.3, avgSkills:1,  growth:6 },
+    // —— UAE - ENS - MBZ (Mohamed Bin Zayed Campus) ———————
+    { org:"UAE - ENS", district:"UAE - ENS - MBZ",     school:"Emirates National Schools Mbz",      product:"My Math Academy",    active:1404, placed:1020, avgHours:1.3, avgSkills:59,  growth:6 },
+    { org:"UAE - ENS", district:"UAE - ENS - MBZ",     school:"Emirates National Schools Mbz",      product:"My Reading Academy", active:1372, placed:964, avgHours:1.3, avgSkills:157,  growth:6 },
 ];
 
 // Derived: total skills = placed Ã avgSkills
@@ -607,21 +607,21 @@ SCHOOLS.forEach(s => { s.totalSkills = s.placed * s.avgSkills; });
 //  UAE - ENS - MBZ Â· All products combined Â· 58 classrooms
 // ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const CLASSROOM_DATA = [
-    // ââ KG1 (Pre-K) – 12 classrooms ââââââââââââââââââ
+    // —— KG1 (Pre-K) – 12 classrooms ————————————
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Blue',   active:23, placed:18, hours:1.81},
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Brown',   active:22, placed:14, hours:1.4},
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Gold',   active:25, placed:14, hours:0.6},
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Green',   active:23, placed:18, hours:0.55},
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Lilac',   active:23, placed:16, hours:0.62},
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Lime',   active:24, placed:10, hours:0.47},
-    {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Orange',   active:24, placed:18, hours:1.36},
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Purple',   active:23, placed:15, hours:0.61},
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Red',   active:23, placed:7, hours:0.54},
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Silver',   active:24, placed:23, hours:1.14},
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-White',   active:21, placed:18, hours:1.55},
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Yellow',   active:24, placed:14, hours:0.67},
-    // ââ
-    // ââ KG2 (Kindergarten) – 12 classrooms ââââââââââââââââ
+    {grade:'KG1 — Pre-K', grp:'KG1', cls:'Kg1-Orange',   active:24, placed:18, hours:1.36},
+    // ——
+    // —— KG2 (Kindergarten) – 12 classrooms ————————————
     {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2- Blue',   active:24, placed:23, hours:1.61},
     {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Brown',   active:22, placed:15, hours:0.54},
     {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Gold',   active:25, placed:18, hours:0.6},
@@ -634,8 +634,8 @@ const CLASSROOM_DATA = [
     {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Silver',   active:24, placed:24, hours:0.81},
     {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-White',   active:22, placed:22, hours:0.79},
     {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Yellow',   active:24, placed:20, hours:0.62},
-    // ââ
-    // ââ Grade 1 – 13 classrooms ââââââââââââââââââââââââââââ
+    // ——
+    // —— Grade 1 – 13 classrooms ——————————————————
     {grade:'Grade 1', grp:'G1', cls:'1A',   active:26, placed:24, hours:2.59},
     {grade:'Grade 1', grp:'G1', cls:'1B',   active:26, placed:26, hours:2.65},
     {grade:'Grade 1', grp:'G1', cls:'1C',   active:26, placed:26, hours:2.86},
@@ -649,8 +649,8 @@ const CLASSROOM_DATA = [
     {grade:'Grade 1', grp:'G1', cls:'1K',   active:25, placed:24, hours:1.66},
     {grade:'Grade 1', grp:'G1', cls:'1L',   active:27, placed:25, hours:1.31},
     {grade:'Grade 1', grp:'G1', cls:'1M',   active:26, placed:26, hours:4.64},
-    // ââ
-    // ââ Grade 2 – 11 classrooms ââââââââââââââââââââââââââââ
+    // ——
+    // —— Grade 2 – 11 classrooms ——————————————————
     {grade:'Grade 2', grp:'G2', cls:'2A',   active:27, placed:23, hours:1.02},
     {grade:'Grade 2', grp:'G2', cls:'2B',   active:26, placed:26, hours:2.27},
     {grade:'Grade 2', grp:'G2', cls:'2C',   active:26, placed:23, hours:1.39},
@@ -662,8 +662,8 @@ const CLASSROOM_DATA = [
     {grade:'Grade 2', grp:'G2', cls:'2I',   active:26, placed:25, hours:1.66},
     {grade:'Grade 2', grp:'G2', cls:'2J',   active:27, placed:25, hours:2.46},
     {grade:'Grade 2', grp:'G2', cls:'2K',   active:27, placed:25, hours:1.63},
-    // ââ
-    // ââ Grade 3 – 10 classrooms ââââââââââââââââââââââââââââ
+    // ——
+    // —— Grade 3 – 10 classrooms ——————————————————
     {grade:'Grade 3', grp:'G3', cls:'3A',   active:25, placed:24, hours:2.52},
     {grade:'Grade 3', grp:'G3', cls:'3B',   active:23, placed:22, hours:2.44},
     {grade:'Grade 3', grp:'G3', cls:'3C',   active:26, placed:25, hours:3.94},
