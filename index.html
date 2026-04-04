@@ -311,7 +311,7 @@
         <div id="schoolLB" class="tab-content active">
             <div class="card-body" style="padding-bottom:0">
                 <p style="font-size:12px;color:var(--muted);margin-bottom:10px">
-                    Programs ranked by the selected competition criteria. Data sourced from Omni's Growth by School report for UAE â ENS Mohamed Bin Zayed. Refreshes hourly.
+                    Programs ranked by the selected competition criteria. Data sourced from Omni, Apr 3, 2026
                 </p>
             </div>
             <div style="overflow-x:auto;padding:0 20px 20px">
@@ -588,22 +588,22 @@
 
 <script>
 // ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-//  REAL DATA â sourced from Omni, Apr 3 2026
+//  REAL DATA â sourced from Omni, Apr 3, 2026
 //  Growth by School Â· UAE â Emirates National Schools (ENS-MBZ)
 //  UAE - ENS - MBZ (Mohamed Bin Zayed Campus)
 // ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 
 const SCHOOLS = [
     // —— UAE - ENS - MBZ (Mohamed Bin Zayed Campus) ———————
-    { org:"UAE - ENS", district:"UAE - ENS - MBZ",     school:"Emirates National Schools Mbz",      product:"My Math Academy",    active:1404, placed:1020, avgHours:1.3, avgSkills:25,  growth:6 },
-    { org:"UAE - ENS", district:"UAE - ENS - MBZ",     school:"Emirates National Schools Mbz",      product:"My Reading Academy",    active:1372, placed:964, avgHours:1.3, avgSkills:1,  growth:6 },
+    { org:"UAE - ENS", district:"UAE - ENS - MBZ",     school:"Emirates National Schools Mbz",      product:"My Math Academy",    active:1404, placed:1020, avgHours:1.3, avgSkills:3,  growth:6 },
+    { org:"UAE - ENS", district:"UAE - ENS - MBZ",     school:"Emirates National Schools Mbz",      product:"My Reading Academy",    active:1372, placed:964, avgHours:1.3, avgSkills:0,  growth:6 },
 ];
 
 // Derived: total skills = placed Ã avgSkills
 SCHOOLS.forEach(s => { s.totalSkills = s.placed * s.avgSkills; });
 
 // ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-//  CLASSROOM DATA â sourced from Omni Student Term Summary, Apr 3 2026
+//  CLASSROOM DATA â sourced from Omni, Apr 3, 2026
 //  UAE - ENS - MBZ Â· All products combined Â· 58 classrooms
 // ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const CLASSROOM_DATA = [
@@ -614,12 +614,12 @@ const CLASSROOM_DATA = [
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Green',   active:23, placed:18, hours:0.55},
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Lilac',   active:23, placed:16, hours:0.62},
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Lime',   active:24, placed:10, hours:0.47},
+    {grade:'KG1 — Pre-K', grp:'KG1', cls:'Kg1-Orange',   active:24, placed:18, hours:1.36},
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Purple',   active:23, placed:15, hours:0.61},
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Red',   active:23, placed:7, hours:0.54},
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Silver',   active:24, placed:23, hours:1.14},
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-White',   active:21, placed:18, hours:1.55},
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Yellow',   active:24, placed:14, hours:0.67},
-    {grade:'KG1 — Pre-K', grp:'KG1', cls:'Kg1-Orange',   active:24, placed:18, hours:1.36},
     // —— KG2 — Kinder – 12 classrooms ————————————
     {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2- Blue',   active:24, placed:23, hours:1.61},
     {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Brown',   active:22, placed:15, hours:0.54},
@@ -674,7 +674,7 @@ const CLASSROOM_DATA = [
 
 
 // ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-//  WEEKLY TREND DATA â sourced from Omni User Group Summary Daily, Apr 3 2026
+//  WEEKLY TREND DATA â sourced from Omni, Apr 3, 2026
 //  UAE - ENS - MBZ Â· My Math Academy & My Reading Academy
 // ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const WEEKLY_DATA = [
