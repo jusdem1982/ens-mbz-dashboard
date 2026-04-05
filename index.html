@@ -594,16 +594,14 @@
 // ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 
 const SCHOOLS = [
-  { org:"UAE - ENS", district:"UAE - ENS - MBZ", school:"Emirates National Schools Mbz", product:"My Math Academy", active:1404, placed:1020, avgHours:1.3, avgSkills:25, growth:6 },
-  { org:"UAE - ENS", district:"UAE - ENS - MBZ", school:"Emirates National Schools Mbz", product:"My Reading Academy", active:1372, placed:964, avgHours:1.3, avgSkills:1, growth:6 }
+  { org:"UAE - ENS", district:"UAE - ENS - MBZ", school:"Emirates National Schools Mbz", product:"My Math Academy", active:1404, placed:1020, avgHours:1.3, avgSkills:3, growth:6 },
+  { org:"UAE - ENS", district:"UAE - ENS - MBZ", school:"Emirates National Schools Mbz", product:"My Reading Academy", active:1372, placed:964, avgHours:1.3, avgSkills:0, growth:6 }
 ];
 
 // Derived: total skills = placed Ã avgSkills
 SCHOOLS.forEach(s => { s.totalSkills = s.placed * s.avgSkills; });
 
 // ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-//  CLASSROOM DATA — sourced from Omni, Apr 05 2026
-//  UAE - ENS - MBZ Â· All products combined · 58 classrooms
 // CLASSROOM DATA — sourced from Omni, Apr 05 2026
 //  UAE - ENS - MBZ · All products combined · 58 classrooms
 const CLASSROOM_DATA = [
@@ -669,8 +667,6 @@ const CLASSROOM_DATA = [
 
 
 // ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-//  WEEKLY TREND DATA — sourced from Omni, Apr 05 2026
-//  UAE - ENS - MBZ Â· My Math Academy & My Reading Academy
 // WEEKLY TREND DATA — sourced from Omni, Apr 05 2026
 //  UAE - ENS - MBZ · My Math Academy & My Reading Academy
 const WEEKLY_DATA = [
