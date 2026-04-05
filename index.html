@@ -311,7 +311,7 @@
         <div id="schoolLB" class="tab-content active">
             <div class="card-body" style="padding-bottom:0">
                 <p style="font-size:12px;color:var(--muted);margin-bottom:10px">
-                    Programs ranked by the selected competition criteria. Data sourced from Omni, Apr 4 2026
+                    Programs ranked by the selected competition criteria. Data sourced from Omni, Apr 04 2026
                 </p>
             </div>
             <div style="overflow-x:auto;padding:0 20px 20px">
@@ -338,7 +338,7 @@
         <div id="gradeLB" class="tab-content">
             <div class="card-body" style="padding-bottom:0">
                 <p style="font-size:12px;color:var(--muted);margin-bottom:4px">
-                    Grade-level performance from Omni's Growth by App Hours report Â· UAE â ENS Mohamed Bin Zayed Â· Term Aug 2025 â Present Â· Updated Apr 4 2026.
+                    Grade-level performance from Omni's Growth by App Hours report Â· UAE â ENS Mohamed Bin Zayed Â· Term Aug 2025 â Present Â· Updated Apr 04 2026.
                 </p>
                 <div id="gradeRangeNote" style="display:none;align-items:center;gap:7px;background:#FFF3CC;border:1px solid #FFD000;border-radius:7px;padding:7px 12px;margin-bottom:6px;font-size:12px;color:#7A5500;">
                     <span>ð</span>
@@ -533,7 +533,7 @@
         <div id="classroomLB" class="tab-content">
             <div class="card-body" style="padding-bottom:0">
                 <p style="font-size:12px;color:var(--muted);margin-bottom:8px">
-                    Classroom-level enrollment from Omni's Student Term Summary Â· All products combined Â· UAE â ENS Mohamed Bin Zayed Â· Updated Apr 4 2026.
+                    Classroom-level enrollment from Omni's Student Term Summary Â· All products combined Â· UAE â ENS Mohamed Bin Zayed Â· Updated Apr 04 2026.
                 </p>
                 <div id="clsRangeNote" style="display:none;align-items:center;gap:7px;background:#FFF3CC;border:1px solid #FFD000;border-radius:7px;padding:7px 12px;margin-bottom:8px;font-size:12px;color:#7A5500;">
                     <span>ð</span>
@@ -570,7 +570,7 @@
         <div id="trendsLB" class="tab-content">
             <div class="card-body" style="padding-bottom:4px">
                 <p style="font-size:12px;color:var(--muted);margin-bottom:0">
-                    Weekly active &amp; placed students by program Â· UAE â ENS Mohamed Bin Zayed Â· Updated Apr 4 2026.
+                    Weekly active &amp; placed students by program Â· UAE â ENS Mohamed Bin Zayed Â· Updated Apr 04 2026.
                 </p>
             </div>
             <div style="padding:0 20px 20px;position:relative;height:320px">
@@ -588,90 +588,90 @@
 
 <script>
 // ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-//  REAL DATA — sourced from Omni, Apr 4 2026
+//  REAL DATA — sourced from Omni, Apr 04 2026
 //  Growth by School Â· UAE â Emirates National Schools (ENS-MBZ)
 //  UAE - ENS - MBZ (Mohamed Bin Zayed Campus)
 // ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 
 const SCHOOLS = [
-  { org:"UAE - ENS", district:"UAE - ENS - MBZ", school:"Emirates National Schools Mbz", product:"My Math Academy", active:1404, placed:1020, avgHours:1.3, avgSkills:3, growth:6 },
-  { org:"UAE - ENS", district:"UAE - ENS - MBZ", school:"Emirates National Schools Mbz", product:"My Reading Academy", active:1372, placed:964, avgHours:1.3, avgSkills:0, growth:6 }
+  { org:"UAE - ENS", district:"UAE - ENS - MBZ", school:"Emirates National Schools Mbz", product:"My Math Academy", active:1404, placed:1020, avgHours:1.3, avgSkills:2, growth:15 },
+  { org:"UAE - ENS", district:"UAE - ENS - MBZ", school:"Emirates National Schools Mbz", product:"My Reading Academy", active:1372, placed:964, avgHours:1.3, avgSkills:1, growth:5 }
 ];
 
 // Derived: total skills = placed Ã avgSkills
 SCHOOLS.forEach(s => { s.totalSkills = s.placed * s.avgSkills; });
 
 // ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-//  CLASSROOM DATA — sourced from Omni, Apr 4 2026
+//  CLASSROOM DATA — sourced from Omni, Apr 04 2026
 //  UAE - ENS - MBZ Â· All products combined · 58 classrooms
-// CLASSROOM DATA — sourced from Omni, Apr 4 2026
+// CLASSROOM DATA — sourced from Omni, Apr 04 2026
 //  UAE - ENS - MBZ · All products combined · 58 classrooms
 const CLASSROOM_DATA = [
   {grade:'Grade 1', grp:'G1', cls:'1E', active:27, placed:27, hours:2.82},
   {grade:'Grade 1', grp:'G1', cls:'1L', active:27, placed:25, hours:1.31},
-  {grade:'Grade 1', grp:'G1', cls:'1J', active:27, placed:27, hours:6.63},
-  {grade:'Grade 2', grp:'G2', cls:'2A', active:27, placed:23, hours:1.01},
-  {grade:'Grade 2', grp:'G2', cls:'2F', active:27, placed:24, hours:1.12},
   {grade:'Grade 2', grp:'G2', cls:'2J', active:27, placed:25, hours:2.46},
   {grade:'Grade 2', grp:'G2', cls:'2G', active:27, placed:24, hours:2.15},
-  {grade:'Grade 1', grp:'G1', cls:'1G', active:26, placed:20, hours:1.13},
-  {grade:'Grade 1', grp:'G1', cls:'1A', active:26, placed:24, hours:2.66},
+  {grade:'Grade 2', grp:'G2', cls:'2A', active:27, placed:23, hours:1.01},
+  {grade:'Grade 1', grp:'G1', cls:'1J', active:27, placed:27, hours:6.63},
+  {grade:'Grade 2', grp:'G2', cls:'2F', active:27, placed:24, hours:1.12},
   {grade:'Grade 1', grp:'G1', cls:'1B', active:26, placed:26, hours:2.66},
-  {grade:'Grade 2', grp:'G2', cls:'2B', active:26, placed:26, hours:2.27},
-  {grade:'Grade 3', grp:'G3', cls:'3C', active:26, placed:25, hours:3.95},
-  {grade:'Grade 1', grp:'G1', cls:'1M', active:26, placed:26, hours:4.64},
-  {grade:'Grade 3', grp:'G3', cls:'3I', active:26, placed:26, hours:2.44},
   {grade:'Grade 1', grp:'G1', cls:'1H', active:26, placed:26, hours:2.34},
-  {grade:'Grade 2', grp:'G2', cls:'2D', active:26, placed:24, hours:2.23},
   {grade:'Grade 2', grp:'G2', cls:'2C', active:26, placed:23, hours:1.39},
+  {grade:'Grade 2', grp:'G2', cls:'2B', active:26, placed:26, hours:2.27},
+  {grade:'Grade 1', grp:'G1', cls:'1A', active:26, placed:24, hours:2.66},
   {grade:'Grade 1', grp:'G1', cls:'1D', active:26, placed:24, hours:1.85},
-  {grade:'Grade 2', grp:'G2', cls:'2K', active:26, placed:25, hours:1.63},
-  {grade:'Grade 2', grp:'G2', cls:'2E', active:26, placed:25, hours:0.89},
+  {grade:'Grade 3', grp:'G3', cls:'3I', active:26, placed:26, hours:2.44},
+  {grade:'Grade 1', grp:'G1', cls:'1G', active:26, placed:20, hours:1.13},
+  {grade:'Grade 3', grp:'G3', cls:'3C', active:26, placed:25, hours:3.95},
+  {grade:'Grade 2', grp:'G2', cls:'2D', active:26, placed:24, hours:2.23},
+  {grade:'Grade 1', grp:'G1', cls:'1M', active:26, placed:26, hours:4.64},
   {grade:'Grade 1', grp:'G1', cls:'1C', active:26, placed:26, hours:2.86},
+  {grade:'Grade 2', grp:'G2', cls:'2E', active:26, placed:25, hours:0.89},
+  {grade:'Grade 2', grp:'G2', cls:'2K', active:26, placed:25, hours:1.63},
   {grade:'Grade 2', grp:'G2', cls:'2I', active:26, placed:25, hours:1.66},
-  {grade:'Grade 1', grp:'G1', cls:'1F', active:25, placed:22, hours:2.77},
   {grade:'Grade 2', grp:'G2', cls:'2H', active:25, placed:25, hours:3.05},
-  {grade:'Grade 3', grp:'G3', cls:'3E', active:25, placed:25, hours:11.87},
-  {grade:'Grade 1', grp:'G1', cls:'1I', active:25, placed:5, hours:0.09},
-  {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Gold', active:25, placed:14, hours:0.62},
-  {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Gold', active:25, placed:18, hours:0.6},
   {grade:'Grade 3', grp:'G3', cls:'3A', active:25, placed:24, hours:2.52},
-  {grade:'Grade 1', grp:'G1', cls:'1K', active:25, placed:24, hours:1.67},
+  {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Gold', active:25, placed:14, hours:0.62},
   {grade:'Grade 3', grp:'G3', cls:'3D', active:25, placed:24, hours:2.64},
-  {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Yellow', active:24, placed:20, hours:0.62},
-  {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Silver', active:24, placed:24, hours:0.82},
-  {grade:'Grade 3', grp:'G3', cls:'3H', active:24, placed:24, hours:4.12},
-  {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Red', active:24, placed:24, hours:1.74},
+  {grade:'Grade 1', grp:'G1', cls:'1K', active:25, placed:24, hours:1.67},
+  {grade:'Grade 1', grp:'G1', cls:'1I', active:25, placed:5, hours:0.09},
+  {grade:'Grade 1', grp:'G1', cls:'1F', active:25, placed:22, hours:2.77},
+  {grade:'Grade 3', grp:'G3', cls:'3E', active:25, placed:25, hours:11.87},
+  {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Gold', active:25, placed:18, hours:0.6},
   {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Lime', active:24, placed:10, hours:0.47},
   {grade:'Grade 3', grp:'G3', cls:'3F', active:24, placed:21, hours:2.93},
-  {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Purple', active:24, placed:20, hours:0.92},
-  {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2- Blue', active:24, placed:23, hours:1.64},
   {grade:'KG1 — Pre-K', grp:'KG1', cls:'Kg1-Orange', active:24, placed:18, hours:1.37},
-  {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Silver', active:24, placed:23, hours:1.14},
-  {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Yellow', active:24, placed:14, hours:0.67},
+  {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Silver', active:24, placed:24, hours:0.82},
+  {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Red', active:24, placed:24, hours:1.74},
   {grade:'Grade 3', grp:'G3', cls:'3J', active:24, placed:23, hours:2.23},
-  {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Blue', active:23, placed:18, hours:1.8},
+  {grade:'Grade 3', grp:'G3', cls:'3H', active:24, placed:24, hours:4.12},
+  {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Silver', active:24, placed:23, hours:1.14},
+  {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2- Blue', active:24, placed:23, hours:1.64},
+  {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Yellow', active:24, placed:14, hours:0.67},
+  {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Yellow', active:24, placed:20, hours:0.62},
+  {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Purple', active:24, placed:20, hours:0.92},
   {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Lilac', active:23, placed:16, hours:0.62},
-  {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Lime', active:23, placed:20, hours:0.83},
-  {grade:'Grade 3', grp:'G3', cls:'3G', active:23, placed:23, hours:3.46},
-  {grade:'Grade 3', grp:'G3', cls:'3B', active:23, placed:22, hours:2.44},
-  {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Red', active:23, placed:7, hours:0.54},
-  {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Orange', active:23, placed:18, hours:0.68},
   {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Purple', active:23, placed:15, hours:0.61},
   {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Green', active:23, placed:18, hours:0.55},
-  {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-White', active:22, placed:19, hours:1.48},
+  {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Red', active:23, placed:7, hours:0.54},
+  {grade:'Grade 3', grp:'G3', cls:'3G', active:23, placed:23, hours:3.46},
+  {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Blue', active:23, placed:18, hours:1.8},
+  {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Lime', active:23, placed:20, hours:0.83},
+  {grade:'Grade 3', grp:'G3', cls:'3B', active:23, placed:22, hours:2.44},
+  {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Orange', active:23, placed:18, hours:0.68},
   {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Brown', active:22, placed:15, hours:0.54},
-  {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-White', active:22, placed:22, hours:0.79},
   {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Brown', active:22, placed:14, hours:1.4},
+  {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-White', active:22, placed:19, hours:1.48},
+  {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-White', active:22, placed:22, hours:0.79},
   {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Green', active:20, placed:9, hours:0.5},
   {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Lilac', active:14, placed:4, hours:0.36}
 ];
 
 
 // ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-//  WEEKLY TREND DATA — sourced from Omni, Apr 4 2026
+//  WEEKLY TREND DATA — sourced from Omni, Apr 04 2026
 //  UAE - ENS - MBZ Â· My Math Academy & My Reading Academy
-// WEEKLY TREND DATA — sourced from Omni, Apr 4 2026
+// WEEKLY TREND DATA — sourced from Omni, Apr 04 2026
 //  UAE - ENS - MBZ · My Math Academy & My Reading Academy
 const WEEKLY_DATA = [
   {week:'2025-11-24', label:'Nov 24', mmaActive:1, mmaPlaced:0, mraActive:1, mraPlaced:0},
