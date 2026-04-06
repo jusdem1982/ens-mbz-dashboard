@@ -418,26 +418,26 @@
 
 <script>
 // ════════════════════════════════════════════════════════════
-//  REAL DATA — sourced from Omni, Apr 5 2026
+//  REAL DATA — sourced from Omni, Apr 6 2026
 //  Growth by School · UAE – Emirates National Schools (ENS-MBZ)
 //  UAE - ENS - MBZ (Mohamed Bin Zayed Campus)
 // ════════════════════════════════════════════════════════════
 
 const SCHOOLS = [
     // ── UAE - ENS - MBZ (Mohamed Bin Zayed Campus) ──────────
-    { org:"UAE - ENS", district:"UAE - ENS - MBZ",     school:"Emirates National Schools Mbz",      product:"My Math Academy",    active:1404, placed:1020, avgHours:1.3, avgSkills:2,  growth:6 },
-    { org:"UAE - ENS", district:"UAE - ENS - MBZ",     school:"Emirates National Schools Mbz",      product:"My Reading Academy", active:1372, placed:964, avgHours:1.3, avgSkills:1,  growth:6 },
+    { org:"UAE - ENS", district:"UAE - ENS - MBZ",     school:"Emirates National Schools Mbz",      product:"My Math Academy",    active:1404, placed:1020, avgHours:1.3, avgSkills:25,  growth:6 },
+    { org:"UAE - ENS", district:"UAE - ENS - MBZ",     school:"Emirates National Schools Mbz",      product:"My Reading Academy",    active:1372, placed:964, avgHours:1.3, avgSkills:1,  growth:6 },
 ];
 
 // Derived: total skills = placed × avgSkills
 SCHOOLS.forEach(s => { s.totalSkills = s.placed * s.avgSkills; });
 
 // ════════════════════════════════════════════════════════════
-//  CLASSROOM DATA — sourced from Omni Student Term Summary, Apr 5 2026
+//  CLASSROOM DATA — sourced from Omni Student Term Summary, Apr 6 2026
 //  UAE - ENS - MBZ · All products combined · 58 classrooms
 // ════════════════════════════════════════════════════════════
 const CLASSROOM_DATA = [
-    // ── KG1 (Pre-K) — 12 classrooms ─────────────────────────
+    // ── KG1 (Pre-K) — 12 classrooms ──────────────────────────────
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Blue', active:23, placed:18, hours:1.8},
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Brown', active:22, placed:14, hours:1.4},
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Gold', active:25, placed:14, hours:0.62},
@@ -450,7 +450,7 @@ const CLASSROOM_DATA = [
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Silver', active:24, placed:23, hours:1.14},
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-White', active:22, placed:19, hours:1.48},
     {grade:'KG1 — Pre-K', grp:'KG1', cls:'KG1-Yellow', active:24, placed:14, hours:0.67},
-    // ── KG2 (Kindergarten) - 12 classrooms
+    // ── KG2 (Kindergarten) — 12 classrooms ──────────────────────────────
     {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Blue', active:24, placed:23, hours:1.64},
     {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Brown', active:22, placed:15, hours:0.54},
     {grade:'KG2 — Kinder', grp:'KG2', cls:'KG2-Gold', active:25, placed:18, hours:0.6},
@@ -503,7 +503,7 @@ const CLASSROOM_DATA = [
 ];
 
 // ════════════════════════════════════════════════════════════
-//  WEEKLY TREND DATA — sourced from Omni User Group Summary Daily, Apr 5 2026
+//  WEEKLY TREND DATA — sourced from Omni User Group Summary Daily, Apr 6 2026
 //  UAE - ENS - MBZ · My Math Academy & My Reading Academy
 // ════════════════════════════════════════════════════════════
 const WEEKLY_DATA = [
