@@ -48,7 +48,7 @@
 
         /* ─── DATA SOURCE STRIP ─── */
         .source-strip { background: var(--navy); padding: 7px 28px; font-size: 11px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; color: rgba(255,255,255,0.7); }
-        .source-tag { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius:4px; padding: 1px 8px; font-size: 10px; color: rgba(255,255,255,0.6); }
+        .source-tag { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 1px 8px; font-size: 10px; color: rgba(255,255,255,0.6); }
         .source-live { color: var(--gold); font-weight: 700; display: flex; align-items: center; gap: 5px; }
         .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: pulse 2s infinite; }
         @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
@@ -80,7 +80,7 @@
         .card-body { padding: 16px 20px; }
         .chart-wrap { height: 270px; position: relative; }
 
-        /* ─── PRODUCT TAG ─── *//
+        /* ─── PRODUCT TAG ─── */
         .prod-tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; white-space: nowrap; }
         .prod-math    { background: #E8EFFF; color: var(--royal); }
         .prod-reading { background: #E0F8FF; color: #0077AA; }
@@ -793,7 +793,7 @@ function fmt(n) {
 }
 
 function productTag(p) {
-    if (p === 'My Math Academy')    return `<span class="prod-tag prod-math">🐐 My Math Academy</span>`;
+    if (p === 'My Math Academy')    return `<span class="prod-tag prod-math">📐 My Math Academy</span>`;
     if (p === 'My Reading Academy') return `<span class="prod-tag prod-reading">📖 My Reading Academy</span>`;
     return `<span class="prod-tag">${p}</span>`;
 }
@@ -1014,10 +1014,25 @@ function sortTbl(tableId, field, initAsc) {
 let currentClsFilter = 'all';
 
 function getDateAdjustedClassroomData() {
-    // Per-classroom weekly data is not available from Omni,
-    // so always return the full-term snapshot.
-    // The Trends chart and School Leaderboard KPIs handle date filtering separately.
-    return CLASSROOM_DATA;
+    if (isFullDateRange()) return CLASSROOM_DATA;
+    // Scale classroom numbers proportionally using program-level weekly stats
+    const fullStats = getDateRangeStats(WEEKLY_DATA[0].week, WEEKLY_DATA[WEEKLY_DATA.length - 1].week);
+    const rangeStats = getDateRangeStats(currentDateRange.from, currentDateRange.to);
+    // Compute scaling ratios per product
+    const mmaActiveRatio  = fullStats.mmaMaxActive  > 0 ? rangeStats.mmaMaxActive  / fullStats.mmaMaxActive  : 0;
+    const mmaPlacedRatio  = fullStats.mmaPeakPlaced > 0 ? rangeStats.mmaPeakPlaced / fullStats.mmaPeakPlaced : 0;
+    const mraActiveRatio  = fullStats.mraMaxActive  > 0 ? rangeStats.mraMaxActive  / fullStats.mraMaxActive  : 0;
+    const mraPlacedRatio  = fullStats.mraPeakPlaced > 0 ? rangeStats.mraPeakPlaced / fullStats.mraPeakPlaced : 0;
+    return CLASSROOM_DATA.map(r => {
+        const isMMA = r.product === 'My Math Academy';
+        const aRatio = isMMA ? mmaActiveRatio : mraActiveRatio;
+        const pRatio = isMMA ? mmaPlacedRatio : mraPlacedRatio;
+        return {
+            ...r,
+            active: Math.round(r.active * aRatio),
+            placed: Math.round(r.placed * pRatio),
+        };
+    });
 }
 
 function renderClassroomTable(filter) {
