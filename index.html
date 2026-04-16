@@ -340,7 +340,11 @@
             <div class="card-body" style="padding-bottom:0">
                 <p style="font-size:12px;color:var(--muted);margin-bottom:4px">
                     Grade-level enrollment from Omni's Student Term Summary · All products combined · UAE – ENS Mohamed Bin Zayed · Updated Apr 6 2026.
-                </p>
+                </p>                <div id="gradeRangeNote" style="display:none;align-items:center;gap:7px;background:#FFF3CC;border:1px solid #FFD000;border-radius:7px;padding:7px 12px;margin-bottom:8px;font-size:12px;color:#7A5500;">
+                    <span>📅</span>
+                    <span>This tab shows the <strong>full-term snapshot</strong> (Aug 2025 – Mar 2026). Per-grade weekly data is not available — use the <strong>Trends tab</strong> to see weekly patterns.</span>
+                </div>
+
             </div>
             <div style="overflow-x:auto">
                 <table class="lb-table">
@@ -633,12 +637,13 @@ function getDateAdjustedSchools() {
 }
 
 function updateSnapshotNotices() {
-    const { from, to } = currentDateRange;
-    const isFullRange = from <= WEEKLY_DATA[0].week && to >= WEEKLY_DATA[WEEKLY_DATA.length - 1].week;
+    const full = isFullDateRange();
     const notice = document.getElementById('rangeNote');
-    if (notice) notice.style.display = isFullRange ? 'none' : 'inline';
+    if (notice) notice.style.display = full ? 'none' : 'inline';
     const clsNote = document.getElementById('clsRangeNote');
-    if (clsNote) clsNote.style.display = isFullRange ? 'none' : 'flex';
+    if (clsNote) clsNote.style.display = full ? 'none' : 'flex';
+    const gradeNote = document.getElementById('gradeRangeNote');
+    if (gradeNote) gradeNote.style.display = full ? 'none' : 'flex';
 }
 
 // ════════════════════════════════════════════════════════════
@@ -930,21 +935,10 @@ function sortTbl(tableId, field, initAsc) {
 let currentClsFilter = 'all';
 
 function getDateAdjustedClassroomData() {
-    const { from, to } = currentDateRange;
-    const isFullRange = from <= WEEKLY_DATA[0].week && to >= WEEKLY_DATA[WEEKLY_DATA.length - 1].week;
-    if (isFullRange) return CLASSROOM_DATA;
-    const stats = getDateRangeStats(from, to);
-    if (!stats) return CLASSROOM_DATA;
-    const fullMmaPlaced = Math.max(...WEEKLY_DATA.map(r => r.mmaPlaced));
-    const fullMraPlaced = Math.max(...WEEKLY_DATA.map(r => r.mraPlaced));
-    const fullTotal = fullMmaPlaced + fullMraPlaced;
-    if (fullTotal === 0) return CLASSROOM_DATA;
-    const scale = (stats.mmaPeakPlaced + stats.mraPeakPlaced) / fullTotal;
-    return CLASSROOM_DATA.map(r => ({
-        ...r,
-        placed: Math.max(0, Math.round(r.placed * scale)),
-        hours:  r.hours != null ? +(r.hours * scale).toFixed(2) : null
-    }));
+    // Per-classroom weekly data is not available from Omni,
+    // so always return the full-term snapshot.
+    // The Trends chart and School Leaderboard KPIs handle date filtering separately.
+    return CLASSROOM_DATA;
 }
 
 function renderClassroomTable(filter) {
