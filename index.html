@@ -686,6 +686,8 @@ function getDateRangeStats(from, to) {
     if (!rows.length) return {
         mmaMaxActive: 0, mmaPeakPlaced: 0,
         mraMaxActive: 0, mraPeakPlaced: 0,
+        mmaSumActive: 0, mmaSumPlaced: 0,
+        mraSumActive: 0, mraSumPlaced: 0,
         weeks: 0
     };
     return {
@@ -693,6 +695,10 @@ function getDateRangeStats(from, to) {
         mmaPeakPlaced: Math.max(...rows.map(r => r.mmaPlaced)),
         mraMaxActive:  Math.max(...rows.map(r => r.mraActive)),
         mraPeakPlaced: Math.max(...rows.map(r => r.mraPlaced)),
+        mmaSumActive:  rows.reduce((s,r) => s + r.mmaActive, 0),
+        mmaSumPlaced:  rows.reduce((s,r) => s + r.mmaPlaced, 0),
+        mraSumActive:  rows.reduce((s,r) => s + r.mraActive, 0),
+        mraSumPlaced:  rows.reduce((s,r) => s + r.mraPlaced, 0),
         weeks: rows.length
     };
 }
@@ -704,13 +710,24 @@ function isFullDateRange() {
 
 function getDateAdjustedSchools() {
     if (isFullDateRange()) return SCHOOLS;
-    const stats = getDateRangeStats(currentDateRange.from, currentDateRange.to);
-    return SCHOOLS.map(s => ({
-        ...s,
-        active:      s.product === 'My Math Academy' ? stats.mmaMaxActive  : stats.mraMaxActive,
-        placed:      s.product === 'My Math Academy' ? stats.mmaPeakPlaced : stats.mraPeakPlaced,
-        totalSkills: s.product === 'My Math Academy' ? stats.mmaPeakPlaced * s.avgSkills : stats.mraPeakPlaced * s.avgSkills
-    }));
+    const fullStats  = getDateRangeStats(WEEKLY_DATA[0].week, WEEKLY_DATA[WEEKLY_DATA.length - 1].week);
+    const rangeStats = getDateRangeStats(currentDateRange.from, currentDateRange.to);
+    // Use sum-based ratios for smooth proportional scaling
+    const mmaActiveRatio  = fullStats.mmaSumActive > 0 ? rangeStats.mmaSumActive / fullStats.mmaSumActive : 0;
+    const mmaPlacedRatio  = fullStats.mmaSumPlaced > 0 ? rangeStats.mmaSumPlaced / fullStats.mmaSumPlaced : 0;
+    const mraActiveRatio  = fullStats.mraSumActive > 0 ? rangeStats.mraSumActive / fullStats.mraSumActive : 0;
+    const mraPlacedRatio  = fullStats.mraSumPlaced > 0 ? rangeStats.mraSumPlaced / fullStats.mraSumPlaced : 0;
+    return SCHOOLS.map(s => {
+        const isMMA = s.product === 'My Math Academy';
+        const aRatio = isMMA ? mmaActiveRatio : mraActiveRatio;
+        const pRatio = isMMA ? mmaPlacedRatio : mraPlacedRatio;
+        return {
+            ...s,
+            active:      Math.round(s.active * aRatio),
+            placed:      Math.round(s.placed * pRatio),
+            totalSkills: Math.round(s.placed * pRatio) * s.avgSkills
+        };
+    });
 }
 
 function updateSnapshotNotices() {
@@ -804,7 +821,7 @@ function growthBadge(g) {
 }
 
 function utilBadge(active, placed) {
-    const pct = Math.round((placed / active) * 100);
+    const pct = active > 0 ? Math.round((placed / active) * 100) : 0;
     const cls = pct >= 85 ? 'util-high' : pct >= 70 ? 'util-mid' : 'util-low';
     return `<span class="util-badge ${cls}">${pct}% placed</span>`;
 }
@@ -1015,14 +1032,14 @@ let currentClsFilter = 'all';
 
 function getDateAdjustedClassroomData() {
     if (isFullDateRange()) return CLASSROOM_DATA;
-    // Scale classroom numbers proportionally using program-level weekly stats
-    const fullStats = getDateRangeStats(WEEKLY_DATA[0].week, WEEKLY_DATA[WEEKLY_DATA.length - 1].week);
+    // Scale classroom numbers proportionally using sum-based weekly stats
+    const fullStats  = getDateRangeStats(WEEKLY_DATA[0].week, WEEKLY_DATA[WEEKLY_DATA.length - 1].week);
     const rangeStats = getDateRangeStats(currentDateRange.from, currentDateRange.to);
-    // Compute scaling ratios per product
-    const mmaActiveRatio  = fullStats.mmaMaxActive  > 0 ? rangeStats.mmaMaxActive  / fullStats.mmaMaxActive  : 0;
-    const mmaPlacedRatio  = fullStats.mmaPeakPlaced > 0 ? rangeStats.mmaPeakPlaced / fullStats.mmaPeakPlaced : 0;
-    const mraActiveRatio  = fullStats.mraMaxActive  > 0 ? rangeStats.mraMaxActive  / fullStats.mraMaxActive  : 0;
-    const mraPlacedRatio  = fullStats.mraPeakPlaced > 0 ? rangeStats.mraPeakPlaced / fullStats.mraPeakPlaced : 0;
+    // Sum-based ratios give smooth proportional scaling across any date range
+    const mmaActiveRatio  = fullStats.mmaSumActive > 0 ? rangeStats.mmaSumActive / fullStats.mmaSumActive : 0;
+    const mmaPlacedRatio  = fullStats.mmaSumPlaced > 0 ? rangeStats.mmaSumPlaced / fullStats.mmaSumPlaced : 0;
+    const mraActiveRatio  = fullStats.mraSumActive > 0 ? rangeStats.mraSumActive / fullStats.mraSumActive : 0;
+    const mraPlacedRatio  = fullStats.mraSumPlaced > 0 ? rangeStats.mraSumPlaced / fullStats.mraSumPlaced : 0;
     return CLASSROOM_DATA.map(r => {
         const isMMA = r.product === 'My Math Academy';
         const aRatio = isMMA ? mmaActiveRatio : mraActiveRatio;
@@ -1073,7 +1090,7 @@ function renderClassroomTable(filter) {
     if (!tbody) return;
 
     tbody.innerHTML = filteredRows.map(r => {
-        const rate = Math.round(r.placed / r.active * 100);
+        const rate = r.active > 0 ? Math.round(r.placed / r.active * 100) : 0;
         const badgeClass = rate >= 95 ? 'growth-high' : rate >= 85 ? 'growth-mid' : rate >= 70 ? 'growth-low' : 'growth-min';
         const hrs = r.hours != null ? r.hours.toFixed(2) : '—';
         const totalHrs = r.hours != null ? (r.hours * r.placed).toFixed(1) : '—';
@@ -1149,7 +1166,7 @@ function renderGradeTable() {
         const placed   = rows.reduce((s, r) => s + r.placed, 0);
         const totalHrs = rows.reduce((s, r) => s + (r.hours || 0) * r.placed, 0);
         const avgHrs   = placed > 0 ? (totalHrs / placed) : 0;
-        const rate     = Math.round(placed / active * 100);
+        const rate     = active > 0 ? Math.round(placed / active * 100) : 0;
         const badgeClass = rate >= 95 ? 'growth-high' : rate >= 85 ? 'growth-mid' : rate >= 70 ? 'growth-low' : 'growth-min';
         const classroomCount = productFilter === 'all'
             ? Object.keys(Object.fromEntries(data.filter(r => r.grp === g.grp).map(r => [r.cls, null]))).length
